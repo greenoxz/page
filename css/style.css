@@ -1,0 +1,193 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-image: url(https://i.redd.it/h70v389765261.png);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background: linear-gradient(to bottom, #1600aa, #2469ce);
+    color: white;
+    background-size: cover;
+    background-attachment: fixed;
+    font-family: "Kanit", sans-serif;
+    font-weight: normal;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #fff;
+    height: 50px;
+    max-height: 500px;
+    margin: 0 auto;
+}
+
+.logo a {
+    text-decoration: none;
+    color: #333;
+    font-weight: 700;
+    font-size: 24px;
+}
+
+.menu {
+    display: flex;
+    list-style: none;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.menu li {
+    margin-left: 20px;
+    font-weight: 400;
+    font: size 18px;
+}
+
+.menu li a {
+    text-decoration: none;
+    color: #000;
+    font-weight: 500;
+    margin-right: 20px;
+    line-height: 30px;
+}
+
+.banner {
+    color: white;
+    height: 300ox;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 20px;
+    margin-left: 20%;
+    margin-right: 20%;
+    margin-top: 20px;
+
+}
+
+.banner-info {
+    text-align: center;
+}
+
+.banner-info img {
+    width: 20vw;
+    max-width: 200px;
+    border-radius: 100%;
+    size-adjust: 100px;
+}
+
+.banner-info p {
+    font-size: 18vm;
+    color:#fff;
+    margin-bottom: 20px;
+    margin-top: 10px;
+    font-family: "Sarabun", sans-serif;
+}
+
+.link {
+    color: #0efc60;
+    font-weight: 500;
+}
+
+.banner-info h1 {
+    margin-top: 10%;
+    font-weight: 600;
+    font-size: 18vm;
+    color:#0efc60;
+}
+
+.logo img{
+    height: 100%;
+    margin-left: 20px;
+}
+
+.logo {
+    align-items: center;
+}
+
+.main-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    border-radius: 10px;
+    margin-left: 30%;
+    margin-right: 30%;
+    color: #1600aa;
+    background-color: #0efc60;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+.link-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+
+.link-container h1 {
+    font-size: 20px;
+    color: #0efc60;
+    font-weight: 600;
+}
+
+.link-item {
+    display: flex;
+    justify-content: space-between;
+    justify-content: center;
+    align-items: center;
+    width: 50%;
+    height: auto;
+    margin: 10px 0;
+    text-align: center;
+    background-color: #0efc60;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+
+}
+
+.link-item img {
+    width: auto;
+    height: 30px;
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.link-item p {
+    display: flex;
+    margin-bottom: 10px;
+    text-decoration-line: none;
+    text-decoration: none;
+    color: #1600aa;
+    align-items: center;
+    position: relative;
+    justify-content: center;
+}
+
+#no-underline {
+    text-decoration: none;
+  }
+
+.footer {
+    color: #fff;
+    margin-top: 20px;
+    padding: 15px;
+    text-align: center;
+    font-weight: 300;
+}
+
+.twitch-chat {
+    display: block;
+    margin: 0 auto;
+    text-align: center;
+    border-radius: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    margin-top: 20px;
+    height: 300px;
+    width: 50%;
+    border: 2px solid;
+}
