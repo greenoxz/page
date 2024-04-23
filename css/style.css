@@ -52,7 +52,7 @@ nav {
     text-decoration: none;
     color: #000;
     font-weight: 500;
-    margin-right: 20px;
+    margin-right: 2rem;
     line-height: 30px;
 }
 
@@ -62,10 +62,9 @@ nav {
     display: flex;
     justify-content: center;
     align-items: center;
-    border-radius: 20px;
     margin-left: 20%;
     margin-right: 20%;
-    margin-top: 20px;
+    margin-top: 1rem;
 
 }
 
@@ -132,7 +131,7 @@ nav {
 .link-container h1 {
     font-size: 20px;
     color: #0efc60;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .link-item {
@@ -152,9 +151,12 @@ nav {
 
 .link-item img {
     width: auto;
-    height: 30px;
-    margin-top: 10px;
+    height: 2rem;
     border-radius: 8px;
+    margin-top: 10px;
+    margin-right: .7rem;
+    outline: 3px solid #fff;
+    background-color: #fff;
 }
 
 .link-item p {
@@ -190,4 +192,29 @@ nav {
     height: 300px;
     width: 50%;
     border: 2px solid;
+}
+
+@media screen and (max-width: 680px) {
+    .menu {
+        display: block;
+        text-align: right;
+    }
+    nav {
+        height: 7rem;
+    }
+    .logo img {
+        height: 50%;
+        justify-content: center;
+    }
+    .menu nav {
+        align-items: center;
+    }
+    .link-item {
+        width: 80%;
+    }
+    .banner {
+        margin-left: 10%;
+        margin-right: 10%;
+        margin-top: 1rem;
+    }
 }
