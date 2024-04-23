@@ -74,7 +74,7 @@ nav {
 
 .banner-info img {
     width: 20vw;
-    max-width: 200px;
+    max-width: 15rem;
     border-radius: 100%;
     size-adjust: 100px;
 }
@@ -82,8 +82,8 @@ nav {
 .banner-info p {
     font-size: 18vm;
     color:#fff;
-    margin-bottom: 20px;
-    margin-top: 10px;
+    margin-bottom: 2rem;
+    margin-top: 1rem;
     font-family: "Sarabun", sans-serif;
 }
 
@@ -93,7 +93,7 @@ nav {
 }
 
 .banner-info h1 {
-    margin-top: 10%;
+    margin-top: 1rem;
     font-weight: 600;
     font-size: 18vm;
     color:#0efc60;
@@ -112,7 +112,6 @@ nav {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    border-radius: 10px;
     margin-left: 30%;
     margin-right: 30%;
     color: #1600aa;
@@ -145,7 +144,7 @@ nav {
     text-align: center;
     background-color: #0efc60;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
+    border-radius: 1rem;
 
 }
 
