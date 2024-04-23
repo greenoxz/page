@@ -1,4 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Sarabun:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&family=Noto+Sans+Thai+Looped:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+Thai:wght@100..900&family=Noto+Serif+Thai:wght@100..900&display=swap');
+
 
 * {
     margin: 0;
@@ -10,19 +11,25 @@ body {
     background-image: url(https://i.redd.it/h70v389765261.png);
     background-size: cover;
     background-repeat: no-repeat;
-    background: linear-gradient(to bottom, #1600aa, #2469ce);
+    background: linear-gradient(135deg, #1600aa, #2469ce);
     color: white;
     background-size: cover;
     background-attachment: fixed;
-    font-family: "Kanit", sans-serif;
+    font-family: "Noto Sans Thai", sans-serif;
     font-weight: normal;
+    text-shadow: -1px 3px 7px rgba(0,0,0,0.3);
+}
+
+body p {
+    font-family: "Noto Sans Thai Looped", sans-serif;
+    text-shadow: -1px 3px 7px rgba(0,0,0,0.3);
 }
 
 nav {
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    background-color: #fff;
+    background: #fff;
     height: 50px;
     max-height: 500px;
     margin: 0 auto;
@@ -50,7 +57,7 @@ nav {
 
 .menu li a {
     text-decoration: none;
-    color: #000;
+    color: #1600aa;
     font-weight: 500;
     margin-right: 2rem;
     line-height: 30px;
@@ -84,7 +91,6 @@ nav {
     color:#fff;
     margin-bottom: 2rem;
     margin-top: 1rem;
-    font-family: "Sarabun", sans-serif;
 }
 
 .link {
@@ -116,7 +122,6 @@ nav {
     margin-right: 30%;
     color: #1600aa;
     background-color: #0efc60;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
 
 .link-container {
@@ -140,10 +145,13 @@ nav {
     align-items: center;
     width: 50%;
     height: auto;
-    margin: 10px 0;
+    margin: 1rem 0;
     text-align: center;
     background-color: #0efc60;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    outline: 3px solid #1600aa;
+    box-shadow: 10px 16px 0px 3px rgba(22,0,170);
+    -webkit-box-shadow: 8px 10px 0px 3px rgba(22,0,170);
+    -moz-box-shadow: 8px 10px 0px 3px rgba(22,0,170);
     border-radius: 1rem;
 
 }
@@ -153,19 +161,15 @@ nav {
     height: 2rem;
     border-radius: 8px;
     margin-top: 10px;
-    margin-right: .7rem;
+    margin-right: .3rem;
+    margin-left: .3rem;
     outline: 3px solid #fff;
     background-color: #fff;
 }
 
 .link-item p {
-    display: flex;
-    margin-bottom: 10px;
-    text-decoration-line: none;
-    text-decoration: none;
+    margin-bottom: 5px;
     color: #1600aa;
-    align-items: center;
-    position: relative;
     justify-content: center;
 }
 
