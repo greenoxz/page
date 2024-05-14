@@ -26,6 +26,8 @@ body p {
 }
 
 nav {
+    position: sticky;
+    top: 0 ;
     display: flex;
     justify-content: space-between;
     padding: 10px;
@@ -53,6 +55,11 @@ nav {
     margin-left: 20px;
     font-weight: 400;
     font: size 18px;
+}
+
+.menu li a:hover {
+    color:hsl(0, 100%, 50%);
+    font-weight: 700;
 }
 
 .menu li a {
@@ -132,6 +139,11 @@ nav {
     align-items: center;
 }
 
+.link-item p:hover {
+    color: hsl(0, 100%, 50%);
+    font-weight: 700;
+}
+
 .link-container h1 {
     font-size: 20px;
     color: #0efc60;
@@ -178,7 +190,14 @@ nav {
   }
 
 .footer {
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;
     color: #fff;
+    background-color: rgba(0, 0, 0, 0.5); /* Highlighted */
     margin-top: 20px;
     padding: 15px;
     text-align: center;
