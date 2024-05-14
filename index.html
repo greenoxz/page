@@ -2,6 +2,25 @@
 <html>
     <head>
         
+        <!--scrip ยืนยันการเปิดลิงก์-->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Navigation with Confirmation</title>
+        <script>
+            function confirmNavigation(event) {
+                var userConfirmed = confirm("คุณแน่ใจหรือไม่ว่าต้องการเปิดลิงก์นี้?");
+                if (!userConfirmed) {
+                    event.preventDefault();
+                }
+            }
+    
+            document.addEventListener("DOMContentLoaded", function() {
+                var twitchLink = document.getElementById("twitch-link");
+                twitchLink.addEventListener("click", confirmNavigation);
+            });
+        </script>
+        <!--scrip ยืนยันการเปิดลิงก์-->
+
         <title>pisitz</title>
         <link rel="stylesheet" href="css/style.css">
         <link rel="shortcut icon" type="webicon" href="pic/pisit-icon.webp">
@@ -20,7 +39,7 @@
 
            <ul class="menu">
                 <li><a href="index.html">หน้าแรก</a></li>
-                <li><a href="https://www.twitch.tv/pisitz" target="_blank">Twitch</a></li>
+                <li><a href="https://www.twitch.tv/pisitz" id="twitch-link" target="_blank">Twitch</a></li>
                 <li><a href="contact.html">ติดต่อ</a></li>
            </ul>
         </nav>
