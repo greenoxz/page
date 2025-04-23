@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@100;200;300;400;500;600;700&family=IBM+Plex+Sans+Thai:wght@100;200;300;400;500;600;700&family=Noto+Sans+Thai+Looped:wght@100;200;300;400;500;600;700;800;900&family=Noto+Sans+Thai:wght@100..900&family=Noto+Serif+Thai:wght@100..900&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300..700&display=swap');
 
 * {
     margin: 0;
@@ -8,21 +8,19 @@
 }
 
 body {
-    background-image: url(https://i.redd.it/h70v389765261.png);
     background-size: cover;
     background-repeat: no-repeat;
-    background: linear-gradient(135deg, #1600aa, #2469ce);
+    background-color: #1f2022;
     color: white;
     background-size: cover;
     background-attachment: fixed;
-    font-family: "Noto Sans Thai", sans-serif;
+    font-family: "Quicksand", sans-serif;
+    font-optical-sizing: auto;
     font-weight: normal;
-    text-shadow: -1px 3px 7px rgba(0,0,0,0.3);
 }
 
 body p {
-    font-family: "Noto Sans Thai Looped", sans-serif;
-    text-shadow: -1px 3px 7px rgba(0,0,0,0.3);
+    font-family: "Quicksand", sans-serif;
 }
 
 nav {
@@ -31,7 +29,7 @@ nav {
     display: flex;
     justify-content: space-between;
     padding: 10px;
-    background: #fff;
+    background: transparent;
     height: 50px;
     max-height: 500px;
     margin: 0 auto;
@@ -59,13 +57,13 @@ nav {
 }
 
 .menu li a:hover {
-    color: #0efc60;
-    background-color: #1600aa;
+    color: #1f2022;
+    background-color: white;
 }
 
 .menu li a {
     text-decoration: none;
-    color: #1600aa;
+    color: #0efc60;
     font-weight: 500;
     margin-right: 2rem;
     line-height: 30px;
@@ -96,7 +94,7 @@ nav {
 
 .banner-info p {
     font-size: 18vm;
-    color:#fff;
+    color:#ffffff;
     margin-bottom: 2rem;
     margin-top: 1rem;
 }
@@ -202,11 +200,11 @@ nav {
 
 .footer {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     height: 100%;
     width: 100%;
     color: #fff;
-    background-color: rgba(0, 0, 0, 0.5); /* สีดำใส */
+    background-color: transparent;
     margin-top: 2.5rem;
     padding: 15px;
     text-align: center;
