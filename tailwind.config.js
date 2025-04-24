@@ -2,10 +2,11 @@ module.exports = {
   darkMode: 'class',
   content: ["./**/*.html"],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        blackpure: "#000000"
+      }
+    },
   },
   plugins: [],
-  variants: {
-    extend: {},
-  }
 }

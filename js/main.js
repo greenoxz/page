@@ -12,10 +12,10 @@ function applyTheme(theme) {
 
   if (theme === "dark") {
     body.className = "theme-dark";
-    icon.textContent = "🌙";
+    icon.textContent = "🌙 Dark Mode";
   } else {
     body.className = "theme-light";
-    icon.textContent = "🌞";
+    icon.textContent = "🌞 Light Mode";
   }
 
   setCookie("theme", theme, 365);
