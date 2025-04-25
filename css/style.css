@@ -83,7 +83,12 @@ body {
   flex-direction: column;
   gap: 0.5rem;
   padding: 1rem 2rem;
-  background-color: inherit;
+  background-color: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(6px);
+}
+
+.theme-dark .mobile-menu {
+  background-color: rgba(0, 0, 0, 0.6);
 }
 
 .hamburger {
@@ -124,14 +129,6 @@ body {
   stroke: currentColor;
 }
 
-.mobile-menu {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  padding: 1rem 2rem;
-  background-color: inherit;
-}
-
 @media (min-width: 769px) {
   .mobile-menu {
     display: none !important;
@@ -153,12 +150,6 @@ a {
   opacity: 0.9;
 }
 
-@media (min-width: 769px) {
-  .mobile-menu {
-    display: none !important;
-  }
-}
-
 .hidden {
   display: none !important;
 }
@@ -176,30 +167,15 @@ a {
   color: inherit !important;
 }
 
-.hamburger .icon {
-  stroke: currentColor !important;
-  fill: currentColor !important;
-}
-
 /* Also target the button by id */
 #hamburger-btn {
   color: inherit !important;
-}
-
-#hamburger-btn .icon {
-  stroke: currentColor !important;
-  fill: currentColor !important;
 }
 
 /* Hamburger and close icons inherit theme color */
 .hamburger,
 #hamburger-btn {
   color: inherit;
-}
-.hamburger .icon,
-#hamburger-btn .icon {
-  stroke: currentColor;
-  fill: currentColor;
 }
 /* Ensure correct icon color per theme */
 .theme-light .hamburger,

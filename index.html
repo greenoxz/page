@@ -6,10 +6,69 @@
   <title>ppknr</title>
   <link rel="stylesheet" href="css/style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300..700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <style>
+    @keyframes slideFadeIn {
+      from {
+        transform: translateY(-10px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideFadeOut {
+      from {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-10px);
+        opacity: 0;
+      }
+    }
+
+    .animate-in {
+      animation: slideFadeIn 0.2s ease-out forwards;
+    }
+
+    .animate-out {
+      animation: slideFadeOut 0.2s ease-in forwards;
+    }
+
+    body {
+      animation: fadeInBody 0.3s ease-in;
+    }
+
+    @keyframes fadeInBody {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+  </style>
   <script>
     function toggleMenu() {
       const menu = document.getElementById("mobile-menu");
-      menu.classList.toggle("hidden");
+      const isMenuVisible = !menu.classList.contains("hidden");
+      const iconPath = document.querySelector("#hamburger-btn svg path");
+
+      if (isMenuVisible) {
+        menu.classList.remove("animate-in");
+        menu.classList.add("animate-out");
+        iconPath.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+        setTimeout(() => menu.classList.add("hidden"), 180);
+      } else {
+        menu.classList.remove("hidden");
+        menu.classList.remove("animate-out");
+        void menu.offsetWidth;
+        menu.classList.add("animate-in");
+        iconPath.setAttribute("d", "M6 18L18 6M6 6l12 12");
+      }
     }
   </script>
 </head>
@@ -28,7 +87,7 @@
       </div>
       <div class="nav-buttons">
         <button onclick="toggleTheme()" class="theme-btn">
-          <span id="theme-icon">🌞</span>
+          <span id="theme-icon" class="material-icons">light_mode</span>
         </button>
         <button class="hamburger" onclick="toggleMenu()" id="hamburger-btn"><svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
@@ -54,5 +113,32 @@
   </div>
 
   <script src="js/main.js" defer></script>
+  <script>
+    const themeBtn = document.querySelector(".theme-btn");
+    const themeIcon = document.getElementById("theme-icon");
+    const body = document.getElementById("theme-body");
+
+    function toggleTheme() {
+      const isDark = body.classList.toggle("theme-dark");
+      if (isDark) {
+        body.classList.remove("theme-light");
+        themeIcon.textContent = "dark_mode";
+        localStorage.setItem("theme", "dark");
+      } else {
+        body.classList.add("theme-light");
+        themeIcon.textContent = "light_mode";
+        localStorage.setItem("theme", "light");
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        body.classList.add("theme-dark");
+        body.classList.remove("theme-light");
+        themeIcon.textContent = "dark_mode";
+      }
+    });
+  </script>
 </body>
 </html>
