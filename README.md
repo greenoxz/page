@@ -1,50 +1,51 @@
 
 # Page - Static Website Template
 
-โปรเจกต์เว็บไซต์ส่วนตัวสำหรับทดลองทำและศึกษาการใช้งาน HTML, Tailwind CSS และ JavaScript  
-เน้นสร้างเว็บแบบ Static ที่โฮสต์ง่าย และปรับแต่งได้เอง
+This is a personal project created for practicing and studying HTML, Tailwind CSS, and JavaScript.  
+It focuses on building a simple static website that is easy to host and customize.
 
-## จุดประสงค์
-- ศึกษาการใช้ Tailwind CSS ในการออกแบบหน้าเว็บ
-- ทดลองทำโครงสร้างเว็บไซต์แบบ Static
-- ฝึกใช้งาน GitHub Pages สำหรับการโฮสต์เว็บไซต์
+## Purpose
+- Practice using Tailwind CSS for web design
+- Experiment with building a static website structure
+- Learn how to deploy websites using GitHub Pages
 
-## โครงสร้างโปรเจกต์
+## Project Structure
 
-   ```
-├── .vscode/           # การตั้งค่า VSCode (Optional)
-├── css/               # ไฟล์ CSS รวมถึงไฟล์ที่ Compile จาก Tailwind
-├── fonts/             # ฟอนต์ที่ใช้ในเว็บ
-├── js/                # ไฟล์ JavaScript
-├── pic/               # รูปภาพต่าง ๆ
-├── .well-known/       # ไฟล์มาตรฐานความปลอดภัย
-├── about.html         # หน้า About
-├── contact.html       # หน้า Contact
-├── index.html         # หน้าแรก
-├── nav.html           # เมนูนำทาง
-├── footer.html        # ส่วนท้ายเว็บ
-├── input.css          # ไฟล์ Input CSS ก่อน Compile
-├── favicon.ico        # ไอคอนเว็บไซต์
-├── Ads.txt            # ไฟล์โฆษณา (เช่น Google AdSense)
-├── package.json       # ไฟล์จัดการแพ็กเกจ (npm)
-├── package-lock.json  # ล็อกเวอร์ชั่นแพ็กเกจ
-├── tailwind.config.js # ตั้งค่า Tailwind CSS
-   ```
-## การใช้งาน
-1. คลิกปุ่ม Fork หรือ Clone โปรเจกต์นี้มาใช้งาน
-2. ติดตั้งแพ็กเกจ Tailwind CSS (ถ้าแก้ไข CSS เพิ่ม)
-3. แก้ไขไฟล์ HTML/CSS/JS ตามต้องการ
-4. Deploy ขึ้น GitHub Pages ได้ทันที
+```
+├── .vscode/           # VSCode settings (Optional)
+├── css/               # CSS files including compiled Tailwind
+├── fonts/             # Fonts used in the website
+├── js/                # JavaScript files
+├── pic/               # Images
+├── .well-known/       # Security-related standard files
+├── about.html         # About page
+├── contact.html       # Contact page
+├── index.html         # Homepage
+├── nav.html           # Navigation menu
+├── footer.html        # Footer section
+├── input.css          # Tailwind input CSS file before compilation
+├── favicon.ico        # Website icon
+├── Ads.txt            # Advertising file (e.g., Google AdSense)
+├── package.json       # NPM package settings
+├── package-lock.json  # NPM package lock file
+├── tailwind.config.js # Tailwind CSS configuration
+```
 
-## เทคโนโลยีที่ใช้
+## How to Use
+1. Fork or clone this project
+2. Install Tailwind CSS (if you want to customize styles)
+3. Edit the HTML/CSS/JS files as needed
+4. Deploy easily using GitHub Pages
+
+## Technologies Used
 - HTML5
 - Tailwind CSS
 - JavaScript
 - GitHub Pages
 
-License
+## License
 This project is open-source and free to use.
 
-[Live Demo](ppknr.com)
+[🌐 Live Demo](https://ppknr.com)
 
-พัฒนาโดย [greenoxz](https://github.com/greenoxz)
+Developed by [greenoxz](https://github.com/greenoxz)
