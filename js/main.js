@@ -29,17 +29,20 @@ function toggleTheme() {
 
 function toggleMenu() {
   const menu = document.getElementById("mobile-menu");
-  // toggle "hidden" class and determine if menu is open (not hidden)
-  const isMenuOpen = menu.classList.toggle("hidden") === false;
-  // select the <path> inside the hamburger button
+  const isOpen = menu.classList.toggle("show");
+  menu.classList.toggle("hidden", !isOpen);
   const iconPath = document.querySelector("#hamburger-btn svg path");
-  // set d attribute: X icon if open, hamburger if closed
   iconPath.setAttribute(
     "d",
-    isMenuOpen
+    isOpen
       ? "M6 18L18 6M6 6l12 12"
       : "M4 6h16M4 12h16M4 18h16"
   );
+  if (!isOpen) {
+    setTimeout(() => menu.classList.add("hidden"), 300);
+  } else {
+    menu.classList.remove("hidden");
+  }
 }
 
 (function () {
