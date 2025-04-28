@@ -4,43 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>เกี่ยวกับเรา - ppknr</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300..700&display=swap" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 <body class="theme-light" id="theme-body">
   <div class="page-container">
-    <nav class="navbar">
-      <a href="index.html" class="logo-wrap">
-        <img src="pic/popcat.gif" alt="logo" class="logo">
-        <span class="site-title">pisitz</span>
-      </a>
-      <div class="desktop-menu">
-        <a href="index.html">หน้าแรก</a>
-        <a href="#">เกี่ยวกับ</a>
-        <a href="contact.html">ติดต่อ</a>
-      </div>
-      <div class="nav-buttons">
-        <button onclick="toggleTheme()" class="theme-btn">
-          <span id="theme-icon" class="material-icons">light_mode</span>
-        </button>
-        <button class="hamburger" id="hamburger-btn" onclick="toggleMenu()">
-          <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </button>
-      </div>
-    </nav>
-    <div id="mobile-menu" class="mobile-menu hidden">
-      <a href="index.html">หน้าแรก</a>
-      <a href="#">เกี่ยวกับ</a>
-      <a href="contact.html">ติดต่อ</a>
-    </div>
+    <div id="navbar-include"></div>
     <main class="main-section">
       <div class="content" style="text-align: center;">
         <img src="pic/popcat.gif" alt="Profile Image" class="profile-img" style="width:100px; border-radius:50%;">
         <h2>@pisitz</h2>
-        <p>พื้นที่รวมบัญชีโซเชียลมีเดีย</p>
+        <p>Social Media</p>
         <div class="linktree-links">
           <a class="link-box" href="https://www.instagram.com/ppknr" target="_blank">
             <!-- Instagram from simpleicons.org -->
@@ -75,7 +52,7 @@
         </div>
       </div>
     </main>
-    <footer class="footer">© 2025 ppknr.com</footer>
+    <div id="footer-include"></div>
   </div>
 
     <style>
@@ -99,13 +76,14 @@
         color: black;
         font-weight: 500;
         box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-        transition: background 0.2s;
+        transition: background 0.2s, transform 0.2s;
         min-width: 210px;
         font-size: 1.1rem;
         text-align: left;
       }
       .link-box:hover {
         background: #f0f0f0;
+        transform: scale(1.05);
       }
       .theme-dark .link-box {
         background: #1a1a1a;
@@ -115,22 +93,17 @@
         background: #2a2a2a;
       }
     </style>
-</div>
   <script>
-    function toggleMenu() {
-      const menu = document.getElementById("mobile-menu");
-      // toggle "hidden" class and determine if menu is open (not hidden)
-      const isMenuOpen = menu.classList.toggle("hidden") === false;
-      // select the <path> inside the hamburger button
-      const iconPath = document.querySelector("#hamburger-btn svg path");
-      // set d attribute: X icon if open, hamburger if closed
-      iconPath.setAttribute(
-        "d",
-        isMenuOpen
-          ? "M6 18L18 6M6 6l12 12"
-          : "M4 6h16M4 12h16M4 18h16"
-      );
-    }
+    fetch('nav.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar-include').innerHTML = html;
+      });
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer-include').innerHTML = html;
+      });
   </script>
   <script src="js/main.js" defer></script>
 </body>

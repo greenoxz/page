@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>เกี่ยวกับเรา - ppknr</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Anuphan:wght@300..700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body class="theme-light" id="theme-body">
+  <div class="page-container">
+    <div id="navbar-include"></div>
+    <main class="main-section">
+      <div class="content" style="max-width: 600px; margin: 0 auto;">
+        <h1>About</h1>
+        <p>
+          Personal Website of <b>pisitz</b>
+        </p>
+      </div>
+    </main>
+    <div id="footer-include"></div>
+  </div>
+  <script>
+    fetch('nav.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar-include').innerHTML = html;
+      });
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer-include').innerHTML = html;
+      });
+  </script>
+  <script src="js/main.js" defer></script>
+</body>
+</html> 
