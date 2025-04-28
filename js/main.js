@@ -22,9 +22,22 @@ function applyTheme(theme) {
 }
 
 function toggleTheme() {
+  const body = document.getElementById("theme-body");
+  const checkbox = document.getElementById("theme-toggle");
   const current = getCookie("theme") || "light";
   const next = current === "light" ? "dark" : "light";
-  applyTheme(next);
+  
+  if (next === "dark") {
+    body.classList.add("theme-dark");
+    body.classList.remove("theme-light");
+    checkbox.checked = true;
+  } else {
+    body.classList.remove("theme-dark");
+    body.classList.add("theme-light");
+    checkbox.checked = false;
+  }
+  
+  setCookie("theme", next, 365);
 }
 
 function toggleMenu() {
@@ -46,6 +59,17 @@ function toggleMenu() {
 }
 
 (function () {
-  const saved = getCookie("theme");
-  applyTheme(saved || "light");
+  const saved = getCookie("theme") || "light";
+  const body = document.getElementById("theme-body");
+  const checkbox = document.getElementById("theme-toggle");
+  
+  if (saved === "dark") {
+    body.classList.add("theme-dark");
+    body.classList.remove("theme-light");
+    checkbox.checked = true;
+  } else {
+    body.classList.remove("theme-dark");
+    body.classList.add("theme-light");
+    checkbox.checked = false;
+  }
 })();

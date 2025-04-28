@@ -1,0 +1,79 @@
+.theme-toggle {
+    width: 60px;
+    height: 30px;
+    border-radius: 999px;
+    background: #F3F3F3;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05) inset;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+    margin: 0 10px;
+}
+
+.theme-toggle .circle {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.05),
+    -5px -5px 15px rgba(0, 0, 0, 0.05) inset;
+    position: absolute;
+    top: 50%;
+    left: 0%;
+    transform: translate(10%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    transition: 0.5s;
+}
+
+.theme-toggle svg {
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    transition: 0.5s;
+}
+
+.theme-toggle .sun {
+    color: #FFD600;
+    margin-top: 0%;
+    opacity: 1;
+}
+
+.theme-toggle .moon {
+    margin-top: -150%;
+    color: white;
+    opacity: 0;
+}
+
+#theme-toggle {
+    display: none;
+}
+
+#theme-toggle:checked ~ nav .theme-toggle {
+    background: #1F1F21;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5) inset;
+}
+
+#theme-toggle:checked ~ nav .theme-toggle .circle {
+    left: 100%;
+    transform: translate(-110%, -50%);
+    background: #2C2C2F;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5),
+    -5px -5px 15px rgba(0, 0, 0, 0.5) inset;
+}
+
+#theme-toggle:checked ~ nav .theme-toggle .sun {
+    margin-top: 150%;
+    opacity: 0;
+}
+
+#theme-toggle:checked ~ nav .theme-toggle .moon {
+    margin-top: 0%;
+    opacity: 1;
+}
+
+.theme-toggle:active .circle {
+    width: 30px;
+} 
