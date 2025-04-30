@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="theme.css">
+</head>
+<body>
+    <input type="checkbox" id="theme-toggle" onchange="toggleTheme()">
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-links">
+                <a href="../pages/index.html">Home</a>
+                <a href="../pages/about.html">About</a>
+                <a href="../pages/contact.html">Contact</a>
+            </div>
+            <button class="theme-toggle" onclick="toggleTheme()">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+    <div id="mobile-menu" class="mobile-menu hidden">
+        <a href="index.html">Home</a>
+        <a href="about.html">About</a>
+        <a href="contact.html">Contact</a>
+    </div>
+</body>
+</html> 

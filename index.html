@@ -55,32 +55,5 @@
       });
   </script>
   <script src="js/main.js" defer></script>
-  <script>
-    const themeBtn = document.querySelector(".theme-btn");
-    const themeIcon = document.getElementById("theme-icon");
-    const body = document.getElementById("theme-body");
-
-    function toggleTheme() {
-      const isDark = body.classList.toggle("theme-dark");
-      if (isDark) {
-        body.classList.remove("theme-light");
-        themeIcon.textContent = "dark_mode";
-        localStorage.setItem("theme", "dark");
-      } else {
-        body.classList.add("theme-light");
-        themeIcon.textContent = "light_mode";
-        localStorage.setItem("theme", "light");
-      }
-    }
-
-    window.addEventListener("DOMContentLoaded", () => {
-      const savedTheme = localStorage.getItem("theme");
-      if (savedTheme === "dark") {
-        body.classList.add("theme-dark");
-        body.classList.remove("theme-light");
-        themeIcon.textContent = "dark_mode";
-      }
-    });
-  </script>
 </body>
 </html>

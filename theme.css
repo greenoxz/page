@@ -74,6 +74,30 @@
     opacity: 1;
 }
 
+/* เพิ่ม styles สำหรับ dark mode */
+.theme-dark #theme-toggle:not(:checked) ~ nav .theme-toggle {
+    background: #1F1F21;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.5) inset;
+}
+
+.theme-dark #theme-toggle:not(:checked) ~ nav .theme-toggle .circle {
+    background: #2C2C2F;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5),
+    -5px -5px 15px rgba(0, 0, 0, 0.5) inset;
+}
+
+/* ปรับ styles สำหรับ light mode */
+.theme-light #theme-toggle:not(:checked) ~ nav .theme-toggle {
+    background: #F3F3F3;
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.05) inset;
+}
+
+.theme-light #theme-toggle:not(:checked) ~ nav .theme-toggle .circle {
+    background: white;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.05),
+    -5px -5px 15px rgba(0, 0, 0, 0.05) inset;
+}
+
 .theme-toggle:active .circle {
     width: 30px;
 } 

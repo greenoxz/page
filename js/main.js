@@ -2,42 +2,32 @@ function setCookie(name, value, days) {
   const expires = new Date(Date.now() + days * 864e5).toUTCString();
   document.cookie = `${name}=${value}; expires=${expires}; path=/`;
 }
+
 function getCookie(name) {
   return document.cookie.split('; ').find(row => row.startsWith(name + '='))?.split('=')[1];
 }
 
 function applyTheme(theme) {
   const body = document.getElementById("theme-body");
-  const icon = document.getElementById("theme-icon");
-
-  if (theme === "dark") {
-    body.className = "theme-dark";
-    icon.className = "fa-solid fa-moon";
-  } else {
-    body.className = "theme-light";
-    icon.className = "fa-regular fa-sun";
-  }
-
-  setCookie("theme", theme, 365);
-}
-
-function toggleTheme() {
-  const body = document.getElementById("theme-body");
   const checkbox = document.getElementById("theme-toggle");
-  const current = getCookie("theme") || "light";
-  const next = current === "light" ? "dark" : "light";
   
-  if (next === "dark") {
+  body.classList.remove("theme-dark", "theme-light");
+  
+  if (theme === "dark") {
     body.classList.add("theme-dark");
-    body.classList.remove("theme-light");
     checkbox.checked = true;
   } else {
-    body.classList.remove("theme-dark");
     body.classList.add("theme-light");
     checkbox.checked = false;
   }
   
-  setCookie("theme", next, 365);
+  setCookie("theme", theme, 365);
+}
+
+function toggleTheme() {
+  const current = getCookie("theme") || "light";
+  const next = current === "light" ? "dark" : "light";
+  applyTheme(next);
 }
 
 function toggleMenu() {
@@ -58,18 +48,8 @@ function toggleMenu() {
   }
 }
 
+// Initialize theme on page load
 (function () {
-  const saved = getCookie("theme") || "light";
-  const body = document.getElementById("theme-body");
-  const checkbox = document.getElementById("theme-toggle");
-  
-  if (saved === "dark") {
-    body.classList.add("theme-dark");
-    body.classList.remove("theme-light");
-    checkbox.checked = true;
-  } else {
-    body.classList.remove("theme-dark");
-    body.classList.add("theme-light");
-    checkbox.checked = false;
-  }
+  const savedTheme = getCookie("theme") || "light";
+  applyTheme(savedTheme);
 })();

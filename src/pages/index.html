@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>pisitz</title>
+  <link rel="icon" type="image/x-icon" href="../assets/images/favicon.ico">
+  <link rel="stylesheet" href="../styles/main.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <style>
+    .hero-img {
+      transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      transform-origin: center;
+    }
+    
+    .hero-img:hover {
+      animation: wobble 1s ease-in-out;
+    }
+    
+    @keyframes wobble {
+      0%, 100% {
+        transform: rotate(0deg) scale(1);
+      }
+      25% {
+        transform: rotate(-5deg) scale(1.1);
+      }
+      50% {
+        transform: rotate(0deg) scale(1.1);
+      }
+      75% {
+        transform: rotate(5deg) scale(1.1);
+      }
+    }
+  </style>
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("mobile-menu");
+      const isMenuVisible = !menu.classList.contains("hidden");
+      const iconPath = document.querySelector("#hamburger-btn svg path");
+
+      if (isMenuVisible) {
+        menu.classList.remove("animate-in");
+        menu.classList.add("animate-out");
+        iconPath.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+        setTimeout(() => menu.classList.add("hidden"), 180);
+      } else {
+        menu.classList.remove("hidden");
+        menu.classList.remove("animate-out");
+        void menu.offsetWidth;
+        menu.classList.add("animate-in");
+        iconPath.setAttribute("d", "M6 18L18 6M6 6l12 12");
+      }
+    }
+  </script>
+</head>
+<body class="theme-light" id="theme-body">
+
+  <div class="page-container">
+    <div id="navbar-include"></div>
+    <main class="main-section">
+      <div class="hero-container">
+        <img src="../assets/images/logo.webp" alt="Logo" class="hero-logo">
+        <h1>pisitz</h1>
+        <p class="tagline">Just because they call it nonsense doesn't mean it is.</p>
+      </div>
+    </main>
+    <div id="footer-include"></div>
+  </div>
+  <script>
+    fetch('nav.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('navbar-include').innerHTML = html;
+      });
+    fetch('footer.html')
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById('footer-include').innerHTML = html;
+      });
+  </script>
+  <script type="module" src="../scripts/main.js"></script>
+  <script>
+    const themeBtn = document.querySelector(".theme-btn");
+    const themeIcon = document.getElementById("theme-icon");
+    const body = document.getElementById("theme-body");
+
+    function toggleTheme() {
+      const isDark = body.classList.toggle("theme-dark");
+      if (isDark) {
+        body.classList.remove("theme-light");
+        themeIcon.textContent = "dark_mode";
+        localStorage.setItem("theme", "dark");
+      } else {
+        body.classList.add("theme-light");
+        themeIcon.textContent = "light_mode";
+        localStorage.setItem("theme", "light");
+      }
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
+      const savedTheme = localStorage.getItem("theme");
+      if (savedTheme === "dark") {
+        body.classList.add("theme-dark");
+        body.classList.remove("theme-light");
+        themeIcon.textContent = "dark_mode";
+      }
+    });
+  </script>
+</body>
+</html>
