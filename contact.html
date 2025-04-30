@@ -19,21 +19,28 @@
         <p>Social Media</p>
         <div class="linktree-links">
           <a class="link-box" href="https://www.instagram.com/ppknr" target="_blank">
-            <i class="fab fa-instagram"></i> Instagram
+            <i class="fab fa-instagram" style="background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i> Instagram
           </a>
           <a class="link-box" href="https://www.facebook.com/pisitzknr" target="_blank">
-            <i class="fab fa-facebook-f"></i> Facebook
+            <i class="fab fa-facebook-f" style="color:#1877F2"></i> Facebook
           </a>
           <a class="link-box" href="https://www.twitch.tv/pisitz" target="_blank">
-            <i class="fab fa-twitch"></i> Twitch
+            <i class="fab fa-twitch" style="color:#9146FF"></i> Twitch
           </a>
           <a class="link-box" href="https://www.youtube.com/@greenoxz" target="_blank">
-            <i class="fab fa-youtube"></i> YouTube
+            <i class="fab fa-youtube" style="color:#FF0000"></i> YouTube
+          </a>
+          <a class="link-box" href="https://bsky.app/profile/ppknr.com" target="_blank">
+            <i class="fab fa-bluesky" style="color:#0085FF"></i> Bluesky
           </a>
           <a class="link-box" href="https://store.line.me/stickershop/product/30329079/th" target="_blank">
-            <i class="fab fa-line" style="color:#00c300"></i> LINE Sticker
+            <i class="fab fa-line" style="color:#00C300"></i> LINE Sticker
           </a>
         </div>
+
+        <a href="mailto:pisit@ppknr.com" class="email-link">
+          <i class="fa fa-envelope"></i> pisit@ppknr.com
+        </a>
       </div>
     </main>
     <div id="footer-include"></div>
@@ -75,6 +82,30 @@
       }
       .theme-dark .link-box:hover {
         background: #2a2a2a;
+      }
+
+      .contact-section {
+        margin-top: 40px;
+        text-align: center;
+      }
+      .contact-section h3 {
+        margin-bottom: 16px;
+        font-size: 1.2rem;
+        font-weight: 500;
+      }
+      .email-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 24px;
+        text-decoration: none;
+        color: inherit;
+        font-size: 0.95rem;
+        opacity: 0.8;
+        transition: opacity 0.2s;
+      }
+      .email-link:hover {
+        opacity: 1;
       }
     </style>
   <script>
