@@ -53,31 +53,35 @@
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
       gap: 20px;
+      width: 100%;
       margin-top: 30px;
+      padding: 0;
     }
     .tech-item {
-      background: white;
-      padding: 20px;
+      padding: 16px;
       border-radius: 12px;
       display: flex;
       align-items: center;
       gap: 15px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      background: white;
+      transition: transform 0.15s ease, box-shadow 0.15s ease;
+      width: 100%;
+      box-sizing: border-box;
     }
     .tech-item:hover {
       transform: translateY(-2px);
       box-shadow: 0 4px 15px rgba(0,0,0,0.1);
     }
     .tech-item i, .tech-item img {
-      font-size: 28px;
-      width: 28px;
-      height: 28px;
+      font-size: 24px;
+      width: 24px;
+      height: 24px;
       flex-shrink: 0;
+      transition: transform 0.15s ease;
     }
-    .tech-item span {
-      font-size: 0.95rem;
-      line-height: 1.4;
+    .tech-item:hover i, 
+    .tech-item:hover img {
+      transform: scale(1.05);
     }
     .theme-dark .tech-item {
       background: #1a1a1a;
@@ -153,52 +157,21 @@
       color: inherit;
       text-align: left;
     }
-    .tech-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 15px;
-    }
-    .tech-item {
-      padding: 15px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      background: white;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-    }
-    .theme-dark .tech-item {
-      background: #1a1a1a;
-    }
-    .tech-item:hover {
-      transform: translateY(-2px);
-    }
-    .tech-item i, .tech-item img {
-      font-size: 24px;
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-      transition: transform 0.15s ease;
-    }
-    .tech-item:hover i, 
-    .tech-item:hover img {
-      transform: scale(1.05);
-    }
     .theme-dark .tech-item .fa-github {
       color: #fff !important;
     }
     .tech-item span {
       font-size: 0.95rem;
       line-height: 1.4;
+      text-align: left;
+      flex: 1;
+      padding-right: 8px;
     }
     .theme-dark .tech-item span {
       color: #999;
     }
     .theme-dark .tech-item:hover span {
       color: #fff;
-    }
-    .theme-dark .tech-item:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
     body {
       transition: background-color 0.3s ease, color 0.3s ease;
@@ -213,6 +186,14 @@
     }
     .theme-dark .tech-item .fa-js {
       color: #F7DF1E !important;
+    }
+    @media (max-width: 768px) {
+      .tech-grid {
+        grid-template-columns: 1fr;
+      }
+      .content-box {
+        padding: 30px;
+      }
     }
   </style>
 </head>
