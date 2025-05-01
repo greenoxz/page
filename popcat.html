@@ -7,6 +7,9 @@
     <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <style>
         /* Game-specific styles */
         .game-container {
@@ -16,11 +19,24 @@
             justify-content: center;
             flex: 1;
             padding: 20px;
-            cursor: pointer;
             user-select: none;
             -webkit-user-select: none;
             -moz-user-select: none;
             -ms-user-select: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+
+        .click-area {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 999;
+            cursor: pointer;
+            background: transparent;
         }
 
         .game-title {
@@ -29,6 +45,8 @@
             margin-bottom: 20px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             pointer-events: none;
+            position: relative;
+            z-index: 2;
         }
 
         .stats-container {
@@ -37,6 +55,8 @@
             margin-bottom: 20px;
             padding: 15px 30px;
             pointer-events: none;
+            position: relative;
+            z-index: 2;
         }
 
         .stat-box {
@@ -57,20 +77,20 @@
 
         .cat-container {
             position: relative;
-            transition: transform 0.2s;
-            pointer-events: none;
-            z-index: 1000;
+            transition: transform 0.05s;
             margin-bottom: 20px;
+            transform-origin: center;
+        }
+
+        .cat-container:active {
+            transform: scale(0.85);
         }
 
         .cat-image {
             width: 300px;
             height: 300px;
-            transition: transform 0.1s;
-        }
-
-        .cat-image:active {
-            transform: scale(0.95);
+            transition: transform 0.05s;
+            pointer-events: none;
         }
 
         .mouth-open {
@@ -78,11 +98,22 @@
             top: 0;
             left: 0;
             opacity: 0;
-            transition: opacity 0.1s;
+            transition: opacity 0.05s;
+            pointer-events: none;
         }
 
         .mouth-open.active {
             opacity: 1;
+        }
+
+        @keyframes pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(0.85); }
+            100% { transform: scale(1); }
+        }
+
+        .pop-animation {
+            animation: pop 0.08s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
         .sound-effect {
@@ -99,7 +130,7 @@
             border-radius: 8px;
             cursor: pointer;
             transition: background-color 0.3s;
-            z-index: 1001;
+            z-index: 1000;
             pointer-events: auto;
             user-select: none;
             -webkit-user-select: none;
@@ -158,6 +189,10 @@
                     <div class="stat-label">High Score</div>
                     <div class="stat-value" id="highScore">0</div>
                 </div>
+                <div class="stat-box">
+                    <div class="stat-label">Total Clicks</div>
+                    <div class="stat-value" id="totalClicks">0</div>
+                </div>
             </div>
             <div class="cat-container">
                 <img src="pic/pisit-closed.webp" alt="Pop Cat" class="cat-image" id="catImage">
@@ -174,10 +209,25 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/main.js"></script>
     <script>
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAXfzmalfP4RZjMSjDbl5LOXBT7m9vzDzU",
+            authDomain: "ppknr-popcat.firebaseapp.com",
+            databaseURL: "https://ppknr-popcat-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "ppknr-popcat",
+            storageBucket: "ppknr-popcat.firebasestorage.app",
+            messagingSenderId: "90126143526",
+            appId: "1:90126143526:web:96316212d303ac08df16e7"
+        };
+
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const totalClicksRef = database.ref('totalClicks');
+
         // Load navigation and footer
         $(function(){
             $("#nav-placeholder").load("nav.html", function() {
-                // Set active menu item after nav is loaded
                 $('.desktop-menu a[href="popcat.html"]').addClass('active');
                 $('.mobile-menu a[href="popcat.html"]').addClass('active');
             });
@@ -190,13 +240,26 @@
         const catImageOpen = document.getElementById('catImageOpen');
         const clickCount = document.getElementById('clickCount');
         const highScore = document.getElementById('highScore');
+        const totalClicks = document.getElementById('totalClicks');
         const resetButton = document.getElementById('resetButton');
         const popSound = document.getElementById('popSound');
         let count = 0;
 
-        // Load high score from localStorage
+        // Load initial high score
         let savedHighScore = localStorage.getItem('popcatHighScore') || 0;
         highScore.textContent = savedHighScore;
+
+        // Load total clicks from Firebase
+        totalClicksRef.once('value').then((snapshot) => {
+            savedTotalClicks = snapshot.val() || 0;
+            totalClicks.textContent = savedTotalClicks;
+        });
+
+        // Listen for real-time updates to total clicks
+        totalClicksRef.on('value', (snapshot) => {
+            savedTotalClicks = snapshot.val() || 0;
+            totalClicks.textContent = savedTotalClicks;
+        });
 
         function handleClick(e) {
             // Don't count clicks on the reset button
@@ -204,6 +267,12 @@
             
             count++;
             clickCount.textContent = count;
+            
+            // Update total clicks in Firebase
+            totalClicksRef.transaction((currentTotal) => {
+                return (currentTotal || 0) + 1;
+            });
+            
             popSound.currentTime = 0;
             popSound.play();
             
@@ -214,13 +283,19 @@
                 localStorage.setItem('popcatHighScore', savedHighScore);
             }
             
-            // Show open mouth
+            // Show open mouth and add pop animation
             catImageOpen.classList.add('active');
+            catImage.classList.add('pop-animation');
             
-            // Hide open mouth after 100ms
+            // Remove animation class after animation ends
+            setTimeout(() => {
+                catImage.classList.remove('pop-animation');
+            }, 80);
+            
+            // Hide open mouth after 50ms
             setTimeout(() => {
                 catImageOpen.classList.remove('active');
-            }, 100);
+            }, 50);
         }
 
         function resetScore() {
