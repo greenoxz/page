@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pisit Pop</title>
+    <link rel="stylesheet" href="theme.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        /* Game-specific styles */
+        .game-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex: 1;
+            padding: 20px;
+            cursor: pointer;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .game-title {
+            font-size: 3rem;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
+            pointer-events: none;
+        }
+
+        .stats-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+            padding: 15px 30px;
+            pointer-events: none;
+        }
+
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+
+        .cat-container {
+            position: relative;
+            transition: transform 0.2s;
+            pointer-events: none;
+            z-index: 1000;
+            margin-bottom: 20px;
+        }
+
+        .cat-image {
+            width: 300px;
+            height: 300px;
+            transition: transform 0.1s;
+        }
+
+        .cat-image:active {
+            transform: scale(0.95);
+        }
+
+        .mouth-open {
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 0.1s;
+        }
+
+        .mouth-open.active {
+            opacity: 1;
+        }
+
+        .sound-effect {
+            display: none;
+        }
+
+        .reset-button {
+            margin-top: 20px;
+            padding: 12px 24px;
+            font-size: 1.1rem;
+            background-color: #e74c3c;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            z-index: 1001;
+            pointer-events: auto;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        .reset-button:hover {
+            background-color: #c0392b;
+        }
+
+        .reset-button:active {
+            transform: scale(0.98);
+        }
+
+        /* Dark theme overrides */
+        body.theme-dark .stat-label {
+            color: #ccc;
+        }
+
+        body.theme-dark .stat-value {
+            color: #fff;
+        }
+
+        body.theme-dark .game-title {
+            color: #fff;
+        }
+
+        /* Make sure navigation and footer are clickable */
+        #nav-placeholder, #footer-placeholder {
+            pointer-events: auto;
+        }
+
+        /* Prevent text selection */
+        .page-container {
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+    </style>
+</head>
+<body class="theme-light" id="theme-body">
+    <div class="page-container">
+        <!-- Include Navigation -->
+        <div id="nav-placeholder"></div>
+
+        <div class="game-container" id="clickArea">
+            <h1 class="game-title">Pisit Pop</h1>
+            <div class="stats-container">
+                <div class="stat-box">
+                    <div class="stat-label">Current Clicks</div>
+                    <div class="stat-value" id="clickCount">0</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-label">High Score</div>
+                    <div class="stat-value" id="highScore">0</div>
+                </div>
+            </div>
+            <div class="cat-container">
+                <img src="pic/pisit-closed.webp" alt="Pop Cat" class="cat-image" id="catImage">
+                <img src="pic/pisit-open.webp" alt="Pop Cat Open" class="cat-image mouth-open" id="catImageOpen">
+            </div>
+            <button class="reset-button" id="resetButton">Reset Score</button>
+            <audio id="popSound" class="sound-effect" src="https://assets.mixkit.co/active_storage/sfx/2571/2571-preview.mp3"></audio>
+        </div>
+
+        <!-- Include Footer -->
+        <div id="footer-placeholder"></div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        // Load navigation and footer
+        $(function(){
+            $("#nav-placeholder").load("nav.html", function() {
+                // Set active menu item after nav is loaded
+                $('.desktop-menu a[href="popcat.html"]').addClass('active');
+                $('.mobile-menu a[href="popcat.html"]').addClass('active');
+            });
+            $("#footer-placeholder").load("footer.html");
+        });
+
+        // Game functionality
+        const clickArea = document.getElementById('clickArea');
+        const catImage = document.getElementById('catImage');
+        const catImageOpen = document.getElementById('catImageOpen');
+        const clickCount = document.getElementById('clickCount');
+        const highScore = document.getElementById('highScore');
+        const resetButton = document.getElementById('resetButton');
+        const popSound = document.getElementById('popSound');
+        let count = 0;
+
+        // Load high score from localStorage
+        let savedHighScore = localStorage.getItem('popcatHighScore') || 0;
+        highScore.textContent = savedHighScore;
+
+        function handleClick(e) {
+            // Don't count clicks on the reset button
+            if (e.target === resetButton) return;
+            
+            count++;
+            clickCount.textContent = count;
+            popSound.currentTime = 0;
+            popSound.play();
+            
+            // Update high score if needed
+            if (count > savedHighScore) {
+                savedHighScore = count;
+                highScore.textContent = savedHighScore;
+                localStorage.setItem('popcatHighScore', savedHighScore);
+            }
+            
+            // Show open mouth
+            catImageOpen.classList.add('active');
+            
+            // Hide open mouth after 100ms
+            setTimeout(() => {
+                catImageOpen.classList.remove('active');
+            }, 100);
+        }
+
+        function resetScore() {
+            count = 0;
+            clickCount.textContent = '0';
+        }
+
+        // Wait for elements to be loaded
+        $(document).ready(function() {
+            clickArea.addEventListener('click', handleClick);
+            resetButton.addEventListener('click', resetScore);
+        });
+    </script>
+</body>
+</html> 
