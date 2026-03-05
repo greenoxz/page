@@ -53,3 +53,13 @@ function toggleMenu() {
   const savedTheme = getCookie("theme") || "light";
   applyTheme(savedTheme);
 })();
+
+// ดึง meta tag theme-color มา
+let metaThemeColor = document.querySelector('meta[name="theme-color"]');
+
+// ตรวจสอบว่าตอนนี้เป็นโหมดมืดหรือสว่าง แล้วเซ็ตสีให้ตรงกัน
+if (document.body.classList.contains('theme-dark')) {
+    metaThemeColor.setAttribute('content', '#18181b'); // สีโหมดมืด
+} else {
+    metaThemeColor.setAttribute('content', '#fcfcfc'); // สีโหมดสว่าง
+}
