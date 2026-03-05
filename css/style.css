@@ -84,8 +84,8 @@ body {
 }
 
 .theme-dark .navbar {
-  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.08);
-  background-color: rgba(0, 0, 0, 0.7);
+  box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.05);
+  background-color: rgba(24, 24, 27, 0.8);
 }
 
 .footer {
@@ -159,7 +159,8 @@ body {
 }
 
 .theme-dark .hero-img {
-  filter: drop-shadow(0 20px 30px rgba(255, 77, 28, 0.15));
+  /* ปรับเงาสีส้มให้ดูละมุนขึ้น */
+  filter: drop-shadow(0 20px 30px rgba(249, 115, 22, 0.1));
 }
 
 @media (min-width: 768px) {
@@ -212,7 +213,7 @@ body {
 }
 
 .theme-dark .mobile-menu {
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(24, 24, 27, 0.9);
 }
 
 .hamburger {
@@ -239,8 +240,8 @@ body {
   color: #1f2937;
 }
 .theme-dark {
-  background-color: #0a0a0a;
-  color: white;
+  background-color: #18181b; /* เปลี่ยนจาก #0a0a0a */
+  color: #e4e4e7; /* เปลี่ยนจาก white เป็นสีขาวหม่น/เทาอ่อน */
 }
 
 .icon {
@@ -266,7 +267,7 @@ a {
 .mobile-menu a:hover {
   transform: translateX(6px);
   opacity: 0.9;
-  color: #ff4d1c;
+  color: #f97316;
 }
 
 .hidden {
@@ -365,14 +366,14 @@ a {
   bottom: -2px;
   width: 100%;
   height: 2px;
-  background: #ff4d1c;
+  background: #f97316;
   transform: scaleX(0);
   transition: transform 0.25s cubic-bezier(.4,2,.6,1);
   transform-origin: left;
   opacity: 0.7;
 }
 
-.desktop-menu a:hover { color: #ff4d1c; }
+.desktop-menu a:hover { color: #f97316; }
 .desktop-menu a:hover::after {
   transform: scaleX(1);
   opacity: 1;
@@ -396,7 +397,7 @@ a {
   padding: 0.8rem 2rem;
   font-size: 1.1rem;
   color: white !important;
-  background-color: #ff4d1c;
+  background-color: #f97316; 
   border: none;
   border-radius: 999px;
   cursor: pointer;
@@ -424,9 +425,9 @@ a {
 }
 
 .cta-button:hover {
-  background-color: #e63d0e;
+  background-color: #ea580c; /* สีตอนโฮเวอร์ */
   transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(255, 77, 28, 0.4);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
 }
 
 .cta-button:hover::before {
@@ -435,7 +436,7 @@ a {
 
 .cta-button:active {
   transform: translateY(0);
-  box-shadow: 0 4px 10px rgba(255, 77, 28, 0.3);
+  box-shadow: 0 4px 10px rgba(249, 115, 22, 0.2);
 }
 
 .icon-bounce {
