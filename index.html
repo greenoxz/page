@@ -58,16 +58,23 @@
     <div id="footer-include"></div>
   </div>
   
-  <script>
+<script>
     fetch('nav.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('navbar-include').innerHTML = html;
       });
+
     fetch('footer.html')
       .then(res => res.text())
       .then(html => {
         document.getElementById('footer-include').innerHTML = html;
+        
+        // เพิ่มโค้ดอัปเดตเลขปีตรงนี้
+        const yearElem = document.getElementById('year'); 
+        if (yearElem) {
+          yearElem.textContent = new Date().getFullYear();
+        }
       });
   </script>
   <script src="js/main.js" defer></script>
