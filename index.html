@@ -33,21 +33,28 @@
 
   <div class="page-container">
     <div id="navbar-include"></div>
+    
     <main class="main-section">
       <div class="content">
-        <img src="pic/logo.webp" alt="logo" class="hero-img" />
-        <h1>pisitz</h1>
-        <p>Just because they call it nonsense doesn't mean it is.</p>
+        <div class="image-wrapper">
+          <img src="pic/logo.webp" alt="logo" class="hero-img" />
+        </div>
+        
+        <h1 class="main-title">pisitz</h1>
+        <p class="subtitle">Just because they call it nonsense doesn't mean it is.</p>
+        
         <div class="button-container">
-          <a href="popcat.html" class="cta-button">
-            <i class="fas fa-gamepad"></i>
+          <a href="popcat.html" class="cta-button group">
+            <i class="fas fa-gamepad icon-bounce"></i>
             Play PisitPop
           </a>
         </div>
       </div>
     </main>
+
     <div id="footer-include"></div>
   </div>
+  
   <script>
     fetch('nav.html')
       .then(res => res.text())

@@ -93,14 +93,11 @@
     .content-section {
       margin: 0;
       line-height: 1.8;
+      text-align: center;
     }
     .content-section p {
-      margin-bottom: 1.2rem;
-      font-size: 1.02rem;
-      text-align: left;
-    }
-    .content-section p:last-child {
-      margin-bottom: 0;
+      margin-bottom: 1rem;
+      font-size: 1.1rem;
     }
     .section-title {
       font-size: 1.5rem;
@@ -139,9 +136,9 @@
     .content-box {
       background: #f9f9f9;
       border-radius: 15px;
-      padding: 40px;
+      padding: 30px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      margin-top: 30px;
+      margin-top: 20px;
       transition: background-color 0.2s ease;
     }
     .theme-dark .content-box {
@@ -152,10 +149,11 @@
       margin-top: 30px;
     }
     .tech-title {
-      font-size: 1.02rem;
+      font-size: 1.1rem;
+      font-weight: 600;
       margin-bottom: 20px;
       color: inherit;
-      text-align: left;
+      text-align: center;
     }
     .theme-dark .tech-item .fa-github {
       color: #fff !important;
@@ -192,7 +190,7 @@
         grid-template-columns: 1fr;
       }
       .content-box {
-        padding: 30px;
+        padding: 20px;
       }
     }
   </style>
@@ -219,53 +217,36 @@
         <div class="content-box">
           <div class="content-section">
             <div lang="th">
-              <p>เว็บไซต์นี้เป็นเพียงโปรเจคส่วนตัวที่สร้างขึ้นเพื่อการเรียนรู้และทดลองทำเว็บไซต์ด้วยตัวเอง ไม่ได้มีจุดประสงค์ทางการค้าหรือเชิงพาณิชย์ใดๆ เป็นพื้นที่สำหรับการทดลองและพัฒนาทักษะด้านการเขียนโค้ด รวมถึงเป็นที่เก็บผลงานและบันทึกการเรียนรู้ต่างๆ</p>
-
-              <p>สร้างด้วย HTML, CSS และ JavaScript อย่างง่ายๆ เพื่อศึกษาการพัฒนาเว็บไซต์เบื้องต้น และทดลองการใช้งานเทคโนโลยีต่างๆ โดยเน้นการเรียนรู้จากการลงมือทำจริง การแก้ไขปัญหาที่เกิดขึ้น และการปรับปรุงพัฒนาอย่างต่อเนื่อง เพื่อให้เข้าใจหลักการทำงานของเว็บไซต์อย่างลึกซึ้ง</p>
-
-              <p>วัตถุประสงค์หลักคือการเรียนรู้และพัฒนาทักษะการเขียนโค้ด การออกแบบเว็บไซต์ และการทำความเข้าใจพื้นฐานของการพัฒนาเว็บไซต์ นอกจากนี้ยังมุ่งเน้นการศึกษาแนวทางการพัฒนาที่เป็นมาตรฐาน การจัดการโค้ดให้เป็นระเบียบ และการสร้างเว็บไซต์ที่มีประสิทธิภาพ</p>
-
-              <p>ในการพัฒนาเว็บไซต์นี้ ได้นำเอาหลักการออกแบบที่เน้นผู้ใช้เป็นศูนย์กลาง (User-Centered Design) มาประยุกต์ใช้ โดยคำนึงถึงความสะดวกในการใช้งาน ความเรียบง่ายของการออกแบบ และการตอบสนองที่รวดเร็ว รวมถึงการรองรับการแสดงผลบนอุปกรณ์ที่หลากหลาย (Responsive Design)</p>
+              <p>เว็บไซต์นี้เป็นโปรเจคส่วนตัวสำหรับทดลองเขียนโค้ดและเรียนรู้การทำเว็บ ไม่มีจุดประสงค์เชิงพาณิชย์ใดๆ ทำไว้ลุยเล่นๆ และเป็นพื้นที่เก็บผลงานครับ</p>
             </div>
             <div lang="en">
-              <p>This website is a personal project created for learning and experimenting with web development. It has no commercial or business purposes. It serves as a space for experimentation and coding skill development, as well as a portfolio and learning journal.</p>
-
-              <p>Built with simple HTML, CSS, and JavaScript to study basic web development and experiment with various technologies. The focus is on learning through hands-on experience, problem-solving, and continuous improvement to gain a deep understanding of how websites work.</p>
-
-              <p>The main objective is to learn and develop coding skills, website design, and understand the fundamentals of web development. Additionally, it aims to study standard development practices, code organization, and efficient website creation.</p>
-
-              <p>In developing this website, user-centered design principles have been applied, focusing on usability, simplicity in design, and fast response times. The site also implements responsive design to ensure proper display across various devices.</p>
+              <p>This is a personal project built to practice coding and web development. No commercial purposes—just a space to experiment and showcase my work.</p>
             </div>
           </div>
 
           <div class="tech-section">
-            <p class="tech-title" lang="th">เทคโนโลยีที่ใช้ในการพัฒนา:</p>
-            <p class="tech-title" lang="en">Technologies Used:</p>
+            <p class="tech-title" lang="th">เทคโนโลยีที่ใช้</p>
+            <p class="tech-title" lang="en">Tech Stack</p>
             <div class="tech-grid">
               <div class="tech-item">
                 <i class="fab fa-html5" style="color: #E34F26;"></i>
-                <span lang="th">HTML5 สำหรับโครงสร้างเว็บไซต์</span>
-                <span lang="en">HTML5 for website structure</span>
+                <span lang="th">HTML5 / CSS / JS พื้นฐาน</span>
+                <span lang="en">Basic HTML5 / CSS / JS</span>
               </div>
               <div class="tech-item">
                 <i class="fab fa-css3-alt" style="color: #1572B6;"></i>
-                <span lang="th">Tailwind CSS สำหรับการจัดการสไตล์</span>
+                <span lang="th">Tailwind CSS สำหรับสไตล์</span>
                 <span lang="en">Tailwind CSS for styling</span>
               </div>
               <div class="tech-item">
-                <i class="fab fa-js" style="color: #B7A419;"></i>
-                <span lang="th">JavaScript สำหรับการทำฟังก์ชัน</span>
-                <span lang="en">JavaScript for functionality</span>
-              </div>
-              <div class="tech-item">
                 <i class="fab fa-github" style="color: #181717;"></i>
-                <span lang="th">GitHub Pages สำหรับการเผยแพร่เว็บไซต์</span>
-                <span lang="en">GitHub Pages for website hosting</span>
+                <span lang="th">GitHub Pages (Hosting)</span>
+                <span lang="en">GitHub Pages (Hosting)</span>
               </div>
               <div class="tech-item">
                 <img src="https://www.vectorlogo.zone/logos/cloudflare/cloudflare-icon.svg" alt="Cloudflare">
-                <span lang="th">Cloudflare สำหรับ DNS และระบบความปลอดภัย</span>
-                <span lang="en">Cloudflare for DNS and security</span>
+                <span lang="th">Cloudflare (DNS & Security)</span>
+                <span lang="en">Cloudflare (DNS & Security)</span>
               </div>
             </div>
           </div>
@@ -286,21 +267,16 @@
         document.getElementById('footer-include').innerHTML = html;
       });
 
-    // Enhanced language switch functionality with animation
     const langBtns = document.querySelectorAll('.lang-btn');
     langBtns.forEach(btn => {
       btn.addEventListener('click', () => {
         const lang = btn.dataset.lang;
-        
-        // เปลี่ยนปุ่มทันที
         langBtns.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-
-        // เปลี่ยนภาษาทันที
         document.body.classList.toggle('lang-en', lang === 'en');
       });
     });
   </script>
   <script src="js/main.js" defer></script>
 </body>
-</html> 
+</html>
