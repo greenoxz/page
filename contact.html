@@ -8,33 +8,182 @@
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <style>
+    .contact-wrapper {
+      max-width: 480px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+      text-align: center;
+      width: 100%;
+    }
+
+    .profile-img {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      object-fit: cover;
+      margin: 0 auto 1.2rem;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      border: 4px solid #ffffff;
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    
+    .profile-img:hover {
+      transform: scale(1.08) rotate(-3deg);
+    }
+
+    .theme-dark .profile-img {
+      border-color: #1a1a1a;
+      box-shadow: 0 10px 25px rgba(255, 77, 28, 0.15);
+    }
+
+    .profile-name {
+      font-size: 1.8rem;
+      font-weight: 700;
+      margin: 0 0 0.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    .profile-bio {
+      font-size: 1.05rem;
+      opacity: 0.7;
+      margin-bottom: 2rem;
+      font-weight: 300;
+    }
+
+    .linktree-links {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .link-box {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 16px 20px;
+      background: #ffffff;
+      border-radius: 99px; /* ทรงแคปซูล */
+      color: #1f2937;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+      border: 1px solid rgba(0,0,0,0.03);
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .link-box:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+      border-color: rgba(0,0,0,0.08);
+    }
+
+    .theme-dark .link-box {
+      background: #111111;
+      color: #ffffff;
+      border-color: rgba(255,255,255,0.05);
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .theme-dark .link-box:hover {
+      background: #1a1a1a;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+      border-color: rgba(255,255,255,0.1);
+    }
+
+    .link-icon {
+      font-size: 1.6rem;
+      width: 32px;
+      display: flex;
+      justify-content: center;
+      transition: transform 0.3s;
+    }
+
+    .link-box:hover .link-icon {
+      transform: scale(1.15);
+    }
+
+    .link-text {
+      flex: 1;
+      text-align: center;
+      padding-right: 32px; /* ชดเชยความกว้างไอคอนเพื่อให้ข้อความอยู่ตรงกลางเป๊ะๆ */
+    }
+
+    .email-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 35px;
+      padding: 12px 24px;
+      border-radius: 99px;
+      background: rgba(0,0,0,0.04);
+      text-decoration: none;
+      color: inherit;
+      font-size: 1rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .email-link:hover {
+      background: rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+
+    .theme-dark .email-link {
+      background: rgba(255,255,255,0.05);
+    }
+
+    .theme-dark .email-link:hover {
+      background: rgba(255,255,255,0.1);
+    }
+  </style>
 </head>
 <body class="theme-light" id="theme-body">
   <div class="page-container">
     <div id="navbar-include"></div>
+    
     <main class="main-section">
-      <div class="content" style="text-align: center;">
-        <img src="pic/pisit-fire.webp" alt="Profile Image" class="profile-img" style="width:100px; border-radius:10%;">
-        <h2>@pisitz</h2>
-        <p>Social Media</p>
+      <div class="contact-wrapper">
+        <img src="pic/pisit-fire.webp" alt="Profile Image" class="profile-img">
+        <h2 class="profile-name">@pisitz</h2>
+        <p class="profile-bio">Let's connect</p>
+        
         <div class="linktree-links">
           <a class="link-box" href="https://www.instagram.com/ppknr" target="_blank">
-            <i class="fab fa-instagram" style="background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i> Instagram
+            <div class="link-icon">
+              <i class="fab fa-instagram" style="background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+            </div>
+            <span class="link-text">Instagram</span>
           </a>
+          
           <a class="link-box" href="https://www.facebook.com/pisitzknr" target="_blank">
-            <i class="fab fa-facebook-f" style="color:#1877F2"></i> Facebook
+            <div class="link-icon"><i class="fab fa-facebook-f" style="color:#1877F2"></i></div>
+            <span class="link-text">Facebook</span>
           </a>
+          
           <a class="link-box" href="https://www.twitch.tv/pisitz" target="_blank">
-            <i class="fab fa-twitch" style="color:#9146FF"></i> Twitch
+            <div class="link-icon"><i class="fab fa-twitch" style="color:#9146FF"></i></div>
+            <span class="link-text">Twitch</span>
           </a>
+          
           <a class="link-box" href="https://www.youtube.com/@greenoxz" target="_blank">
-            <i class="fab fa-youtube" style="color:#FF0000"></i> YouTube
+            <div class="link-icon"><i class="fab fa-youtube" style="color:#FF0000"></i></div>
+            <span class="link-text">YouTube</span>
           </a>
+          
           <a class="link-box" href="https://bsky.app/profile/ppknr.com" target="_blank">
-            <i class="fab fa-bluesky" style="color:#0085FF"></i> Bluesky
+            <div class="link-icon"><i class="fab fa-bluesky" style="color:#0085FF"></i></div>
+            <span class="link-text">Bluesky</span>
           </a>
+          
           <a class="link-box" href="https://store.line.me/stickershop/product/30329079/th" target="_blank">
-            <i class="fab fa-line" style="color:#00C300"></i> LINE Sticker
+            <div class="link-icon"><i class="fab fa-line" style="color:#00C300"></i></div>
+            <span class="link-text">LINE Sticker</span>
           </a>
         </div>
 
@@ -43,71 +192,10 @@
         </a>
       </div>
     </main>
+    
     <div id="footer-include"></div>
   </div>
 
-    <style>
-      .linktree-links {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        margin-top: 24px;
-      }
-      .link-box {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: flex-start;
-        gap: 12px;
-        padding: 16px;
-        margin: 10px 0;
-        background: white;
-        border-radius: 8px;
-        text-decoration: none;
-        color: black;
-        font-weight: 500;
-        box-shadow: 0 1px 5px rgba(0,0,0,0.1);
-        transition: background 0.2s, transform 0.2s;
-        min-width: 210px;
-        font-size: 1.1rem;
-        text-align: left;
-      }
-      .link-box:hover {
-        background: #f0f0f0;
-        transform: scale(1.05);
-      }
-      .theme-dark .link-box {
-        background: #1a1a1a;
-        color: white;
-      }
-      .theme-dark .link-box:hover {
-        background: #2a2a2a;
-      }
-
-      .contact-section {
-        margin-top: 40px;
-        text-align: center;
-      }
-      .contact-section h3 {
-        margin-bottom: 16px;
-        font-size: 1.2rem;
-        font-weight: 500;
-      }
-      .email-link {
-        display: inline-flex;
-        align-items: center;
-        gap: 8px;
-        margin-top: 24px;
-        text-decoration: none;
-        color: inherit;
-        font-size: 0.95rem;
-        opacity: 0.8;
-        transition: opacity 0.2s;
-      }
-      .email-link:hover {
-        opacity: 1;
-      }
-    </style>
   <script>
     fetch('nav.html')
       .then(res => res.text())
