@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <style>
@@ -488,7 +487,6 @@
 </head>
 <body class="theme-dark" id="theme-body">
     <div class="page-container">
-        <!-- Include Navigation -->
         <div id="nav-placeholder"></div>
 
         <div class="game-container" id="clickArea">
@@ -505,7 +503,6 @@
             </div>
         </div>
 
-        <!-- Leaderboard -->
         <div class="leaderboard">
             <div class="leaderboard-header">
                 <h2 class="leaderboard-title">Top 5 Players</h2>
@@ -517,7 +514,6 @@
             <div id="leaderboardEntries"></div>
         </div>
 
-        <!-- Buttons -->
         <div class="button-container">
             <button class="game-button change-name-button" id="changeNameBtn">
                 <i class="fas fa-user"></i>
@@ -529,11 +525,9 @@
             </button>
         </div>
 
-        <!-- Include Footer -->
         <div id="footer-placeholder"></div>
     </div>
 
-    <!-- Name Input Modal -->
     <div class="modal" id="nameModal">
         <div class="modal-content">
             <h2>New High Score!</h2>
@@ -581,8 +575,13 @@
         const totalClicks = document.getElementById('totalClicks');
         const resetButton = document.getElementById('resetButton');
         const popSound = document.getElementById('popSound');
+        
+        // เพิ่มตัวแปรสำหรับคลิกและการหน่วงเวลาส่งข้อมูล
         let count = 0;
         let savedTotalClicks = 0;
+        let clickTimeout = null;
+        let pendingClicks = 0;
+        
         let currentPlayerName = localStorage.getItem('playerName') || '';
         const nameModal = document.getElementById('nameModal');
         const playerNameInput = document.getElementById('playerName');
@@ -703,21 +702,14 @@
             if (e.target === resetButton) return;
             
             count++;
+            pendingClicks++; // สะสมยอดคลิกที่ยังไม่ได้ส่ง
             clickCount.textContent = count;
-            
-            // Update total clicks in Firebase
-            totalClicksRef.transaction((currentTotal) => {
-                return (currentTotal || 0) + 1;
-            });
             
             // Play sound effect
             if (popSound) {
                 popSound.currentTime = 0;
                 popSound.play();
             }
-            
-            // Check if score is higher than current high score or top 5
-            checkHighScore(count);
             
             // Show open mouth and add pop animation
             catImageOpen.classList.add('active');
@@ -732,6 +724,22 @@
             setTimeout(() => {
                 catImageOpen.classList.remove('active');
             }, 50);
+
+            // หน่วงเวลาส่งข้อมูลไป Firebase (Debounce)
+            clearTimeout(clickTimeout);
+            clickTimeout = setTimeout(() => {
+                // อัปเดตยอด Total Clicks รวมทั้งหมดทีเดียว
+                if (pendingClicks > 0) {
+                    const clicksToSave = pendingClicks;
+                    pendingClicks = 0;
+                    totalClicksRef.transaction((currentTotal) => {
+                        return (currentTotal || 0) + clicksToSave;
+                    });
+                }
+                
+                // ตรวจสอบและอัปเดต High Score เฉพาะตอนที่ผู้เล่นหยุดคลิกแล้ว
+                checkHighScore(count);
+            }, 500); // รอ 0.5 วินาทีหลังจากคลิกครั้งสุดท้ายถึงจะบันทึก
         }
 
         // Function to check if score is high enough for leaderboard
@@ -812,4 +820,4 @@
         });
     </script>
 </body>
-</html> 
+</html>
