@@ -195,11 +195,6 @@
             z-index: 2;
         }
 
-        /* Ensure modal stays on top */
-        .modal {
-            z-index: 9999;
-        }
-
         /* Modal styles */
         .modal {
             display: none;
@@ -208,68 +203,113 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
             justify-content: center;
             align-items: center;
+            z-index: 9999;
         }
 
         .modal-content {
-            background-color: #2c2c2c;
-            padding: 30px;
-            border-radius: 12px;
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 40px 30px;
+            border-radius: 16px;
             text-align: center;
             max-width: 400px;
             width: 90%;
+            color: #2c3e50;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            transform: scale(0.9);
+            animation: modalPopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes modalPopIn {
+            to { transform: scale(1); }
+        }
+
+        body.theme-dark .modal-content {
+            background-color: rgba(44, 62, 80, 0.95);
             color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
         }
 
         .modal h2 {
-            margin: 0 0 15px 0;
-            font-size: 24px;
+            margin: 0 0 10px 0;
+            font-size: 26px;
+            font-weight: 600;
         }
 
         .modal p {
-            margin: 0 0 20px 0;
-            color: #999;
+            margin: 0 0 25px 0;
+            color: #666;
+            font-size: 15px;
+        }
+
+        body.theme-dark .modal p {
+            color: #cbd5e1;
         }
 
         .name-input {
             width: 100%;
-            padding: 12px;
-            margin: 10px 0 20px 0;
-            border: 2px solid #444;
-            border-radius: 8px;
-            background-color: #1c1c1c;
-            color: white;
+            padding: 14px;
+            margin: 0 0 20px 0;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            background-color: #f8f9fa;
+            color: #2c3e50;
             font-size: 16px;
             outline: none;
-            transition: border-color 0.3s;
+            transition: all 0.3s;
+            box-sizing: border-box;
+            text-align: center;
         }
 
         .name-input:focus {
             border-color: #00C2FF;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(0, 194, 255, 0.2);
+        }
+
+        body.theme-dark .name-input {
+            border-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        body.theme-dark .name-input:focus {
+            border-color: #00C2FF;
+            background-color: rgba(0, 0, 0, 0.3);
         }
 
         .submit-button {
-            padding: 12px 30px;
+            width: 100%;
+            padding: 14px;
             background-color: #00C2FF;
             color: white;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 16px;
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: all 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
         }
 
         .submit-button:hover {
             background-color: #0ab4eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 194, 255, 0.3);
         }
 
         .submit-button:active {
-            transform: translateY(1px);
+            transform: translateY(0);
         }
 
         /* Leaderboard styles */
@@ -530,10 +570,13 @@
 
     <div class="modal" id="nameModal">
         <div class="modal-content">
-            <h2>New High Score!</h2>
-            <p>Enter your name to join the leaderboard</p>
-            <input type="text" id="playerName" class="name-input" maxlength="20" placeholder="Your name">
-            <button class="submit-button" onclick="submitScore()">Submit</button>
+            <h2>Welcome!</h2>
+            <p>กรอกชื่อเพื่อร่วมสนุกบน Leaderboard</p>
+            <input type="text" id="playerName" class="name-input" maxlength="20" placeholder="พิมพ์ชื่อของคุณ...">
+            <button class="submit-button" onclick="submitScore()">
+                <i class="fas fa-play"></i>
+                เข้าสู่เกม
+            </button>
         </div>
     </div>
 
@@ -555,7 +598,6 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         const totalClicksRef = database.ref('totalClicks');
-        const highScoreRef = database.ref('highScore');
         const leaderboardRef = database.ref('leaderboard');
 
         // Load navigation and footer
@@ -576,16 +618,31 @@
         const resetButton = document.getElementById('resetButton');
         const popSound = document.getElementById('popSound');
         
-        // เพิ่มตัวแปรสำหรับคลิกและการหน่วงเวลาส่งข้อมูล
         let count = 0;
         let savedTotalClicks = 0;
         let clickTimeout = null;
         let pendingClicks = 0;
         
         let currentPlayerName = localStorage.getItem('playerName') || '';
+        let playerNodeKey = localStorage.getItem('playerNodeKey') || null; 
+        
         const nameModal = document.getElementById('nameModal');
         const playerNameInput = document.getElementById('playerName');
         const leaderboardEntries = document.getElementById('leaderboardEntries');
+
+        // โหลดคะแนนเดิมของผู้เล่นเมื่อเข้ามาที่หน้าเว็บ
+        if (currentPlayerName) {
+            leaderboardRef.orderByChild('name').equalTo(currentPlayerName).once('value', (snapshot) => {
+                if (snapshot.exists()) {
+                    snapshot.forEach((childSnapshot) => {
+                        count = childSnapshot.val().score || 0;
+                        clickCount.textContent = count;
+                        playerNodeKey = childSnapshot.key;
+                        localStorage.setItem('playerNodeKey', playerNodeKey);
+                    });
+                }
+            });
+        }
 
         // Real-time updates for total clicks
         totalClicksRef.on('value', (snapshot) => {
@@ -596,52 +653,26 @@
         // Real-time updates for leaderboard
         leaderboardRef.on('value', (snapshot) => {
             const entries = [];
-            const playerBestScores = new Map();
-
-            // First pass: Find best score for each player
+            
             snapshot.forEach((child) => {
-                const playerName = child.val().name;
-                const score = child.val().score;
-                const timestamp = child.val().timestamp;
-
-                if (!playerBestScores.has(playerName) || 
-                    score > playerBestScores.get(playerName).score ||
-                    (score === playerBestScores.get(playerName).score && 
-                     timestamp > playerBestScores.get(playerName).timestamp)) {
-                    playerBestScores.set(playerName, {
-                        name: playerName,
-                        score: score,
-                        timestamp: timestamp
-                    });
-                }
-            });
-
-            // Convert Map to array
-            playerBestScores.forEach(entry => {
-                entries.push(entry);
-            });
-
-            // Sort by score (highest first) and timestamp (newest first)
-            entries.sort((a, b) => {
-                if (b.score !== a.score) {
-                    return b.score - a.score;
-                }
-                return b.timestamp - a.timestamp;
-            });
-
-            // Fill empty spots with placeholder
-            while (entries.length < 5) {
                 entries.push({
-                    name: "---",
-                    score: 0,
-                    timestamp: 0
+                    name: child.val().name,
+                    score: child.val().score,
+                    timestamp: child.val().timestamp
                 });
+            });
+
+            entries.sort((a, b) => {
+                if (b.score !== a.score) return b.score - a.score;
+                return b.timestamp - a.timestamp; 
+            });
+
+            while (entries.length < 5) {
+                entries.push({ name: "---", score: 0, timestamp: 0 });
             }
 
-            // Take top 5
             const top5 = entries.slice(0, 5);
 
-            // Update display
             leaderboardEntries.innerHTML = top5.map((entry, index) => `
                 <div class="leaderboard-entry ${entry.name === '---' ? 'empty-spot' : ''}">
                     <span class="rank">#${index + 1}</span>
@@ -661,36 +692,40 @@
             playerNameInput.value = '';
         }
 
-        function submitScore(existingName = null) {
-            const name = existingName || playerNameInput.value.trim();
+        function submitScore() {
+            const name = playerNameInput.value.trim();
             if (name) {
                 currentPlayerName = name;
                 localStorage.setItem('playerName', name);
 
-                // Add new score to leaderboard immediately
-                leaderboardRef.push({
-                    name: name,
-                    score: count,
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
-                }).then(() => {
-                    // After adding new score, clean up old scores for this player
-                    leaderboardRef.orderByChild('name').equalTo(name).once('value', (snapshot) => {
-                        const scores = [];
+                leaderboardRef.orderByChild('name').equalTo(name).once('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        // มีอยู่แล้ว: นำยอดที่กดสะสมไว้ ไปบวกเพิ่มกับของเดิมในฐานข้อมูล
                         snapshot.forEach((childSnapshot) => {
-                            scores.push({
-                                key: childSnapshot.key,
-                                score: childSnapshot.val().score
+                            playerNodeKey = childSnapshot.key;
+                            localStorage.setItem('playerNodeKey', playerNodeKey);
+                            
+                            childSnapshot.ref.update({
+                                score: firebase.database.ServerValue.increment(count),
+                                timestamp: firebase.database.ServerValue.TIMESTAMP
+                            }).then(() => {
+                                childSnapshot.ref.once('value').then(snap => {
+                                    count = snap.val().score;
+                                    clickCount.textContent = count;
+                                });
                             });
                         });
-
-                        // Sort scores by value
-                        scores.sort((a, b) => b.score - a.score);
-
-                        // Keep only the highest score, remove others
-                        scores.slice(1).forEach(score => {
-                            leaderboardRef.child(score.key).remove();
+                    } else {
+                        // ผู้เล่นใหม่: สร้างข้อมูลใหม่
+                        const newRef = leaderboardRef.push();
+                        playerNodeKey = newRef.key;
+                        localStorage.setItem('playerNodeKey', playerNodeKey);
+                        newRef.set({
+                            name: name,
+                            score: count,
+                            timestamp: firebase.database.ServerValue.TIMESTAMP
                         });
-                    });
+                    }
                 });
                 
                 hideNameModal();
@@ -698,88 +733,73 @@
         }
 
         function handleClick(e) {
-            // Don't count clicks on the reset button
             if (e.target === resetButton) return;
             
             count++;
-            pendingClicks++; // สะสมยอดคลิกที่ยังไม่ได้ส่ง
+            pendingClicks++;
             clickCount.textContent = count;
             
-            // Play sound effect
             if (popSound) {
                 popSound.currentTime = 0;
                 popSound.play();
             }
             
-            // Show open mouth and add pop animation
             catImageOpen.classList.add('active');
             catImage.classList.add('pop-animation');
             
-            // Remove animation class after animation ends
-            setTimeout(() => {
-                catImage.classList.remove('pop-animation');
-            }, 80);
-            
-            // Hide open mouth after 50ms
-            setTimeout(() => {
-                catImageOpen.classList.remove('active');
-            }, 50);
+            setTimeout(() => { catImage.classList.remove('pop-animation'); }, 80);
+            setTimeout(() => { catImageOpen.classList.remove('active'); }, 50);
 
-            // หน่วงเวลาส่งข้อมูลไป Firebase (Debounce)
             clearTimeout(clickTimeout);
             clickTimeout = setTimeout(() => {
-                // อัปเดตยอด Total Clicks รวมทั้งหมดทีเดียว
                 if (pendingClicks > 0) {
                     const clicksToSave = pendingClicks;
                     pendingClicks = 0;
+                    
                     totalClicksRef.transaction((currentTotal) => {
                         return (currentTotal || 0) + clicksToSave;
                     });
+                    
+                    if (currentPlayerName) {
+                        if (playerNodeKey) {
+                            leaderboardRef.child(playerNodeKey).update({
+                                score: firebase.database.ServerValue.increment(clicksToSave),
+                                timestamp: firebase.database.ServerValue.TIMESTAMP
+                            });
+                        } else {
+                            leaderboardRef.orderByChild('name').equalTo(currentPlayerName).once('value', (snapshot) => {
+                                if (snapshot.exists()) {
+                                    snapshot.forEach((child) => {
+                                        playerNodeKey = child.key;
+                                        localStorage.setItem('playerNodeKey', playerNodeKey);
+                                        child.ref.update({
+                                            score: firebase.database.ServerValue.increment(clicksToSave),
+                                            timestamp: firebase.database.ServerValue.TIMESTAMP
+                                        });
+                                    });
+                                }
+                            });
+                        }
+                    } else {
+                        checkHighScore(count);
+                    }
                 }
-                
-                // ตรวจสอบและอัปเดต High Score เฉพาะตอนที่ผู้เล่นหยุดคลิกแล้ว
-                checkHighScore(count);
-            }, 500); // รอ 0.5 วินาทีหลังจากคลิกครั้งสุดท้ายถึงจะบันทึก
+            }, 500);
         }
 
-        // Function to check if score is high enough for leaderboard
         function checkHighScore(currentScore) {
+            if (currentPlayerName) return;
+
             leaderboardRef.once('value').then((snapshot) => {
                 const entries = [];
-                
-                // Get all scores and convert to array
-                snapshot.forEach((child) => {
-                    entries.push({
-                        name: child.val().name,
-                        score: child.val().score,
-                        timestamp: child.val().timestamp
-                    });
-                });
+                snapshot.forEach((child) => { entries.push(child.val().score); });
+                entries.sort((a, b) => b - a);
+                const top5 = entries.slice(0, 5);
 
-                // Sort by score (highest first)
-                entries.sort((a, b) => b.score - a.score);
-
-                // Get unique entries (keep highest score per player)
-                const uniqueEntries = entries.filter((entry, index, self) =>
-                    index === self.findIndex((e) => e.name === entry.name)
-                );
-
-                // Take top 5
-                const top5 = uniqueEntries.slice(0, 5);
-
-                // Determine if score should be recorded
-                const shouldRecordScore = 
-                    top5.length < 5 || // Less than 5 entries
-                    currentScore > (top5[top5.length - 1]?.score || 0) || // Better than lowest score
-                    (currentPlayerName && // Better than player's best score
-                     currentScore > (entries.find(e => e.name === currentPlayerName)?.score || 0));
-
-                if (shouldRecordScore) {
-                    if (currentPlayerName) {
-                        submitScore(currentPlayerName);
-                    } else {
-                        showNameModal();
-                    }
+                if (top5.length < 5 || currentScore > (top5[top5.length - 1] || 0)) {
+                    document.getElementById('nameModal').querySelector('h2').textContent = "New High Score!";
+                    document.getElementById('nameModal').querySelector('p').textContent = "กรอกชื่อเพื่อร่วมสนุกบน Leaderboard";
+                    showNameModal();
                 }
             });
         }
@@ -788,34 +808,36 @@
             count = 0;
             clickCount.textContent = '0';
             
-            // If user has a name, remove their previous score
-            if (currentPlayerName) {
-                leaderboardRef.orderByChild('name').equalTo(currentPlayerName).once('value', (snapshot) => {
-                    snapshot.forEach((childSnapshot) => {
-                        childSnapshot.ref.remove();
-                    });
+            if (currentPlayerName && playerNodeKey) {
+                leaderboardRef.child(playerNodeKey).update({
+                    score: 0,
+                    timestamp: firebase.database.ServerValue.TIMESTAMP
                 });
             }
         }
 
-        // Handle Enter key in name input
         playerNameInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                submitScore();
-            }
+            if (e.key === 'Enter') { submitScore(); }
         });
 
-        // Wait for elements to be loaded
         $(document).ready(function() {
             clickArea.addEventListener('click', handleClick);
             resetButton.addEventListener('click', resetScore);
             
-            // Add change name button functionality
             const changeNameBtn = document.getElementById('changeNameBtn');
             changeNameBtn.onclick = function() {
+                // เคลียร์ข้อมูลเดิมในเครื่องก่อน
                 currentPlayerName = '';
+                playerNodeKey = null;
                 localStorage.removeItem('playerName');
-                alert('Name reset! You will be asked for your name next time you get a high score.');
+                localStorage.removeItem('playerNodeKey');
+                count = 0;
+                clickCount.textContent = '0';
+                
+                // เรียกหน้าต่างเด้งขึ้นมาให้กรอกชื่อ (เพื่อดึงข้อมูลเดิมหรือเริ่มใหม่)
+                document.getElementById('nameModal').querySelector('h2').textContent = "Welcome back!";
+                document.getElementById('nameModal').querySelector('p').textContent = "กรอกชื่อเดิมของคุณเพื่อเล่นต่อ หรือชื่อใหม่เพื่อเริ่มใหม่";
+                showNameModal();
             };
         });
     </script>
