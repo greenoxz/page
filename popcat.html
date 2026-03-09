@@ -10,10 +10,9 @@
     <link rel="stylesheet" href="theme.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script> <style>
+    <style>
         /* Game-specific styles */
         .game-container {
             display: flex;
@@ -24,6 +23,8 @@
             padding: 20px;
             user-select: none;
             -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
             position: relative;
             min-height: 100vh;
             width: 100%;
@@ -72,9 +73,21 @@
             z-index: 2;
         }
 
-        .stat-box { text-align: center; }
-        .stat-label { font-size: 1rem; color: #666; margin-bottom: 5px; }
-        .stat-value { font-size: 2rem; font-weight: bold; color: #2c3e50; }
+        .stat-box {
+            text-align: center;
+        }
+
+        .stat-label {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 5px;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #2c3e50;
+        }
 
         .cat-container {
             position: relative;
@@ -82,7 +95,10 @@
             margin-bottom: 20px;
             transform-origin: center;
         }
-        .cat-container:active { transform: scale(0.85); }
+
+        .cat-container:active {
+            transform: scale(0.85);
+        }
 
         .cat-image {
             width: 300px;
@@ -99,21 +115,48 @@
             transition: opacity 0.05s;
             pointer-events: none;
         }
-        .mouth-open.active { opacity: 1; }
+
+        .mouth-open.active {
+            opacity: 1;
+        }
 
         @keyframes pop {
             0% { transform: scale(1); }
             50% { transform: scale(0.85); }
             100% { transform: scale(1); }
         }
-        .pop-animation { animation: pop 0.08s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .sound-effect { display: none; }
 
-        body.theme-dark .stat-label { color: #ccc; }
-        body.theme-dark .stat-value { color: #fff; }
-        body.theme-dark .game-title { color: #fff; }
+        .pop-animation {
+            animation: pop 0.08s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
 
-        #nav-placeholder, #footer-placeholder, .leaderboard { position: relative; z-index: 2; }
+        .sound-effect {
+            display: none;
+        }
+
+        /* Dark theme overrides */
+        body.theme-dark .stat-label {
+            color: #ccc;
+        }
+
+        body.theme-dark .stat-value {
+            color: #fff;
+        }
+
+        body.theme-dark .game-title {
+            color: #fff;
+        }
+
+        /* Make sure navigation and footer are above click-area */
+        #nav-placeholder, #footer-placeholder {
+            position: relative;
+            z-index: 2;
+        }
+
+        .leaderboard {
+            position: relative;
+            z-index: 2;
+        }
 
         /* Modal styles */
         .modal {
@@ -139,15 +182,37 @@
             width: 90%;
             color: #2c3e50;
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
             transform: scale(0.9);
-            animation: modalPopIn 0.3s forwards;
+            animation: modalPopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
         }
 
-        @keyframes modalPopIn { to { transform: scale(1); } }
-        body.theme-dark .modal-content { background-color: rgba(44, 62, 80, 0.95); color: white; }
-        .modal h2 { margin: 0 0 10px 0; font-size: 26px; }
-        .modal p { margin: 0 0 25px 0; color: #666; font-size: 14px; }
-        body.theme-dark .modal p { color: #cbd5e1; }
+        @keyframes modalPopIn {
+            to { transform: scale(1); }
+        }
+
+        body.theme-dark .modal-content {
+            background-color: rgba(44, 62, 80, 0.95);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .modal h2 {
+            margin: 0 0 10px 0;
+            font-size: 26px;
+            font-weight: 600;
+        }
+
+        .modal p {
+            margin: 0 0 25px 0;
+            color: #666;
+            font-size: 15px;
+        }
+
+        body.theme-dark .modal p {
+            color: #cbd5e1;
+        }
 
         .name-input {
             width: 100%;
@@ -159,11 +224,27 @@
             color: #2c3e50;
             font-size: 16px;
             outline: none;
-            text-align: center;
+            transition: all 0.3s;
             box-sizing: border-box;
+            text-align: center;
         }
-        .name-input:focus { border-color: #00C2FF; }
-        body.theme-dark .name-input { background-color: rgba(0, 0, 0, 0.2); color: white; border-color: rgba(255,255,255,0.1); }
+
+        .name-input:focus {
+            border-color: #00C2FF;
+            background-color: #fff;
+            box-shadow: 0 0 0 3px rgba(0, 194, 255, 0.2);
+        }
+
+        body.theme-dark .name-input {
+            border-color: rgba(255, 255, 255, 0.1);
+            background-color: rgba(0, 0, 0, 0.2);
+            color: white;
+        }
+
+        body.theme-dark .name-input:focus {
+            border-color: #00C2FF;
+            background-color: rgba(0, 0, 0, 0.3);
+        }
 
         .submit-button {
             width: 100%;
@@ -174,16 +255,29 @@
             border-radius: 10px;
             cursor: pointer;
             font-size: 16px;
-            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+            transition: all 0.3s;
             display: flex;
             justify-content: center;
             align-items: center;
             gap: 8px;
         }
 
+        .submit-button:hover {
+            background-color: #0ab4eb;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 194, 255, 0.3);
+        }
+
+        .submit-button:active {
+            transform: translateY(0);
+        }
+
         /* Leaderboard styles */
         .leaderboard {
-            margin: 20px auto 40px auto;
+            margin: 40px auto 40px auto;
             padding: 20px;
             border-radius: 12px;
             max-width: 600px;
@@ -191,14 +285,57 @@
             background-color: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(0, 0, 0, 0.1);
         }
-        .leaderboard-header { text-align: center; border-bottom: 2px solid rgba(0, 0, 0, 0.1); padding-bottom: 15px; margin-bottom: 20px; }
-        .leaderboard-title { font-size: 24px; font-weight: bold; color: #2c3e50; }
-        .total-clicks { font-size: 18px; color: #666; display: flex; justify-content: center; gap: 8px; }
-        .total-clicks .count { font-weight: bold; color: #ff4d1c; }
-        body.theme-dark .leaderboard { background-color: rgba(52, 73, 94, 0.95); }
-        body.theme-dark .leaderboard-title { color: white; }
-        body.theme-dark .total-clicks { color: #bdc3c7; }
+
+        .leaderboard-header {
+            text-align: center;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .leaderboard-title {
+            color: #2c3e50;
+            font-size: 24px;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .total-clicks {
+            font-size: 18px;
+            color: #666;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .total-clicks i {
+            color: #ff4d1c;
+        }
+
+        .total-clicks .count {
+            font-weight: bold;
+            color: #ff4d1c;
+        }
+
+        body.theme-dark .leaderboard {
+            background-color: rgba(52, 73, 94, 0.95);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.theme-dark .leaderboard-header {
+            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        body.theme-dark .leaderboard-title {
+            color: white;
+        }
+
+        body.theme-dark .total-clicks {
+            color: #bdc3c7;
+        }
 
         .leaderboard-entry {
             display: flex;
@@ -208,44 +345,93 @@
             margin: 8px 0;
             background-color: rgba(255, 255, 255, 0.95);
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
-        }
-        body.theme-dark .leaderboard-entry { background-color: rgba(44, 62, 80, 0.95); color: white; }
-        .rank { font-weight: bold; margin-right: 20px; color: #ff4d1c; }
-        .player-name { flex-grow: 1; font-weight: 500; }
-        .score { font-weight: bold; color: #ff4d1c; }
-
-        /* Auth Buttons */
-        .auth-buttons {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-            position: relative;
-            z-index: 10;
+            transition: transform 0.2s;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
         }
 
+        .leaderboard-entry:hover {
+            transform: translateX(5px);
+        }
+
+        body.theme-dark .leaderboard-entry {
+            background-color: rgba(44, 62, 80, 0.95);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .rank {
+            font-weight: bold;
+            margin-right: 20px;
+            font-size: 18px;
+            color: #ff4d1c;
+        }
+
+        .player-name {
+            flex-grow: 1;
+            font-size: 16px;
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .score {
+            font-weight: bold;
+            font-size: 18px;
+            color: #ff4d1c;
+        }
+
+        body.theme-dark .player-name {
+            color: #ecf0f1;
+        }
+
+        body.theme-dark .score {
+            color: #ff4d1c;
+        }
+
+        .empty-spot {
+            opacity: 0.5;
+            background-color: rgba(0, 0, 0, 0.05) !important;
+        }
+
+        body.theme-dark .empty-spot {
+            background-color: rgba(255, 255, 255, 0.05) !important;
+        }
+
+        /* Button styles */
         .game-button {
             padding: 10px 20px;
             font-size: 14px;
             border: none;
             border-radius: 8px;
             cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            text-transform: uppercase;
+            letter-spacing: 1px;
             font-weight: 600;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
             color: white;
-            transition: all 0.2s;
+            white-space: nowrap;
+            background-color: #00C2FF;
+            position: relative;
+            z-index: 10;
+            margin-bottom: 20px;
         }
 
-        .btn-google { background-color: #ea4335; }
-        .btn-google:hover { background-color: #c5221f; }
-        
-        .btn-logout { background-color: #7f8c8d; display: none; }
-        .btn-logout:hover { background-color: #95a5a6; }
+        .game-button i {
+            font-size: 16px;
+        }
 
-        .btn-name { background-color: #00C2FF; display: none; }
-        .btn-name:hover { background-color: #0ab4eb; }
+        .game-button:hover {
+            background-color: #0ab4eb;
+            transform: translateY(-2px);
+        }
+
+        .game-button:active {
+            transform: translateY(1px);
+        }
 
         #nav-placeholder, #footer-placeholder, .leaderboard { cursor: default; }
         .game-button, .desktop-menu a, .mobile-menu a, .submit-button { cursor: pointer; }
@@ -258,17 +444,10 @@
         <div class="game-container" id="clickArea">
             <h1 class="game-title">Pisit Pop</h1>
             
-            <div class="auth-buttons">
-                <button class="game-button btn-google" id="loginBtn">
-                    <i class="fab fa-google"></i> Login to Play
-                </button>
-                <button class="game-button btn-name" id="changeNameBtn">
-                    <i class="fas fa-user"></i> <span id="playerNameDisplay">ตั้งชื่อ</span>
-                </button>
-                <button class="game-button btn-logout" id="logoutBtn">
-                    <i class="fas fa-sign-out-alt"></i> Logout
-                </button>
-            </div>
+            <button class="game-button change-name-button" id="changeNameBtn">
+                <i class="fas fa-user"></i>
+                <span id="playerNameDisplay">ใส่ชื่อ / เปลี่ยนชื่อ</span>
+            </button>
 
             <div class="stats-container">
                 <div class="stat-box">
@@ -298,11 +477,12 @@
 
     <div class="modal" id="nameModal">
         <div class="modal-content">
-            <h2>ตั้งชื่อในเกม</h2>
-            <p>กรอกชื่อใหม่ หรือกรอก <b>ชื่อเดิม</b> ที่เคยเล่นไว้เพื่อดึงคะแนนเก่ามาผูกกับไอดีนี้</p>
+            <h2>Welcome!</h2>
+            <p>กรอกชื่อเพื่อร่วมสนุกบน Leaderboard</p>
             <input type="text" id="playerName" class="name-input" maxlength="20" placeholder="พิมพ์ชื่อของคุณ...">
             <button class="submit-button" onclick="submitScore()">
-                <i class="fas fa-save"></i> บันทึกชื่อ
+                <i class="fas fa-play"></i>
+                เข้าสู่เกม
             </button>
         </div>
     </div>
@@ -310,7 +490,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/main.js"></script>
     <script>
-        // Firebase Config
+        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAXfzmalfP4RZjMSjDbl5LOXBT7m9vzDzU",
             authDomain: "ppknr-popcat.firebaseapp.com",
@@ -321,15 +501,22 @@
             appId: "1:90126143526:web:96316212d303ac08df16e7"
         };
 
+        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
-        const auth = firebase.auth();
-        const provider = new firebase.auth.GoogleAuthProvider();
-        
         const totalClicksRef = database.ref('totalClicks');
         const leaderboardRef = database.ref('leaderboard');
 
-        // Elements
+        // Load navigation and footer
+        $(function(){
+            $("#nav-placeholder").load("nav.html", function() {
+                $('.desktop-menu a[href="popcat.html"]').addClass('active');
+                $('.mobile-menu a[href="popcat.html"]').addClass('active');
+            });
+            $("#footer-placeholder").load("footer.html");
+        });
+
+        // Game functionality
         const clickArea = document.getElementById('clickArea');
         const catImage = document.getElementById('catImage');
         const catImageOpen = document.getElementById('catImageOpen');
@@ -337,175 +524,228 @@
         const totalClicks = document.getElementById('totalClicks');
         const popSound = document.getElementById('popSound');
         const playerNameDisplay = document.getElementById('playerNameDisplay');
-        
-        const loginBtn = document.getElementById('loginBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
         const changeNameBtn = document.getElementById('changeNameBtn');
+        
+        let count = 0;
+        let savedTotalClicks = 0;
+        let clickTimeout = null;
+        let pendingClicks = 0;
+        
+        let currentPlayerName = localStorage.getItem('playerName') || '';
+        let playerNodeKey = localStorage.getItem('playerNodeKey') || null; 
+        
         const nameModal = document.getElementById('nameModal');
         const playerNameInput = document.getElementById('playerName');
-        
-        // Game State
-        let count = 0;
-        let pendingClicks = 0;
-        let clickTimeout = null;
-        let currentUserUid = null;
-        let currentPlayerName = '';
-        let playerNodeKey = null;
+        const leaderboardEntries = document.getElementById('leaderboardEntries');
 
-        $(function(){
-            $("#nav-placeholder").load("nav.html", () => { $('.desktop-menu a[href="popcat.html"], .mobile-menu a[href="popcat.html"]').addClass('active'); });
-            $("#footer-placeholder").load("footer.html");
-        });
-
-        // 1. ตรวจสอบสถานะ Login
-        auth.onAuthStateChanged((user) => {
-            if (user) {
-                currentUserUid = user.uid;
-                loginBtn.style.display = 'none';
-                logoutBtn.style.display = 'inline-flex';
-                changeNameBtn.style.display = 'inline-flex';
-                
-                // ค้นหาว่า UID นี้มีชื่อในบอร์ดหรือยัง
-                leaderboardRef.orderByChild('uid').equalTo(user.uid).once('value', snapshot => {
-                    if (snapshot.exists()) {
-                        snapshot.forEach(child => {
-                            currentPlayerName = child.val().name;
-                            count = child.val().score || 0;
-                            playerNodeKey = child.key;
-                            updateUI();
-                        });
-                    } else {
-                        // เพิ่งเคย Login ให้เด้งไปตั้งชื่อ หรือดึงชื่อเก่า
-                        showNameModal();
-                    }
-                });
+        // ฟังก์ชันอัปเดตชื่อผู้เล่นบนปุ่ม
+        function updateDisplay() {
+            if (currentPlayerName) {
+                playerNameDisplay.textContent = 'ผู้เล่น: ' + currentPlayerName;
             } else {
-                // Logout แล้ว
-                currentUserUid = null;
-                currentPlayerName = '';
-                playerNodeKey = null;
-                count = 0;
-                loginBtn.style.display = 'inline-flex';
-                logoutBtn.style.display = 'none';
-                changeNameBtn.style.display = 'none';
-                updateUI();
+                playerNameDisplay.textContent = 'ใส่ชื่อ / เปลี่ยนชื่อ';
             }
-        });
-
-        // ฟังก์ชันจัดการ UI
-        function updateUI() {
-            clickCount.textContent = count;
-            playerNameDisplay.textContent = currentPlayerName ? 'ชื่อ: ' + currentPlayerName : 'ตั้งชื่อ';
         }
+        updateDisplay(); // เรียกใช้ครั้งแรก
 
-        // 2. ระบบดึงชื่อ / ผูกชื่อ
-        function submitScore() {
-            const name = playerNameInput.value.trim();
-            if (!name) return;
-            if (!currentUserUid) {
-                alert("กรุณา Login ก่อนตั้งชื่อครับ");
-                return;
-            }
-
-            // ค้นหาว่าชื่อนี้มีในระบบไหม
-            leaderboardRef.orderByChild('name').equalTo(name).once('value', snapshot => {
+        // โหลดคะแนนเดิมของผู้เล่นเมื่อเข้ามาที่หน้าเว็บ
+        if (currentPlayerName) {
+            leaderboardRef.orderByChild('name').equalTo(currentPlayerName).once('value', (snapshot) => {
                 if (snapshot.exists()) {
-                    let claimed = false;
-                    snapshot.forEach(child => {
-                        const data = child.val();
-                        // ถ้าชื่อนี้ยังไม่มีเจ้าของ(uid) หรือเป็นของเราอยู่แล้ว -> ผูกชื่อได้เลย
-                        if (!data.uid || data.uid === currentUserUid) {
-                            playerNodeKey = child.key;
-                            count = data.score;
-                            currentPlayerName = data.name;
-                            child.ref.update({ uid: currentUserUid }); // ล็อค UID
-                            claimed = true;
-                        }
-                    });
-
-                    if (!claimed) {
-                        alert("ชื่อนี้ถูกคนอื่นใช้งานและผูกไอดีไปแล้ว กรุณาตั้งชื่ออื่นครับ!");
-                        return;
-                    }
-                } else {
-                    // ผู้เล่นใหม่ สร้างข้อมูลใหม่เลย
-                    count = 0;
-                    currentPlayerName = name;
-                    const newRef = leaderboardRef.push();
-                    playerNodeKey = newRef.key;
-                    newRef.set({
-                        name: name,
-                        score: count,
-                        timestamp: firebase.database.ServerValue.TIMESTAMP,
-                        uid: currentUserUid
+                    snapshot.forEach((childSnapshot) => {
+                        count = childSnapshot.val().score || 0;
+                        clickCount.textContent = count;
+                        playerNodeKey = childSnapshot.key;
+                        localStorage.setItem('playerNodeKey', playerNodeKey);
                     });
                 }
-                updateUI();
-                hideNameModal();
             });
         }
 
-        // ระบบปุ่ม Auth
-        loginBtn.onclick = (e) => { e.stopPropagation(); auth.signInWithPopup(provider); };
-        logoutBtn.onclick = (e) => { e.stopPropagation(); auth.signOut(); };
-        changeNameBtn.onclick = (e) => { e.stopPropagation(); playerNameInput.value = currentPlayerName; showNameModal(); };
-        
-        function showNameModal() { nameModal.style.display = 'flex'; playerNameInput.focus(); }
-        function hideNameModal() { nameModal.style.display = 'none'; }
-        playerNameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitScore(); });
+        // Real-time updates for total clicks
+        totalClicksRef.on('value', (snapshot) => {
+            savedTotalClicks = snapshot.val() || 0;
+            totalClicks.textContent = savedTotalClicks;
+        });
 
-        // Leaderboard Realtime & Total
-        totalClicksRef.on('value', snap => { document.getElementById('totalClicks').textContent = snap.val() || 0; });
-        leaderboardRef.on('value', snap => {
+        // Real-time updates for leaderboard
+        leaderboardRef.on('value', (snapshot) => {
             const entries = [];
-            snap.forEach(child => { entries.push(child.val()); });
-            entries.sort((a, b) => b.score !== a.score ? b.score - a.score : b.timestamp - a.timestamp);
             
-            while (entries.length < 5) entries.push({ name: "---", score: 0 });
-            
-            document.getElementById('leaderboardEntries').innerHTML = entries.slice(0, 5).map((e, i) => `
-                <div class="leaderboard-entry ${e.name === '---' ? 'opacity-50' : ''}">
-                    <span class="rank">#${i + 1}</span>
-                    <span class="player-name">${e.name}</span>
-                    <span class="score">${e.score || '---'}</span>
+            snapshot.forEach((child) => {
+                entries.push({
+                    name: child.val().name,
+                    score: child.val().score,
+                    timestamp: child.val().timestamp
+                });
+            });
+
+            entries.sort((a, b) => {
+                if (b.score !== a.score) return b.score - a.score;
+                return b.timestamp - a.timestamp; 
+            });
+
+            while (entries.length < 5) {
+                entries.push({ name: "---", score: 0, timestamp: 0 });
+            }
+
+            const top5 = entries.slice(0, 5);
+
+            leaderboardEntries.innerHTML = top5.map((entry, index) => `
+                <div class="leaderboard-entry ${entry.name === '---' ? 'empty-spot' : ''}">
+                    <span class="rank">#${index + 1}</span>
+                    <span class="player-name">${entry.name}</span>
+                    <span class="score">${entry.score || '---'}</span>
                 </div>
             `).join('');
         });
 
-        // Game Click Logic (กัน Auto Click & ซ่อนข้อมูลถ้าไม่ Login)
-        function handleClick(e) {
-            if (e.target.closest('.auth-buttons')) return;
-            if (!currentUserUid || !currentPlayerName) {
-                alert("กรุณา Login และตั้งชื่อก่อนเริ่มเล่นครับ!");
-                return;
-            }
+        function showNameModal() {
+            nameModal.style.display = 'flex';
+            playerNameInput.focus();
+        }
 
+        function hideNameModal() {
+            nameModal.style.display = 'none';
+            playerNameInput.value = '';
+        }
+
+        function submitScore() {
+            const name = playerNameInput.value.trim();
+            if (name) {
+                currentPlayerName = name;
+                localStorage.setItem('playerName', name);
+                updateDisplay(); // อัปเดตชื่อบนปุ่มทันที
+
+                leaderboardRef.orderByChild('name').equalTo(name).once('value', (snapshot) => {
+                    if (snapshot.exists()) {
+                        // มีอยู่แล้ว: นำยอดที่กดสะสมไว้ ไปบวกเพิ่มกับของเดิม
+                        snapshot.forEach((childSnapshot) => {
+                            playerNodeKey = childSnapshot.key;
+                            localStorage.setItem('playerNodeKey', playerNodeKey);
+                            
+                            childSnapshot.ref.update({
+                                score: firebase.database.ServerValue.increment(count),
+                                timestamp: firebase.database.ServerValue.TIMESTAMP
+                            }).then(() => {
+                                childSnapshot.ref.once('value').then(snap => {
+                                    count = snap.val().score;
+                                    clickCount.textContent = count;
+                                });
+                            });
+                        });
+                    } else {
+                        // ผู้เล่นใหม่: สร้างข้อมูลใหม่
+                        const newRef = leaderboardRef.push();
+                        playerNodeKey = newRef.key;
+                        localStorage.setItem('playerNodeKey', playerNodeKey);
+                        newRef.set({
+                            name: name,
+                            score: count,
+                            timestamp: firebase.database.ServerValue.TIMESTAMP
+                        });
+                    }
+                });
+                
+                hideNameModal();
+            }
+        }
+
+        function handleClick(e) {
+            // ไม่นับคลิกถ้าไปโดนปุ่มเปลี่ยนชื่อ
+            if (e.target === changeNameBtn || changeNameBtn.contains(e.target)) return;
+            
             count++;
             pendingClicks++;
             clickCount.textContent = count;
             
-            if (popSound) { popSound.currentTime = 0; popSound.play(); }
+            if (popSound) {
+                popSound.currentTime = 0;
+                popSound.play();
+            }
+            
             catImageOpen.classList.add('active');
             catImage.classList.add('pop-animation');
             
-            setTimeout(() => catImage.classList.remove('pop-animation'), 80);
-            setTimeout(() => catImageOpen.classList.remove('active'), 50);
+            setTimeout(() => { catImage.classList.remove('pop-animation'); }, 80);
+            setTimeout(() => { catImageOpen.classList.remove('active'); }, 50);
 
             clearTimeout(clickTimeout);
             clickTimeout = setTimeout(() => {
-                if (pendingClicks > 0 && playerNodeKey) {
-                    const add = pendingClicks;
+                if (pendingClicks > 0) {
+                    const clicksToSave = pendingClicks;
                     pendingClicks = 0;
-                    totalClicksRef.transaction(t => (t || 0) + add);
-                    leaderboardRef.child(playerNodeKey).update({
-                        score: firebase.database.ServerValue.increment(add),
-                        timestamp: firebase.database.ServerValue.TIMESTAMP
+                    
+                    totalClicksRef.transaction((currentTotal) => {
+                        return (currentTotal || 0) + clicksToSave;
                     });
+                    
+                    if (currentPlayerName) {
+                        if (playerNodeKey) {
+                            leaderboardRef.child(playerNodeKey).update({
+                                score: firebase.database.ServerValue.increment(clicksToSave),
+                                timestamp: firebase.database.ServerValue.TIMESTAMP
+                            });
+                        } else {
+                            leaderboardRef.orderByChild('name').equalTo(currentPlayerName).once('value', (snapshot) => {
+                                if (snapshot.exists()) {
+                                    snapshot.forEach((child) => {
+                                        playerNodeKey = child.key;
+                                        localStorage.setItem('playerNodeKey', playerNodeKey);
+                                        child.ref.update({
+                                            score: firebase.database.ServerValue.increment(clicksToSave),
+                                            timestamp: firebase.database.ServerValue.TIMESTAMP
+                                        });
+                                    });
+                                }
+                            });
+                        }
+                    } else {
+                        checkHighScore(count);
+                    }
                 }
             }, 500);
         }
 
-        clickArea.addEventListener('click', handleClick);
+        function checkHighScore(currentScore) {
+            if (currentPlayerName) return;
+
+            leaderboardRef.once('value').then((snapshot) => {
+                const entries = [];
+                snapshot.forEach((child) => { entries.push(child.val().score); });
+                entries.sort((a, b) => b - a);
+                const top5 = entries.slice(0, 5);
+
+                if (top5.length < 5 || currentScore > (top5[top5.length - 1] || 0)) {
+                    document.getElementById('nameModal').querySelector('h2').textContent = "New High Score!";
+                    document.getElementById('nameModal').querySelector('p').textContent = "กรอกชื่อเพื่อร่วมสนุกบน Leaderboard";
+                    showNameModal();
+                }
+            });
+        }
+
+        playerNameInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') { submitScore(); }
+        });
+
+        $(document).ready(function() {
+            clickArea.addEventListener('click', handleClick);
+            
+            changeNameBtn.onclick = function(e) {
+                e.stopPropagation(); // กันการนับคลิกซ้ำซ้อนเวลาเปลี่ยนชื่อ
+                currentPlayerName = '';
+                playerNodeKey = null;
+                localStorage.removeItem('playerName');
+                localStorage.removeItem('playerNodeKey');
+                count = 0;
+                clickCount.textContent = '0';
+                updateDisplay();
+                
+                document.getElementById('nameModal').querySelector('h2').textContent = "Welcome back!";
+                document.getElementById('nameModal').querySelector('p').textContent = "กรอกชื่อเดิมของคุณเพื่อเล่นต่อ หรือชื่อใหม่เพื่อเริ่มใหม่";
+                showNameModal();
+            };
+        });
     </script>
 </body>
 </html>
