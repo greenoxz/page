@@ -105,7 +105,7 @@
     #shareLinkInput { background: #f9f9f9; color: #555; }
     .theme-dark #shareLinkInput { background: #111; color: #ccc; border-color: #444; }
 
-    /* Percent Settings UI (New Design) */
+    /* Percent Settings UI (New Design with Multiplier) */
     .weight-item { 
       display: flex; 
       flex-direction: column; 
@@ -127,19 +127,19 @@
     .weight-item-text { font-size: 1.05rem; text-align: left; font-weight: bold; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #333; }
     .theme-dark .weight-item-text { color: #eee; }
     
-    .weight-controls { display: flex; align-items: center; gap: 15px; width: 100%; }
+    .weight-controls { display: flex; align-items: center; gap: 10px; width: 100%; flex-wrap: wrap; justify-content: space-between; }
     
     /* Input Wrapper */
-    .weight-input-wrapper { display: flex; align-items: center; gap: 4px; background: #fff; padding: 6px 12px 6px 6px; border-radius: 12px; border: 1px solid #ddd; transition: border-color 0.2s; }
+    .weight-input-wrapper { display: flex; align-items: center; background: #fff; padding: 6px 10px; border-radius: 10px; border: 1px solid #ddd; transition: border-color 0.2s; }
     .weight-input-wrapper:focus-within { border-color: #FF4D1C; box-shadow: 0 0 0 3px rgba(255, 77, 28, 0.1); }
     .theme-dark .weight-input-wrapper { background: #111; border-color: #444; }
     
-    .weight-input-wrapper input { border: none; background: transparent; width: 50px; padding: 0; color: #FF4D1C; font-weight: bold; font-size: 1.05rem; text-align: right; outline: none; -moz-appearance: textfield; font-family: 'Anuphan', sans-serif; }
-    .weight-input-wrapper input::-webkit-outer-spin-button, .weight-input-wrapper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-    .weight-input-wrapper span { color: #888; font-weight: bold; font-size: 1rem; }
-    
+    .weight-input-wrapper input { border: none; background: transparent; width: 100%; padding: 0; font-weight: bold; font-size: 1.05rem; text-align: center; outline: none; color: #333; -moz-appearance: textfield; font-family: 'Anuphan', sans-serif; }
+  .theme-dark .weight-input-wrapper input { color: #fff; }
+  .weight-input-wrapper input::-webkit-outer-spin-button, .weight-input-wrapper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+
     /* Percent Slider */
-    .weight-slider { -webkit-appearance: none; height: 8px; background: #e0e0e0; border-radius: 5px; outline: none; flex: 1; transition: background 0.2s; }
+    .weight-slider { -webkit-appearance: none; height: 8px; background: #e0e0e0; border-radius: 5px; outline: none; flex: 1; min-width: 100px; transition: background 0.2s; }
     .theme-dark .weight-slider { background: #444; }
     .weight-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #FF4D1C; cursor: pointer; box-shadow: 0 2px 6px rgba(255, 77, 28, 0.4); border: 2.5px solid #fff; transition: transform 0.1s; }
     .theme-dark .weight-slider::-webkit-slider-thumb { border-color: #222; }
@@ -159,7 +159,7 @@
     @media (min-width: 600px) {
       .weight-item { flex-direction: row; align-items: center; gap: 20px; padding: 12px 20px; }
       .weight-item-header { width: 35%; max-width: 200px; flex-shrink: 0; }
-      .weight-controls { flex: 1; }
+      .weight-controls { flex: 1; flex-wrap: nowrap; }
     }
   </style>
 </head>
@@ -190,7 +190,7 @@
             </div>
 
             <div class="action-menu" id="textModeActions">
-              <button class="btn secondary" onclick="openWeightModal()" title="ตั้งค่าเปอร์เซ็นต์โอกาสสุ่ม"><i class="fas fa-chart-pie"></i> โอกาสสุ่ม</button>
+              <button class="btn secondary" onclick="openWeightModal()" title="ตั้งค่าโอกาสและตัวคูณ"><i class="fas fa-chart-pie"></i> โอกาสสุ่ม</button>
               <button class="btn secondary" onclick="sortOptions()" title="เรียงลำดับ A-Z"><i class="fas fa-sort-alpha-down"></i> เรียง</button>
               <button class="btn secondary" onclick="shuffleOptions()" title="สลับตำแหน่ง"><i class="fas fa-random"></i> สลับ</button>
               <button class="btn danger" onclick="clearOptions()" title="ล้างตัวเลือกทั้งหมด"><i class="fas fa-trash-alt"></i> ล้าง</button>
@@ -250,14 +250,16 @@
   <div class="modal-overlay" id="weightModal">
     <div class="modal-content" style="max-width: 600px; padding: 30px 20px;">
       <i class="fas fa-chart-pie modal-icon" style="color: #FF4D1C;"></i>
-      <div class="modal-title">โอกาสสุ่ม (%)</div>
-      <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">เมื่อคุณปรับเปอร์เซ็นต์ ระบบจะเฉลี่ยตัวเลือกอื่นๆ ให้รวมเป็น 100% อัตโนมัติ</p>
+      <div class="modal-title">โอกาสสุ่ม / ตัวคูณ</div>
+      <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">
+        คุณสามารถปรับตัวเลข <b>%</b> หรือ <b>ตัวคูณ (x)</b> ได้อย่างอิสระ ระบบจะคำนวณและปรับตัวเลือกอื่นให้รวมเป็น 100% อัตโนมัติ
+      </p>
       
       <div id="weightList" style="width: 100%; max-height: 50vh; overflow-y: auto; margin-bottom: 25px; padding-right: 8px;">
         </div>
       
       <div style="display: flex; gap: 10px; width: 100%;">
-        <button class="btn secondary" style="flex: 1; font-size: 1.1rem; padding: 12px;" onclick="resetPercents()" title="ตั้งค่าทุกอันให้เท่ากัน"><i class="fas fa-sync-alt"></i> เฉลี่ยเท่ากัน</button>
+        <button class="btn secondary" style="flex: 1; font-size: 1.1rem; padding: 12px;" onclick="resetPercents()" title="ตั้งค่าให้เท่ากันทั้งหมด"><i class="fas fa-sync-alt"></i> เฉลี่ยเท่ากัน</button>
         <button class="btn" style="flex: 1; font-size: 1.1rem; padding: 12px;" onclick="closeWeightModal()">เสร็จสิ้น</button>
       </div>
     </div>
@@ -286,11 +288,12 @@
       if (yearElem) yearElem.textContent = new Date().getFullYear();
     });
 
+    // ใช้ Weight เป็น Core หลักในการคำนวณ ส่วน Percent เป็นแค่ส่วนแสดงผลลัพธ์
     let options = [
-      { text: "กินอะไรดี", percent: 25 },
-      { text: "ดูหนัง", percent: 25 },
-      { text: "เล่นเกม", percent: 25 },
-      { text: "นอน", percent: 25 }
+      { text: "กินอะไรดี", weight: 1, percent: 25 },
+      { text: "ดูหนัง", weight: 1, percent: 25 },
+      { text: "เล่นเกม", weight: 1, percent: 25 },
+      { text: "นอน", weight: 1, percent: 25 }
     ];
     
     const colors = [
@@ -306,15 +309,12 @@
     let largeNumMin = 0;
     let largeNumMax = 0;
 
-    function normalizePercents() {
-      if (options.length === 0) return;
-      let sum = options.reduce((acc, opt) => acc + opt.percent, 0);
-      
-      if (sum === 0) {
-        options.forEach(opt => opt.percent = 100 / options.length);
-      } else if (Math.abs(sum - 100) > 0.01) {
-        options.forEach(opt => opt.percent = (opt.percent / sum) * 100);
-      }
+    // --- ฟังก์ชันคำนวณ Percent อัตโนมัติจากค่า Weight ---
+    function calculatePercents() {
+      const totalWeight = options.reduce((sum, opt) => sum + opt.weight, 0);
+      options.forEach(opt => {
+        opt.percent = totalWeight > 0 ? (opt.weight / totalWeight) * 100 : 0;
+      });
     }
 
     function openWeightModal() {
@@ -327,13 +327,10 @@
       document.getElementById('weightModal').classList.remove('active');
     }
 
-    // รีเซ็ตเปอร์เซ็นต์ให้เท่ากันทั้งหมด
     function resetPercents() {
       if(options.length === 0) return;
-      const eq = 100 / options.length;
-      options.forEach(opt => opt.percent = eq);
-      
-      // อัปเดตหน้าตาใหม่ทั้งหมด
+      options.forEach(opt => opt.weight = 1);
+      calculatePercents();
       renderWeightList();
       drawWheel();
     }
@@ -347,8 +344,10 @@
       }
       
       container.innerHTML = options.map((opt, i) => {
-        const displayVal = parseFloat(opt.percent).toFixed(1);
+        const displayPct = opt.percent.toFixed(1);
+        const displayMult = Number.isInteger(opt.weight) ? opt.weight : opt.weight.toFixed(2);
         const color = colors[i % colors.length];
+        
         return `
           <div class="weight-item">
             <div class="weight-item-header">
@@ -356,10 +355,16 @@
               <div class="weight-item-text" title="${opt.text}">${opt.text}</div>
             </div>
             <div class="weight-controls">
-              <input type="range" id="slider-${i}" class="weight-slider" min="0" max="100" step="0.5" value="${opt.percent}" oninput="updatePercent(${i}, this.value)">
-              <div class="weight-input-wrapper">
-                <input type="number" id="input-${i}" min="0" max="100" step="0.1" value="${displayVal}" onchange="updatePercent(${i}, this.value)">
-                <span>%</span>
+              <div class="weight-input-wrapper" style="width: 75px;" title="ตัวคูณ (Weight)">
+                <span style="color:#aaa; font-size:0.9rem;">x</span>
+                <input type="number" id="mult-${i}" min="0" step="0.1" value="${displayMult}" oninput="updateMultiplier(${i}, this.value)">
+              </div>
+              
+              <input type="range" id="slider-${i}" class="weight-slider" min="0" max="100" step="0.5" value="${opt.percent}" oninput="updatePercent(${i}, this.value, 'slider')">
+              
+              <div class="weight-input-wrapper" style="width: 85px;" title="โอกาสสุ่ม (%)">
+                <input type="number" id="pct-${i}" min="0" max="100" step="0.1" value="${displayPct}" oninput="updatePercent(${i}, this.value, 'percent')">
+                <span style="color:#FF4D1C;">%</span>
               </div>
             </div>
           </div>
@@ -367,52 +372,57 @@
       }).join('');
     }
 
-    // ฟังก์ชันอัปเดตเฉพาะตัวเลขในช่อง (ทำให้ Slider ลื่น ไม่กระตุก)
-    function updateWeightDOM(excludeIndex) {
+    // อัปเดตเฉพาะ DOM (ให้พิมพ์/ลากได้ลื่น)
+    function updateWeightDOM(activeSource, activeIndex) {
       for (let i = 0; i < options.length; i++) {
         const slider = document.getElementById(`slider-${i}`);
-        const input = document.getElementById(`input-${i}`);
+        const pctInput = document.getElementById(`pct-${i}`);
+        const multInput = document.getElementById(`mult-${i}`);
         
-        if (i !== excludeIndex) { // อัปเดตช่องอื่นๆ
-          if(slider) slider.value = options[i].percent;
-          if(input) input.value = options[i].percent.toFixed(1);
-        } else { // อัปเดตแค่กล่องตัวเลขของแถบที่เรากำลังลากอยู่
-          if(input) input.value = options[i].percent.toFixed(1);
+        if (slider && !(activeSource === 'slider' && activeIndex === i)) {
+          slider.value = options[i].percent;
+        }
+        if (pctInput && !(activeSource === 'percent' && activeIndex === i)) {
+          pctInput.value = options[i].percent.toFixed(1);
+        }
+        if (multInput && !(activeSource === 'multiplier' && activeIndex === i)) {
+          multInput.value = Number.isInteger(options[i].weight) ? options[i].weight : options[i].weight.toFixed(2);
         }
       }
-      drawWheel(); // รีเฟรชวงล้อด้านหลัง
+      drawWheel();
     }
 
-    function updatePercent(index, val) {
-      let newPercent = parseFloat(val);
-      if (isNaN(newPercent) || newPercent < 0) newPercent = 0;
-      if (newPercent > 100) newPercent = 100;
+    // เมื่อพิมพ์ในช่อง "ตัวคูณ" (Multiplier)
+    function updateMultiplier(index, val) {
+      let w = parseFloat(val);
+      if (isNaN(w) || w < 0) w = 0;
       
-      const oldPercent = options[index].percent;
-      const diff = newPercent - oldPercent;
-      options[index].percent = newPercent;
+      options[index].weight = w;
+      calculatePercents();
+      updateWeightDOM('multiplier', index);
+    }
+
+    // เมื่อลาก Slider หรือ พิมพ์ %
+    function updatePercent(index, val, source) {
+      let p = parseFloat(val);
+      if (isNaN(p) || p < 0) p = 0;
       
-      const othersSum = 100 - oldPercent;
-      
-      if (othersSum > 0) {
-        for (let i = 0; i < options.length; i++) {
-          if (i !== index) {
-            options[i].percent = options[i].percent - diff * (options[i].percent / othersSum);
-          }
+      if (p >= 100) {
+        p = 100;
+        options.forEach((opt, i) => opt.weight = (i === index) ? 1 : 0);
+      } else {
+        let otherWeightSum = options.reduce((sum, opt, i) => sum + (i === index ? 0 : opt.weight), 0);
+        // ถ้าค่าอื่นๆ เป็น 0 หมด แต่ผู้ใช้พยายามปรับ % ให้น้อยกว่า 100 ต้องดันค่าอื่นให้มี weight ขึ้นมา
+        if (otherWeightSum === 0) {
+          options.forEach((opt, i) => { if(i !== index) opt.weight = 1; });
+          otherWeightSum = options.length - 1;
         }
-      } else if (options.length > 1) {
-        const eq = (100 - newPercent) / (options.length - 1);
-        for (let i = 0; i < options.length; i++) {
-          if (i !== index) {
-            options[i].percent = eq;
-          }
-        }
+        // คำนวณ Weight ใหม่ของตัวมันเองจาก % ที่กำหนด
+        options[index].weight = (p / (100 - p)) * otherWeightSum;
       }
       
-      normalizePercents();
-      
-      // เรียกฟังก์ชันเปลี่ยนค่าแบบไม่ Refresh HTML
-      updateWeightDOM(index);
+      calculatePercents();
+      updateWeightDOM(source, index);
     }
 
     function shareWheel() {
@@ -474,13 +484,14 @@
             switchMode('text');
             if(state.items && state.items.length > 0) {
               if (typeof state.items[0] === 'string') {
-                options = state.items.map(text => ({ text: text, percent: 100 / state.items.length }));
-              } else if (state.items[0].weight !== undefined) {
-                const sumW = state.items.reduce((s, o) => s + o.weight, 0) || 1;
-                options = state.items.map(o => ({ text: o.text, percent: (o.weight / sumW) * 100 }));
+                options = state.items.map(text => ({ text: text, weight: 1 }));
+              } else if (state.items[0].percent !== undefined && state.items[0].weight === undefined) {
+                // รองรับเวอร์ชันที่ใช้ percent ล้วน
+                options = state.items.map(o => ({ text: o.text, weight: o.percent }));
               } else {
                 options = state.items;
               }
+              calculatePercents();
             }
           }
           window.history.replaceState({}, document.title, window.location.pathname);
@@ -526,10 +537,10 @@
         isLargeNumberMode = false;
         options = [];
         document.getElementById('autoRemoveLabel').style.display = 'flex';
-        const totalItems = max - min + 1;
         for(let i = min; i <= max; i++) {
-          options.push({ text: i.toString(), percent: 100 / totalItems });
+          options.push({ text: i.toString(), weight: 1, percent: 0 });
         }
+        calculatePercents();
       }
       drawWheel();
       updateList();
@@ -621,14 +632,8 @@
       const input = document.getElementById("optionInput");
       const val = input.value.trim();
       if (val !== "") {
-        if (options.length === 0) {
-          options.push({ text: val, percent: 100 });
-        } else {
-          const newPct = 100 / (options.length + 1);
-          options.forEach(opt => opt.percent = opt.percent * ((100 - newPct) / 100));
-          options.push({ text: val, percent: newPct });
-          normalizePercents();
-        }
+        options.push({ text: val, weight: 1, percent: 0 });
+        calculatePercents();
         input.value = "";
         drawWheel();
       }
@@ -636,17 +641,8 @@
 
     function removeOption(index) {
       if(isSpinning || isLargeNumberMode) return;
-      const removedPct = options[index].percent;
       options.splice(index, 1);
-      
-      if (options.length > 0 && removedPct < 100) {
-        const scale = 100 / (100 - removedPct);
-        options.forEach(opt => opt.percent *= scale);
-        normalizePercents();
-      } else if (options.length > 0) {
-        options.forEach(opt => opt.percent = 100 / options.length);
-      }
-      
+      calculatePercents();
       drawWheel();
       if(document.getElementById('weightModal').classList.contains('active')) {
         renderWeightList();
@@ -725,9 +721,10 @@
 
     function spin() {
       if ((options.length === 0 && !isLargeNumberMode) || isSpinning) return;
-      const totalPercent = options.reduce((sum, opt) => sum + opt.percent, 0);
-      if(!isLargeNumberMode && totalPercent < 1) {
-        alert("เปอร์เซ็นต์รวมไม่ถูกต้อง กรุณาตั้งค่าใหม่");
+      
+      const totalWeight = options.reduce((sum, opt) => sum + opt.weight, 0);
+      if(!isLargeNumberMode && totalWeight === 0) {
+        alert("โอกาสสุ่มรวมทั้งหมดเป็น 0 กรุณาตั้งค่าใหม่");
         return;
       }
 
