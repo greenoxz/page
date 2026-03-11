@@ -108,11 +108,9 @@
     .btn-icon-group { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
     
     /* วงล้อ (Glass Outline) */
-    .wheel-box { position: relative; width: 90%; max-width: 400px; aspect-ratio: 1/1; margin: 20px auto; }
-    #canvas { 
-      width: 100%; height: 100%; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); 
-      border: 5px solid rgba(255, 255, 255, 0.6); box-shadow: 0 10px 30px rgba(0,0,0,0.15), inset 0 0 20px rgba(255,255,255,0.5); 
-    }
+    /* วงล้อ */
+  .wheel-box { position: relative; width: 90%; max-width: 400px; aspect-ratio: 1/1; margin: 20px auto; flex-shrink: 0; }
+    #canvas { width: 100%; height: auto; aspect-ratio: 1/1; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.15); display: block; }
     .theme-dark #canvas { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
     .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 35px solid #FF4D1C; z-index: 10; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
     
@@ -216,7 +214,7 @@
               <input type="number" id="numMax" placeholder="เลขสิ้นสุด (เช่น 1000)">
               <div style="display: flex; gap: 8px; width: 100%;">
                 <button class="btn" style="flex: 1;" onclick="generateNumbers()">สร้างวงล้อตัวเลข</button>
-                <button class="btn danger" style="padding: 10px 15px;" onclick="clearNumberInputs()" title="ล้างค่า"><i class="fas fa-eraser"></i></button>
+                <button class="btn danger" style="padding: 12px 15px;" onclick="clearNumberInputs()" title="ล้างค่า"><i class="fas fa-trash-alt"></i></button>
               </div>
             </div>
             
