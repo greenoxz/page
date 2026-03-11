@@ -14,26 +14,17 @@
     /* Layout */
     .layout-wrapper { display: flex; flex-direction: column; gap: 30px; padding: 0 15px; box-sizing: border-box; }
     
-    /* Liquid Glass Effect สำหรับ Column */
     .history-column { 
       width: 100%; 
-      background: rgba(255, 255, 255, 0.65); 
-      backdrop-filter: blur(25px) saturate(180%);
-      -webkit-backdrop-filter: blur(25px) saturate(180%);
+      background: #f5f5f5; 
       padding: 20px; 
-      border-radius: 24px; 
+      border-radius: 15px; 
       display: flex; 
       flex-direction: column; 
       max-height: 500px;
       box-sizing: border-box;
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.8);
     }
-    .theme-dark .history-column { 
-      background: rgba(30, 30, 35, 0.6); 
-      border: 1px solid rgba(255, 255, 255, 0.08); 
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.1); 
-    }
+    .theme-dark .history-column { background: #1a1a1c; border: 1px solid #333; }
 
     @media (min-width: 1000px) {
       .layout-wrapper { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 20px; padding: 0; }
@@ -43,142 +34,136 @@
     
     .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
     
-    /* Editable Title & Share (Glass Style) */
+    /* Editable Title & Share */
     .title-group { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 600px; margin: 0 auto 20px; padding: 0 15px; box-sizing: border-box; }
-    .page-title-input { 
-      text-align: center; font-size: clamp(1.5rem, 6vw, 2.2rem); font-weight: 700; display: block; flex: 1; 
-      background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.5); color: inherit; font-family: 'Anuphan', sans-serif; 
-      border-radius: 16px; padding: 5px 15px; transition: all 0.3s ease; min-width: 0; 
-      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
-    }
-    .page-title-input:hover { background: rgba(255, 255, 255, 0.6); }
-    .page-title-input:focus { border-color: #FF4D1C; outline: none; background: rgba(255, 255, 255, 0.8); box-shadow: 0 0 0 3px rgba(255,77,28,0.2); }
-    .theme-dark .page-title-input { background: rgba(0, 0, 0, 0.3); border-color: rgba(255, 255, 255, 0.1); }
-    .theme-dark .page-title-input:hover { background: rgba(0, 0, 0, 0.5); }
-    .theme-dark .page-title-input:focus { background: rgba(0, 0, 0, 0.6); }
+    .page-title-input { text-align: center; font-size: clamp(1.5rem, 6vw, 2.2rem); font-weight: 700; display: block; flex: 1; background: transparent; border: 2px dashed transparent; color: inherit; font-family: 'Anuphan', sans-serif; border-radius: 12px; padding: 5px 15px; transition: all 0.2s; min-width: 0; }
+    .page-title-input:hover { border-color: #ddd; }
+    .page-title-input:focus { border-color: #FF4D1C; outline: none; background: rgba(0,0,0,0.02); }
+    .theme-dark .page-title-input:hover { border-color: #444; }
+    .theme-dark .page-title-input:focus { background: rgba(255,255,255,0.05); }
 
     /* Tabs Mode */
     .tab-group { display: flex; gap: 10px; margin-bottom: 5px; width: 100%; justify-content: center; flex-wrap: wrap; }
-    .tab-btn { 
-      padding: 8px 20px; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.6); 
-      background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      color: #555; cursor: pointer; font-family: 'Anuphan', sans-serif; font-weight: bold; transition: all 0.3s; white-space: nowrap; 
-      box-shadow: 0 2px 10px rgba(0,0,0,0.02);
-    }
-    .tab-btn:hover { background: rgba(255, 255, 255, 0.7); }
-    .tab-btn.active { background: #FF4D1C; color: #fff; border-color: #FF4D1C; box-shadow: 0 4px 15px rgba(255,77,28,0.3); }
-    .theme-dark .tab-btn { background: rgba(0, 0, 0, 0.3); border-color: rgba(255, 255, 255, 0.1); color: #ccc; }
-    .theme-dark .tab-btn:hover { background: rgba(0, 0, 0, 0.5); }
-    .theme-dark .tab-btn.active { background: #FF4D1C; color: #fff; border-color: #FF4D1C; }
+    .tab-btn { padding: 8px 20px; border-radius: 20px; border: 2px solid #FF4D1C; background: transparent; color: #FF4D1C; cursor: pointer; font-family: 'Anuphan', sans-serif; font-weight: bold; transition: all 0.2s; white-space: nowrap; }
+    .tab-btn.active { background: #FF4D1C; color: #fff; }
+    .theme-dark .tab-btn { border-color: #FF4D1C; color: #FF4D1C; }
+    .theme-dark .tab-btn.active { background: #FF4D1C; color: #fff; }
 
-    /* Inputs Glass Effect */
     .input-group { display: flex; gap: 8px; width: 100%; max-width: 550px; justify-content: center; flex-wrap: wrap; }
-    .input-group input { 
-      flex: 1; min-width: 120px; padding: 12px 15px; border-radius: 14px; 
-      background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.6); font-family: 'Anuphan', sans-serif; font-size: 1rem; 
-      box-shadow: inset 0 2px 5px rgba(0,0,0,0.02); transition: all 0.3s;
-    }
-    .input-group input:focus { outline: none; border-color: #FF4D1C; box-shadow: 0 0 0 3px rgba(255,77,28,0.2); }
-    .theme-dark .input-group input { background: rgba(0, 0, 0, 0.3); color: #fff; border-color: rgba(255, 255, 255, 0.1); box-shadow: inset 0 2px 5px rgba(0,0,0,0.2); }
-    .theme-dark .input-group input:focus { border-color: #FF4D1C; }
+    .input-group input { flex: 1; min-width: 120px; padding: 12px 15px; border-radius: 10px; border: 1px solid #ddd; font-family: 'Anuphan', sans-serif; font-size: 1rem; }
+    .theme-dark .input-group input { background: #111; color: #fff; border-color: #444; }
     
-    /* Buttons */
-    .btn { 
-      padding: 12px 20px; border-radius: 14px; border: none; background: #FF4D1C; color: white; cursor: pointer; 
-      font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: all 0.2s; white-space: nowrap; 
-      box-shadow: 0 4px 15px rgba(255,77,28,0.3);
-    }
-    .btn:hover { background: #e64519; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(255,77,28,0.4); }
-    .btn:active { transform: scale(0.97) translateY(0); }
-    
-    /* Secondary Button Glass */
-    .btn.secondary { 
-      background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.6); color: #333; box-shadow: 0 4px 15px rgba(0,0,0,0.05); 
-    }
-    .btn.secondary:hover { background: rgba(255, 255, 255, 0.8); }
-    .theme-dark .btn.secondary { background: rgba(255, 255, 255, 0.1); border-color: rgba(255, 255, 255, 0.1); color: #fff; }
-    .theme-dark .btn.secondary:hover { background: rgba(255, 255, 255, 0.15); }
-    
-    .btn.danger { background: rgba(255, 68, 68, 0.9); box-shadow: 0 4px 15px rgba(255,68,68,0.3); }
-    .btn.danger:hover { background: #cc0000; }
-    .btn:disabled { background: #ccc !important; box-shadow: none !important; cursor: not-allowed; transform: none; }
-    .btn-icon-group { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
-    
-    /* วงล้อ (Glass Outline) */
-    /* วงล้อ */
-  .wheel-box { position: relative; width: 90%; max-width: 400px; aspect-ratio: 1/1; margin: 20px auto; flex-shrink: 0; }
-    #canvas { width: 100%; height: auto; aspect-ratio: 1/1; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.15); display: block; }
-    .theme-dark #canvas { border-color: rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.4); }
-    .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 35px solid #FF4D1C; z-index: 10; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.3)); }
-    
-    /* Options Glass Item */
-    .options-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; list-style: none; padding: 0; margin: 0; max-width: 600px; }
-    .options-list li { 
-      background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.5); padding: 8px 16px; border-radius: 20px; font-size: 15px; color: #333; 
-      display: flex; align-items: center; gap: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.03); 
-    }
-    .theme-dark .options-list li { background: rgba(0, 0, 0, 0.3); color: #fff; border-color: rgba(255, 255, 255, 0.1); }
-    .delete-btn { color: #ff4444; cursor: pointer; font-size: 1.1rem; transition: transform 0.2s; }
-    .delete-btn:hover { transform: scale(1.2); }
-    
-    .checkbox-group { 
-      display: flex; align-items: center; gap: 10px; font-size: 1rem; cursor: pointer; 
-      background: rgba(255, 255, 255, 0.5); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.5); padding: 10px 20px; border-radius: 14px; margin-top: 10px; 
-      box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-    }
-    .theme-dark .checkbox-group { background: rgba(0, 0, 0, 0.3); border-color: rgba(255, 255, 255, 0.1); }
-    .checkbox-group input { width: 20px; height: 20px; cursor: pointer; accent-color: #FF4D1C; }
+    .action-menu { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 5px; width: 100%; max-width: 550px; }
 
-    /* History Column Items Glass */
-    .history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(0,0,0,0.1); padding-bottom: 15px; margin-bottom: 15px; }
-    .theme-dark .history-header { border-color: rgba(255,255,255,0.1); }
+    .btn { padding: 12px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: background 0.2s, transform 0.1s; white-space: nowrap; }
+    .btn:hover { background: #e64519; }
+    .btn:active { transform: scale(0.97); }
+    .btn.secondary { background: #555; }
+    .btn.secondary:hover { background: #333; }
+    .btn.danger { background: #ff4444; }
+    .btn.danger:hover { background: #cc0000; }
+    .btn:disabled { background: #ccc !important; cursor: not-allowed; transform: none; }
+    
+    /* วงล้อ */
+    .wheel-box { position: relative; width: 90%; max-width: 400px; aspect-ratio: 1/1; margin: 20px auto; flex-shrink: 0; }
+    #canvas { width: 100%; height: auto; aspect-ratio: 1/1; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.15); display: block; }
+    .theme-dark #canvas { border-color: #333; }
+    .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 35px solid #FF4D1C; z-index: 10; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
+    
+    .options-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; list-style: none; padding: 0; margin: 0; max-width: 600px; }
+    .options-list li { background: #eee; padding: 8px 16px; border-radius: 20px; font-size: 15px; color: #333; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .theme-dark .options-list li { background: #333; color: #fff; }
+    .delete-btn { color: #ff4444; cursor: pointer; font-size: 1.1rem; }
+    
+    .checkbox-group { display: flex; align-items: center; gap: 10px; font-size: 1rem; cursor: pointer; background: rgba(0,0,0,0.05); padding: 10px 20px; border-radius: 12px; margin-top: 10px; }
+    .theme-dark .checkbox-group { background: rgba(255,255,255,0.05); }
+    .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
+
+    /* History Column */
+    .history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+    .theme-dark .history-header { border-color: #333; }
     .history-title { margin: 0; font-size: 1.3rem; font-weight: bold; }
     .history-list { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; padding-right: 5px; min-height: 200px; }
     .history-list::-webkit-scrollbar { width: 6px; }
-    .history-list::-webkit-scrollbar-thumb { background-color: rgba(0,0,0,0.2); border-radius: 10px; }
-    .theme-dark .history-list::-webkit-scrollbar-thumb { background-color: rgba(255,255,255,0.2); }
-    .history-list li { 
-      padding: 15px; margin-bottom: 10px; border-radius: 16px; border-left: 5px solid #FF4D1C; font-size: 1.1rem; 
-      display: flex; flex-direction: column; gap: 5px; 
-      background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-      border-top: 1px solid rgba(255,255,255,0.6); border-right: 1px solid rgba(255,255,255,0.6); border-bottom: 1px solid rgba(255,255,255,0.6);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.03); transition: transform 0.2s;
-    }
-    .history-list li:hover { transform: translateX(5px); }
-    .history-list li span { font-size: 0.85rem; color: #777; }
-    .theme-dark .history-list li { background: rgba(0, 0, 0, 0.4); color: #fff; border-color: rgba(255,255,255,0.05); }
-    .theme-dark .history-list li span { color: #aaa; }
+    .history-list::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 10px; }
+    .history-list li { padding: 15px; background: #fff; margin-bottom: 10px; border-radius: 12px; border-left: 5px solid #FF4D1C; font-size: 1.1rem; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .history-list li span { font-size: 0.85rem; color: #888; }
+    .theme-dark .history-list li { background: #222; color: #fff; }
     .empty-history { text-align: center; color: #aaa; font-style: italic; padding: 40px 0; font-size: 1.1rem; }
 
-    /* Modal Popup Liquid Glass */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.4s ease; padding: 20px; box-sizing: border-box; }
+    /* Modal Popup */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; padding: 20px; box-sizing: border-box; }
     .modal-overlay.active { display: flex; opacity: 1; }
-    .modal-content { 
-      background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(30px) saturate(200%); -webkit-backdrop-filter: blur(30px) saturate(200%);
-      padding: 35px 25px; border-radius: 28px; text-align: center; max-width: 400px; width: 100%; max-height: 90vh; 
-      display: flex; flex-direction: column; align-items: center; 
-      border: 1px solid rgba(255, 255, 255, 0.6);
-      box-shadow: 0 25px 60px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255, 255, 255, 0.8); 
-      transform: scale(0.95) translateY(20px); opacity: 0; transition: all 0.4s cubic-bezier(0.17, 0.67, 0.12, 0.99); 
-    }
-    .modal-overlay.active .modal-content { transform: scale(1) translateY(0); opacity: 1; }
-    .theme-dark .modal-content { background: rgba(30, 30, 35, 0.8); color: #fff; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 25px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255, 255, 255, 0.1); }
-    .modal-icon { font-size: 3.5rem; color: #FF4D1C; margin-bottom: 15px; flex-shrink: 0; filter: drop-shadow(0 4px 10px rgba(255,77,28,0.3)); }
+    .modal-content { background: #fff; padding: 35px 20px; border-radius: 20px; text-align: center; max-width: 400px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.3); transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+    .theme-dark .modal-content { background: #18181b; color: #fff; border: 1px solid #333; }
+    .modal-icon { font-size: 3.5rem; color: #FF4D1C; margin-bottom: 15px; flex-shrink: 0; }
     .modal-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; flex-shrink: 0; }
     .modal-winner { font-size: clamp(1.5rem, 6vw, 2.5rem); color: #FF4D1C; font-weight: bold; margin-bottom: 25px; line-height: 1.4; word-break: break-word; overflow-wrap: anywhere; width: 100%; overflow-y: auto; padding: 0 10px; }
 
     /* Share Input Box in Modal */
-    #shareLinkInput { background: rgba(0,0,0,0.05); color: #555; border: 1px solid rgba(0,0,0,0.1); }
-    .theme-dark #shareLinkInput { background: rgba(0, 0, 0, 0.3); color: #ccc; border-color: rgba(255, 255, 255, 0.1); }
+    #shareLinkInput { background: #f9f9f9; color: #555; }
+    .theme-dark #shareLinkInput { background: #111; color: #ccc; border-color: #444; }
+
+    /* Percent Settings UI (New Design) */
+    .weight-item { 
+      display: flex; 
+      flex-direction: column; 
+      gap: 12px; 
+      margin-bottom: 12px; 
+      background: #fafafa; 
+      padding: 15px; 
+      border-radius: 16px; 
+      border: 1px solid #eaeaea;
+      transition: all 0.2s;
+    }
+    .weight-item:hover { border-color: #ddd; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+    .theme-dark .weight-item { background: #1f1f22; border-color: #333; }
+    .theme-dark .weight-item:hover { border-color: #555; }
+    
+    .weight-item-header { display: flex; align-items: center; gap: 12px; width: 100%; }
+    .color-dot { width: 16px; height: 16px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.15); border: 2px solid #fff; }
+    .theme-dark .color-dot { border-color: #222; }
+    .weight-item-text { font-size: 1.05rem; text-align: left; font-weight: bold; flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: #333; }
+    .theme-dark .weight-item-text { color: #eee; }
+    
+    .weight-controls { display: flex; align-items: center; gap: 15px; width: 100%; }
+    
+    /* Input Wrapper */
+    .weight-input-wrapper { display: flex; align-items: center; gap: 4px; background: #fff; padding: 6px 12px 6px 6px; border-radius: 12px; border: 1px solid #ddd; transition: border-color 0.2s; }
+    .weight-input-wrapper:focus-within { border-color: #FF4D1C; box-shadow: 0 0 0 3px rgba(255, 77, 28, 0.1); }
+    .theme-dark .weight-input-wrapper { background: #111; border-color: #444; }
+    
+    .weight-input-wrapper input { border: none; background: transparent; width: 50px; padding: 0; color: #FF4D1C; font-weight: bold; font-size: 1.05rem; text-align: right; outline: none; -moz-appearance: textfield; font-family: 'Anuphan', sans-serif; }
+    .weight-input-wrapper input::-webkit-outer-spin-button, .weight-input-wrapper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+    .weight-input-wrapper span { color: #888; font-weight: bold; font-size: 1rem; }
+    
+    /* Percent Slider */
+    .weight-slider { -webkit-appearance: none; height: 8px; background: #e0e0e0; border-radius: 5px; outline: none; flex: 1; transition: background 0.2s; }
+    .theme-dark .weight-slider { background: #444; }
+    .weight-slider::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #FF4D1C; cursor: pointer; box-shadow: 0 2px 6px rgba(255, 77, 28, 0.4); border: 2.5px solid #fff; transition: transform 0.1s; }
+    .theme-dark .weight-slider::-webkit-slider-thumb { border-color: #222; }
+    .weight-slider::-webkit-slider-thumb:active { transform: scale(1.15); }
+    .weight-slider::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: #FF4D1C; cursor: pointer; border: 2.5px solid #fff; box-shadow: 0 2px 6px rgba(255, 77, 28, 0.4); }
+
+    /* Custom Scrollbar for Modal Options */
+    #weightList::-webkit-scrollbar { width: 8px; }
+    #weightList::-webkit-scrollbar-track { background: rgba(0,0,0,0.04); border-radius: 10px; margin-block: 5px; }
+    #weightList::-webkit-scrollbar-thumb { background: rgba(0,0,0,0.15); border-radius: 10px; transition: background 0.2s; }
+    #weightList::-webkit-scrollbar-thumb:hover { background: #FF4D1C; }
+    .theme-dark #weightList::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); }
+    .theme-dark #weightList::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); }
+    .theme-dark #weightList::-webkit-scrollbar-thumb:hover { background: #FF4D1C; }
+
+    /* Desktop Layout */
+    @media (min-width: 600px) {
+      .weight-item { flex-direction: row; align-items: center; gap: 20px; padding: 12px 20px; }
+      .weight-item-header { width: 35%; max-width: 200px; flex-shrink: 0; }
+      .weight-controls { flex: 1; }
+    }
   </style>
 </head>
 <body class="theme-light" id="theme-body">
-  
   <div class="page-container">
     <div id="navbar-include"></div>
     
@@ -201,12 +186,14 @@
 
             <div class="input-group" id="textModeGroup">
               <input type="text" id="optionInput" placeholder="ใส่สิ่งที่ต้องการสุ่ม...">
-              <button class="btn" onclick="addOption()">เพิ่ม</button>
-              <div class="btn-icon-group">
-                <button class="btn secondary" onclick="sortOptions()" title="เรียง A-Z"><i class="fas fa-sort-alpha-down"></i></button>
-                <button class="btn secondary" onclick="shuffleOptions()" title="สลับตัวเลือก"><i class="fas fa-random"></i></button>
-                <button class="btn danger" onclick="clearOptions()" title="ล้างตัวเลือกทั้งหมด"><i class="fas fa-trash-alt"></i></button>
-              </div>
+              <button class="btn" style="min-width: 100px;" onclick="addOption()">เพิ่มลงวงล้อ</button>
+            </div>
+
+            <div class="action-menu" id="textModeActions">
+              <button class="btn secondary" onclick="openWeightModal()" title="ตั้งค่าเปอร์เซ็นต์โอกาสสุ่ม"><i class="fas fa-chart-pie"></i> โอกาสสุ่ม</button>
+              <button class="btn secondary" onclick="sortOptions()" title="เรียงลำดับ A-Z"><i class="fas fa-sort-alpha-down"></i> เรียง</button>
+              <button class="btn secondary" onclick="shuffleOptions()" title="สลับตำแหน่ง"><i class="fas fa-random"></i> สลับ</button>
+              <button class="btn danger" onclick="clearOptions()" title="ล้างตัวเลือกทั้งหมด"><i class="fas fa-trash-alt"></i> ล้าง</button>
             </div>
 
             <div class="input-group" id="numberModeGroup" style="display: none;">
@@ -218,7 +205,7 @@
               </div>
             </div>
             
-            <ul class="options-list" id="optionsList"></ul>
+            <ul class="options-list" id="optionsList" style="margin-top: 10px;"></ul>
 
             <div class="wheel-box">
               <div class="pointer"></div>
@@ -260,14 +247,30 @@
     </div>
   </div>
 
+  <div class="modal-overlay" id="weightModal">
+    <div class="modal-content" style="max-width: 600px; padding: 30px 20px;">
+      <i class="fas fa-chart-pie modal-icon" style="color: #FF4D1C;"></i>
+      <div class="modal-title">โอกาสสุ่ม (%)</div>
+      <p style="color: #888; font-size: 0.9rem; margin-bottom: 20px;">เมื่อคุณปรับเปอร์เซ็นต์ ระบบจะเฉลี่ยตัวเลือกอื่นๆ ให้รวมเป็น 100% อัตโนมัติ</p>
+      
+      <div id="weightList" style="width: 100%; max-height: 50vh; overflow-y: auto; margin-bottom: 25px; padding-right: 8px;">
+        </div>
+      
+      <div style="display: flex; gap: 10px; width: 100%;">
+        <button class="btn secondary" style="flex: 1; font-size: 1.1rem; padding: 12px;" onclick="resetPercents()" title="ตั้งค่าทุกอันให้เท่ากัน"><i class="fas fa-sync-alt"></i> เฉลี่ยเท่ากัน</button>
+        <button class="btn" style="flex: 1; font-size: 1.1rem; padding: 12px;" onclick="closeWeightModal()">เสร็จสิ้น</button>
+      </div>
+    </div>
+  </div>
+
   <div class="modal-overlay" id="shareModal">
     <div class="modal-content">
-      <i class="fas fa-check-circle modal-icon" style="color: #4CAF50; filter: drop-shadow(0 4px 10px rgba(76,175,80,0.3));"></i>
+      <i class="fas fa-check-circle modal-icon" style="color: #4CAF50;"></i>
       <div class="modal-title">คัดลอกลิงก์สำเร็จ!</div>
       <p style="margin-bottom: 20px; color: #888; font-size: 0.95rem;">ส่งลิงก์ด้านล่างนี้ให้เพื่อนเพื่อแชร์วงล้อของคุณได้เลย</p>
       
       <div style="display: flex; gap: 8px; width: 100%; margin-bottom: 25px;">
-        <input type="text" id="shareLinkInput" readonly style="flex: 1; padding: 10px; border-radius: 12px; font-family: inherit; font-size: 0.9rem;">
+        <input type="text" id="shareLinkInput" readonly style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; font-size: 0.9rem;">
         <button class="btn" onclick="copyShareLink()" id="copyShareBtn" style="padding: 10px 15px;" title="คัดลอกอีกครั้ง"><i class="fas fa-copy"></i></button>
       </div>
       
@@ -283,7 +286,13 @@
       if (yearElem) yearElem.textContent = new Date().getFullYear();
     });
 
-    let options = ["กินอะไรดี", "ดูหนัง", "เล่นเกม", "นอน"];
+    let options = [
+      { text: "กินอะไรดี", percent: 25 },
+      { text: "ดูหนัง", percent: 25 },
+      { text: "เล่นเกม", percent: 25 },
+      { text: "นอน", percent: 25 }
+    ];
+    
     const colors = [
       "#FF4D1C", "#2A9D8F", "#E9C46A", "#E63946", "#264653", 
       "#F4A261", "#8AB17D", "#6D597A", "#4CC9F0", "#F72585",
@@ -297,9 +306,117 @@
     let largeNumMin = 0;
     let largeNumMax = 0;
 
+    function normalizePercents() {
+      if (options.length === 0) return;
+      let sum = options.reduce((acc, opt) => acc + opt.percent, 0);
+      
+      if (sum === 0) {
+        options.forEach(opt => opt.percent = 100 / options.length);
+      } else if (Math.abs(sum - 100) > 0.01) {
+        options.forEach(opt => opt.percent = (opt.percent / sum) * 100);
+      }
+    }
+
+    function openWeightModal() {
+      if(isSpinning || isLargeNumberMode) return;
+      document.getElementById('weightModal').classList.add('active');
+      renderWeightList();
+    }
+
+    function closeWeightModal() {
+      document.getElementById('weightModal').classList.remove('active');
+    }
+
+    // รีเซ็ตเปอร์เซ็นต์ให้เท่ากันทั้งหมด
+    function resetPercents() {
+      if(options.length === 0) return;
+      const eq = 100 / options.length;
+      options.forEach(opt => opt.percent = eq);
+      
+      // อัปเดตหน้าตาใหม่ทั้งหมด
+      renderWeightList();
+      drawWheel();
+    }
+
+    // สร้างกล่องตั้งค่า (ทำงานรอบเดียวตอนเปิดหน้าต่าง)
+    function renderWeightList() {
+      const container = document.getElementById('weightList');
+      if (options.length === 0) {
+        container.innerHTML = "<div class='empty-history'>ยังไม่มีตัวเลือกให้ตั้งค่า</div>";
+        return;
+      }
+      
+      container.innerHTML = options.map((opt, i) => {
+        const displayVal = parseFloat(opt.percent).toFixed(1);
+        const color = colors[i % colors.length];
+        return `
+          <div class="weight-item">
+            <div class="weight-item-header">
+              <div class="color-dot" style="background-color: ${color};"></div>
+              <div class="weight-item-text" title="${opt.text}">${opt.text}</div>
+            </div>
+            <div class="weight-controls">
+              <input type="range" id="slider-${i}" class="weight-slider" min="0" max="100" step="0.5" value="${opt.percent}" oninput="updatePercent(${i}, this.value)">
+              <div class="weight-input-wrapper">
+                <input type="number" id="input-${i}" min="0" max="100" step="0.1" value="${displayVal}" onchange="updatePercent(${i}, this.value)">
+                <span>%</span>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // ฟังก์ชันอัปเดตเฉพาะตัวเลขในช่อง (ทำให้ Slider ลื่น ไม่กระตุก)
+    function updateWeightDOM(excludeIndex) {
+      for (let i = 0; i < options.length; i++) {
+        const slider = document.getElementById(`slider-${i}`);
+        const input = document.getElementById(`input-${i}`);
+        
+        if (i !== excludeIndex) { // อัปเดตช่องอื่นๆ
+          if(slider) slider.value = options[i].percent;
+          if(input) input.value = options[i].percent.toFixed(1);
+        } else { // อัปเดตแค่กล่องตัวเลขของแถบที่เรากำลังลากอยู่
+          if(input) input.value = options[i].percent.toFixed(1);
+        }
+      }
+      drawWheel(); // รีเฟรชวงล้อด้านหลัง
+    }
+
+    function updatePercent(index, val) {
+      let newPercent = parseFloat(val);
+      if (isNaN(newPercent) || newPercent < 0) newPercent = 0;
+      if (newPercent > 100) newPercent = 100;
+      
+      const oldPercent = options[index].percent;
+      const diff = newPercent - oldPercent;
+      options[index].percent = newPercent;
+      
+      const othersSum = 100 - oldPercent;
+      
+      if (othersSum > 0) {
+        for (let i = 0; i < options.length; i++) {
+          if (i !== index) {
+            options[i].percent = options[i].percent - diff * (options[i].percent / othersSum);
+          }
+        }
+      } else if (options.length > 1) {
+        const eq = (100 - newPercent) / (options.length - 1);
+        for (let i = 0; i < options.length; i++) {
+          if (i !== index) {
+            options[i].percent = eq;
+          }
+        }
+      }
+      
+      normalizePercents();
+      
+      // เรียกฟังก์ชันเปลี่ยนค่าแบบไม่ Refresh HTML
+      updateWeightDOM(index);
+    }
+
     function shareWheel() {
       const currentMode = document.getElementById('tabNumber').classList.contains('active') ? 'number' : 'text';
-      
       const state = {
         title: document.getElementById('wheelTitle').value,
         mode: currentMode,
@@ -308,12 +425,10 @@
         max: document.getElementById('numMax').value,
         isLarge: isLargeNumberMode
       };
-
       const encodedData = btoa(encodeURIComponent(JSON.stringify(state)));
       const shareUrl = window.location.origin + window.location.pathname + '?d=' + encodedData;
 
       document.getElementById('shareLinkInput').value = shareUrl;
-
       navigator.clipboard.writeText(shareUrl).then(() => {
         showShareModal(true);
       }).catch(err => {
@@ -330,9 +445,7 @@
       }
     }
 
-    function closeShareModal() {
-      document.getElementById('shareModal').classList.remove('active');
-    }
+    function closeShareModal() { document.getElementById('shareModal').classList.remove('active'); }
 
     function copyShareLink() {
       const shareInput = document.getElementById('shareLinkInput');
@@ -348,13 +461,10 @@
     function loadFromUrl() {
       const urlParams = new URLSearchParams(window.location.search);
       const dataStr = urlParams.get('d');
-      
       if (dataStr) {
         try {
           const state = JSON.parse(decodeURIComponent(atob(dataStr)));
-          
           if(state.title) document.getElementById('wheelTitle').value = state.title;
-
           if (state.mode === 'number') {
             switchMode('number');
             if(state.min) document.getElementById('numMin').value = state.min;
@@ -363,10 +473,16 @@
           } else {
             switchMode('text');
             if(state.items && state.items.length > 0) {
-              options = state.items;
+              if (typeof state.items[0] === 'string') {
+                options = state.items.map(text => ({ text: text, percent: 100 / state.items.length }));
+              } else if (state.items[0].weight !== undefined) {
+                const sumW = state.items.reduce((s, o) => s + o.weight, 0) || 1;
+                options = state.items.map(o => ({ text: o.text, percent: (o.weight / sumW) * 100 }));
+              } else {
+                options = state.items;
+              }
             }
           }
-          
           window.history.replaceState({}, document.title, window.location.pathname);
         } catch (e) {
           console.error("Invalid share link");
@@ -378,19 +494,18 @@
       if(isSpinning) return;
       isLargeNumberMode = false;
       options = [];
-      
       document.getElementById('tabText').classList.toggle('active', mode === 'text');
       document.getElementById('tabNumber').classList.toggle('active', mode === 'number');
-      
       if(mode === 'text') {
         document.getElementById('textModeGroup').style.display = 'flex';
+        document.getElementById('textModeActions').style.display = 'flex';
         document.getElementById('numberModeGroup').style.display = 'none';
         document.getElementById('autoRemoveLabel').style.display = 'flex';
       } else {
         document.getElementById('textModeGroup').style.display = 'none';
+        document.getElementById('textModeActions').style.display = 'none';
         document.getElementById('numberModeGroup').style.display = 'flex';
       }
-      
       drawWheel();
       updateList();
     }
@@ -399,28 +514,21 @@
       if(isSpinning) return;
       const min = parseInt(document.getElementById('numMin').value);
       const max = parseInt(document.getElementById('numMax').value);
-      
-      if(isNaN(min) || isNaN(max)) {
-        alert("กรุณากรอกตัวเลขให้ครบถ้วน");
-        return;
-      }
-      if(min > max) {
-        alert("เลขเริ่มต้นต้องน้อยกว่าหรือเท่ากับเลขสิ้นสุด");
-        return;
-      }
+      if(isNaN(min) || isNaN(max)) { alert("กรุณากรอกตัวเลขให้ครบถ้วน"); return; }
+      if(min > max) { alert("เลขเริ่มต้นต้องน้อยกว่าหรือเท่ากับเลขสิ้นสุด"); return; }
 
       if((max - min) > 200) {
         isLargeNumberMode = true;
-        largeNumMin = min;
-        largeNumMax = max;
+        largeNumMin = min; largeNumMax = max;
         options = [];
         document.getElementById('autoRemoveLabel').style.display = 'none';
       } else {
         isLargeNumberMode = false;
         options = [];
         document.getElementById('autoRemoveLabel').style.display = 'flex';
+        const totalItems = max - min + 1;
         for(let i = min; i <= max; i++) {
-          options.push(i.toString());
+          options.push({ text: i.toString(), percent: 100 / totalItems });
         }
       }
       drawWheel();
@@ -441,7 +549,7 @@
 
       let drawOptions = options;
       if (isLargeNumberMode) {
-        drawOptions = Array(12).fill("?");
+        drawOptions = Array(12).fill({ text: "?", percent: 100/12 });
       }
 
       if (drawOptions.length === 0) {
@@ -450,19 +558,24 @@
         return;
       }
 
-      const sliceAngle = (2 * Math.PI) / drawOptions.length;
+      let startAngle = 0;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       
       for (let i = 0; i < drawOptions.length; i++) {
+        const opt = drawOptions[i];
+        const sliceAngle = (opt.percent / 100) * 2 * Math.PI;
+
+        if (sliceAngle <= 0) continue; 
+
         ctx.beginPath();
         ctx.fillStyle = colors[i % colors.length];
         ctx.moveTo(center, center);
-        ctx.arc(center, center, center, i * sliceAngle, (i + 1) * sliceAngle);
+        ctx.arc(center, center, center, startAngle, startAngle + sliceAngle);
         ctx.fill();
         ctx.save();
         
         ctx.translate(center, center);
-        ctx.rotate(i * sliceAngle + sliceAngle / 2);
+        ctx.rotate(startAngle + sliceAngle / 2);
         ctx.textAlign = "right";
         ctx.fillStyle = "#fff";
         
@@ -475,10 +588,12 @@
         ctx.shadowOffsetX = 1;
         ctx.shadowOffsetY = 1;
         
-        ctx.fillText(drawOptions[i], center - 20, 8);
+        ctx.fillText(opt.text, center - 20, 8);
         
         ctx.shadowColor = "transparent";
         ctx.restore();
+
+        startAngle += sliceAngle;
       }
 
       if (isLargeNumberMode) {
@@ -498,7 +613,6 @@
         ctx.font = "bold 16px 'Anuphan', sans-serif";
         ctx.fillText(`${largeNumMin} - ${largeNumMax}`, center, center + 15);
       }
-
       updateList();
     }
 
@@ -507,7 +621,14 @@
       const input = document.getElementById("optionInput");
       const val = input.value.trim();
       if (val !== "") {
-        options.push(val);
+        if (options.length === 0) {
+          options.push({ text: val, percent: 100 });
+        } else {
+          const newPct = 100 / (options.length + 1);
+          options.forEach(opt => opt.percent = opt.percent * ((100 - newPct) / 100));
+          options.push({ text: val, percent: newPct });
+          normalizePercents();
+        }
         input.value = "";
         drawWheel();
       }
@@ -515,8 +636,21 @@
 
     function removeOption(index) {
       if(isSpinning || isLargeNumberMode) return;
+      const removedPct = options[index].percent;
       options.splice(index, 1);
+      
+      if (options.length > 0 && removedPct < 100) {
+        const scale = 100 / (100 - removedPct);
+        options.forEach(opt => opt.percent *= scale);
+        normalizePercents();
+      } else if (options.length > 0) {
+        options.forEach(opt => opt.percent = 100 / options.length);
+      }
+      
       drawWheel();
+      if(document.getElementById('weightModal').classList.contains('active')) {
+        renderWeightList();
+      }
     }
 
     function clearOptions() {
@@ -530,11 +664,11 @@
 
     function sortOptions() {
       if(isSpinning || isLargeNumberMode) return;
-      const isNumeric = options.every(val => !isNaN(val) && val.trim() !== '');
+      const isNumeric = options.every(opt => !isNaN(opt.text) && opt.text.trim() !== '');
       if (isNumeric) {
-        options.sort((a, b) => Number(a) - Number(b));
+        options.sort((a, b) => Number(a.text) - Number(b.text));
       } else {
-        options.sort((a, b) => a.localeCompare(b, 'th'));
+        options.sort((a, b) => a.text.localeCompare(b.text, 'th'));
       }
       drawWheel();
     }
@@ -550,19 +684,16 @@
 
     function updateList() {
       const list = document.getElementById("optionsList");
-      
       if (isLargeNumberMode) {
         list.innerHTML = `<li><i class="fas fa-infinity"></i> โหมดสุ่มตัวเลขจำนวนมาก: ${largeNumMin} ถึง ${largeNumMax}</li>`;
         return;
       }
-
       if(options.length > 50) {
         list.innerHTML = `<li>แสดงผลตัวเลือก ${options.length} รายการ (ซ่อนเพื่อความสวยงาม)</li>`;
         return;
       }
-      
       list.innerHTML = options.map((opt, i) => `
-        <li>${opt} <i class="fas fa-times delete-btn" onclick="removeOption(${i})"></i></li>
+        <li>${opt.text} <i class="fas fa-times delete-btn" onclick="removeOption(${i})"></i></li>
       `).join('');
     }
 
@@ -572,10 +703,8 @@
         list.innerHTML = `<div class="empty-history">ยังไม่มีประวัติการสุ่ม<br>ลองหมุนวงล้อดูสิ!</div>`;
         return;
       }
-      
       const reversedHistory = [...historyData].reverse();
       const total = historyData.length;
-      
       list.innerHTML = reversedHistory.map((item, index) => {
         const realIndex = total - index;
         return `
@@ -596,6 +725,12 @@
 
     function spin() {
       if ((options.length === 0 && !isLargeNumberMode) || isSpinning) return;
+      const totalPercent = options.reduce((sum, opt) => sum + opt.percent, 0);
+      if(!isLargeNumberMode && totalPercent < 1) {
+        alert("เปอร์เซ็นต์รวมไม่ถูกต้อง กรุณาตั้งค่าใหม่");
+        return;
+      }
+
       isSpinning = true;
       document.getElementById('spinBtn').disabled = true;
 
@@ -606,19 +741,23 @@
 
       setTimeout(() => {
         let winner;
-        
         if (isLargeNumberMode) {
           winner = Math.floor(Math.random() * (largeNumMax - largeNumMin + 1)) + largeNumMin;
         } else {
-          const sliceDeg = 360 / options.length;
-          const actualDeg = currentDeg % 360;
-          const pointerAngle = (360 - actualDeg + 270) % 360;
-          const winnerIndex = Math.floor(pointerAngle / sliceDeg);
-          winner = options[winnerIndex];
-          
+          const pointerAngleDeg = (360 - (currentDeg % 360) + 270) % 360;
+          let cumulativeAngle = 0;
+          let winnerIndex = 0;
+          for (let i = 0; i < options.length; i++) {
+            const sliceAngleDeg = (options[i].percent / 100) * 360;
+            cumulativeAngle += sliceAngleDeg;
+            if (pointerAngleDeg <= cumulativeAngle && options[i].percent > 0) {
+              winnerIndex = i;
+              break;
+            }
+          }
+          winner = options[winnerIndex].text;
           if (document.getElementById('autoRemove').checked) {
-            options.splice(winnerIndex, 1);
-            drawWheel();
+            removeOption(winnerIndex);
           }
         }
         
@@ -633,9 +772,7 @@
       }, 4000);
     }
 
-    function closeModal() {
-      document.getElementById('winModal').classList.remove('active');
-    }
+    function closeModal() { document.getElementById('winModal').classList.remove('active'); }
 
     document.getElementById("optionInput").addEventListener("keypress", function(e) {
       if (e.key === "Enter") addOption();
