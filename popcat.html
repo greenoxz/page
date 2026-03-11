@@ -13,7 +13,6 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <style>
-        /* Game-specific styles */
         .game-container {
             display: flex;
             flex-direction: column;
@@ -23,8 +22,6 @@
             padding: 20px;
             user-select: none;
             -webkit-user-select: none;
-            -moz-user-select: none;
-            -ms-user-select: none;
             position: relative;
             min-height: 100vh;
             width: 100%;
@@ -42,26 +39,16 @@
             overflow-x: hidden;
         }
 
-        .click-area {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            cursor: pointer;
-            background: transparent;
-            z-index: 1;
-        }
-
         .game-title {
             font-size: 3rem;
             color: #2c3e50;
             margin-bottom: 10px;
             text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
             pointer-events: none;
-            position: relative;
             z-index: 2;
         }
+
+        body.theme-dark .game-title { color: #fff; }
 
         .stats-container {
             display: flex;
@@ -69,25 +56,16 @@
             margin-bottom: 20px;
             padding: 15px 30px;
             pointer-events: none;
-            position: relative;
             z-index: 2;
         }
 
-        .stat-box {
-            text-align: center;
-        }
-
-        .stat-label {
-            font-size: 1rem;
-            color: #666;
-            margin-bottom: 5px;
-        }
-
         .stat-value {
-            font-size: 2rem;
+            font-size: 2.5rem;
             font-weight: bold;
             color: #2c3e50;
         }
+
+        body.theme-dark .stat-value { color: #fff; }
 
         .cat-container {
             position: relative;
@@ -96,9 +74,7 @@
             transform-origin: center;
         }
 
-        .cat-container:active {
-            transform: scale(0.85);
-        }
+        .cat-container:active { transform: scale(0.85); }
 
         .cat-image {
             width: 300px;
@@ -113,12 +89,9 @@
             left: 0;
             opacity: 0;
             transition: opacity 0.05s;
-            pointer-events: none;
         }
 
-        .mouth-open.active {
-            opacity: 1;
-        }
+        .mouth-open.active { opacity: 1; }
 
         @keyframes pop {
             0% { transform: scale(1); }
@@ -126,332 +99,153 @@
             100% { transform: scale(1); }
         }
 
-        .pop-animation {
-            animation: pop 0.08s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .pop-animation { animation: pop 0.08s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-        .sound-effect {
-            display: none;
-        }
-
-        /* Dark theme overrides */
-        body.theme-dark .stat-label {
-            color: #ccc;
-        }
-
-        body.theme-dark .stat-value {
-            color: #fff;
-        }
-
-        body.theme-dark .game-title {
-            color: #fff;
-        }
-
-        /* Make sure navigation and footer are above click-area */
-        #nav-placeholder, #footer-placeholder {
-            position: relative;
-            z-index: 2;
-        }
-
-        .leaderboard {
-            position: relative;
-            z-index: 2;
-        }
-
-        /* Modal styles */
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(5px);
-            justify-content: center;
-            align-items: center;
-            z-index: 9999;
-        }
-
-        .modal-content {
-            background-color: rgba(255, 255, 255, 0.95);
-            padding: 40px 30px;
-            border-radius: 16px;
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-            color: #2c3e50;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            transform: scale(0.9);
-            animation: modalPopIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
-
-        @keyframes modalPopIn {
-            to { transform: scale(1); }
-        }
-
-        body.theme-dark .modal-content {
-            background-color: rgba(44, 62, 80, 0.95);
-            color: white;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .modal h2 {
-            margin: 0 0 10px 0;
-            font-size: 26px;
-            font-weight: 600;
-        }
-
-        .modal p {
-            margin: 0 0 25px 0;
-            color: #666;
-            font-size: 15px;
-        }
-
-        body.theme-dark .modal p {
-            color: #cbd5e1;
-        }
-
-        .name-input {
-            width: 100%;
-            padding: 14px;
-            margin: 0 0 20px 0;
-            border: 2px solid #e2e8f0;
-            border-radius: 10px;
-            background-color: #f8f9fa;
-            color: #2c3e50;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s;
-            box-sizing: border-box;
-            text-align: center;
-        }
-
-        .name-input:focus {
-            border-color: #00C2FF;
-            background-color: #fff;
-            box-shadow: 0 0 0 3px rgba(0, 194, 255, 0.2);
-        }
-
-        body.theme-dark .name-input {
-            border-color: rgba(255, 255, 255, 0.1);
-            background-color: rgba(0, 0, 0, 0.2);
-            color: white;
-        }
-
-        body.theme-dark .name-input:focus {
-            border-color: #00C2FF;
-            background-color: rgba(0, 0, 0, 0.3);
-        }
-
-        .submit-button {
-            width: 100%;
-            padding: 14px;
-            background-color: #00C2FF;
-            color: white;
+        /* --- Button Design (Match Wheel Page) --- */
+        .game-button {
+            padding: 12px 24px;
+            font-size: 1rem;
             border: none;
             border-radius: 10px;
             cursor: pointer;
-            font-size: 16px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-            transition: all 0.3s;
-            display: flex;
-            justify-content: center;
+            transition: background 0.2s, transform 0.1s;
+            font-weight: bold;
+            font-family: 'Anuphan', sans-serif;
+            display: inline-flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
+            color: white;
+            background-color: #FF4D1C;
+            z-index: 10;
+            margin-bottom: 20px;
         }
+        .game-button:hover { background-color: #e64519; }
+        .game-button:active { transform: scale(0.97); }
 
-        .submit-button:hover {
-            background-color: #0ab4eb;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 194, 255, 0.3);
-        }
-
-        .submit-button:active {
-            transform: translateY(0);
-        }
-
-        /* Leaderboard styles */
+        /* --- Leaderboard Design --- */
         .leaderboard {
-            margin: 40px auto 40px auto;
-            padding: 20px;
-            border-radius: 12px;
+            margin: 40px auto 60px auto;
+            padding: 25px;
+            border-radius: 15px;
             max-width: 600px;
             width: 90%;
-            background-color: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(0, 0, 0, 0.1);
+            background-color: #f5f5f5;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            z-index: 2;
+        }
+
+        body.theme-dark .leaderboard {
+            background-color: #1a1a1c;
+            border: 1px solid #333;
         }
 
         .leaderboard-header {
             text-align: center;
             margin-bottom: 20px;
             padding-bottom: 15px;
-            border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+            border-bottom: 2px solid #ddd;
         }
+
+        body.theme-dark .leaderboard-header { border-bottom-color: #333; }
 
         .leaderboard-title {
             color: #2c3e50;
             font-size: 24px;
+            font-weight: 700;
             margin-bottom: 10px;
-            font-weight: 600;
         }
 
-        .total-clicks {
-            font-size: 18px;
-            color: #666;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-
-        .total-clicks i {
-            color: #ff4d1c;
-        }
-
-        .total-clicks .count {
-            font-weight: bold;
-            color: #ff4d1c;
-        }
-
-        body.theme-dark .leaderboard {
-            background-color: rgba(52, 73, 94, 0.95);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        body.theme-dark .leaderboard-header {
-            border-bottom: 2px solid rgba(255, 255, 255, 0.1);
-        }
-
-        body.theme-dark .leaderboard-title {
-            color: white;
-        }
-
-        body.theme-dark .total-clicks {
-            color: #bdc3c7;
-        }
+        body.theme-dark .leaderboard-title { color: white; }
 
         .leaderboard-entry {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 12px 20px;
-            margin: 8px 0;
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 8px;
+            padding: 15px 20px;
+            margin: 10px 0;
+            background-color: #fff;
+            border-radius: 12px;
+            border-left: 5px solid #FF4D1C;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
             transition: transform 0.2s;
-            border: 1px solid rgba(0, 0, 0, 0.1);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-        }
-
-        .leaderboard-entry:hover {
-            transform: translateX(5px);
         }
 
         body.theme-dark .leaderboard-entry {
-            background-color: rgba(44, 62, 80, 0.95);
+            background-color: #222;
             color: white;
-            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .rank {
-            font-weight: bold;
-            margin-right: 20px;
-            font-size: 18px;
-            color: #ff4d1c;
-        }
+        .rank { font-weight: bold; font-size: 1.1rem; color: #FF4D1C; width: 40px; }
+        .player-name { flex-grow: 1; font-weight: 500; }
+        .score { font-weight: bold; color: #FF4D1C; font-size: 1.1rem; }
 
-        .player-name {
-            flex-grow: 1;
-            font-size: 16px;
-            color: #2c3e50;
-            font-weight: 500;
-        }
-
-        .score {
-            font-weight: bold;
-            font-size: 18px;
-            color: #ff4d1c;
-        }
-
-        body.theme-dark .player-name {
-            color: #ecf0f1;
-        }
-
-        body.theme-dark .score {
-            color: #ff4d1c;
-        }
-
-        .empty-spot {
-            opacity: 0.5;
-            background-color: rgba(0, 0, 0, 0.05) !important;
-        }
-
-        body.theme-dark .empty-spot {
-            background-color: rgba(255, 255, 255, 0.05) !important;
-        }
-
-        /* Button styles */
-        .game-button {
-            padding: 10px 20px;
-            font-size: 14px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            font-weight: 600;
-            display: inline-flex;
-            align-items: center;
+        .pagination {
+            display: flex;
             justify-content: center;
             gap: 8px;
-            color: white;
-            white-space: nowrap;
-            background-color: #00C2FF;
-            position: relative;
-            z-index: 10;
-            margin-bottom: 20px;
+            margin-top: 25px;
+            flex-wrap: wrap;
         }
 
-        .game-button i {
-            font-size: 16px;
+        .page-btn {
+            padding: 8px 14px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            background: #fff;
+            color: #333;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.2s;
         }
 
-        .game-button:hover {
-            background-color: #0ab4eb;
-            transform: translateY(-2px);
-        }
+        .page-btn:hover { background: #eee; }
+        .page-btn.active { background: #FF4D1C; color: #fff; border-color: #FF4D1C; }
 
-        .game-button:active {
-            transform: translateY(1px);
-        }
+        body.theme-dark .page-btn { background: #222; border-color: #444; color: #fff; }
+        body.theme-dark .page-btn.active { background: #FF4D1C; border-color: #FF4D1C; }
 
-        #nav-placeholder, #footer-placeholder, .leaderboard { cursor: default; }
-        .game-button, .desktop-menu a, .mobile-menu a, .submit-button { cursor: pointer; }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(5px);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        .modal-content {
+            background-color: #fff;
+            padding: 40px 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+        }
+        body.theme-dark .modal-content { background-color: #18181b; color: white; }
+        .name-input {
+            width: 100%; padding: 14px; margin-bottom: 20px;
+            border: 2px solid #ddd; border-radius: 10px;
+            box-sizing: border-box; text-align: center; font-size: 16px;
+        }
+        body.theme-dark .name-input { background: #222; color: #fff; border-color: #444; }
     </style>
 </head>
-<body class="theme-dark" id="theme-body">
+<body id="theme-body">
     <div class="page-container">
         <div id="nav-placeholder"></div>
 
         <div class="game-container" id="clickArea">
             <h1 class="game-title">Pisit Pop</h1>
             
-            <button class="game-button change-name-button" id="changeNameBtn">
-                <i class="fas fa-user"></i>
+            <button class="game-button" id="changeNameBtn">
+                <i class="fas fa-user-edit"></i>
                 <span id="playerNameDisplay">ใส่ชื่อ / เปลี่ยนชื่อ</span>
             </button>
 
             <div class="stats-container">
                 <div class="stat-box">
-                    <div class="stat-label">Clicks</div>
                     <div class="stat-value" id="clickCount">0</div>
                 </div>
             </div>
@@ -463,26 +257,26 @@
 
         <div class="leaderboard">
             <div class="leaderboard-header">
-                <h2 class="leaderboard-title">Top 5 Players</h2>
-                <div class="total-clicks">
-                    <i class="fas fa-mouse-pointer"></i>
-                    Total Clicks: <span class="count" id="totalClicks">0</span>
+                <h2 class="leaderboard-title">Leaderboard (Top 50)</h2>
+                <div class="total-clicks" style="color: #666;">
+                    Total Clicks: <span id="totalClicks" style="font-weight:bold; color:#FF4D1C;">0</span>
                 </div>
             </div>
             <div id="leaderboardEntries"></div>
+            <div id="paginationContainer" class="pagination"></div>
         </div>
 
+        <audio id="popSound" src="sound/pop.mp3" preload="auto"></audio>
         <div id="footer-placeholder"></div>
     </div>
 
     <div class="modal" id="nameModal">
         <div class="modal-content">
-            <h2>Welcome!</h2>
-            <p>กรอกชื่อเพื่อร่วมสนุกบน Leaderboard</p>
+            <h2 id="modalTitle">Welcome!</h2>
+            <p id="modalDesc">กรอกชื่อเพื่อร่วมสนุกบน Leaderboard</p>
             <input type="text" id="playerName" class="name-input" maxlength="20" placeholder="พิมพ์ชื่อของคุณ...">
-            <button class="submit-button" onclick="submitScore()">
-                <i class="fas fa-play"></i>
-                เข้าสู่เกม
+            <button class="game-button" style="width: 100%; margin-bottom: 0;" onclick="submitScore()">
+                <i class="fas fa-play"></i> เข้าสู่เกม
             </button>
         </div>
     </div>
@@ -490,7 +284,6 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="js/main.js"></script>
     <script>
-        // Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAXfzmalfP4RZjMSjDbl5LOXBT7m9vzDzU",
             authDomain: "ppknr-popcat.firebaseapp.com",
@@ -501,13 +294,11 @@
             appId: "1:90126143526:web:96316212d303ac08df16e7"
         };
 
-        // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
         const totalClicksRef = database.ref('totalClicks');
         const leaderboardRef = database.ref('leaderboard');
 
-        // Load navigation and footer
         $(function(){
             $("#nav-placeholder").load("nav.html", function() {
                 $('.desktop-menu a[href="popcat.html"]').addClass('active');
@@ -516,7 +307,6 @@
             $("#footer-placeholder").load("footer.html");
         });
 
-        // Game functionality
         const clickArea = document.getElementById('clickArea');
         const catImage = document.getElementById('catImage');
         const catImageOpen = document.getElementById('catImageOpen');
@@ -525,227 +315,136 @@
         const popSound = document.getElementById('popSound');
         const playerNameDisplay = document.getElementById('playerNameDisplay');
         const changeNameBtn = document.getElementById('changeNameBtn');
-        
-        let count = 0;
-        let savedTotalClicks = 0;
-        let clickTimeout = null;
-        let pendingClicks = 0;
-        
-        let currentPlayerName = localStorage.getItem('playerName') || '';
-        let playerNodeKey = localStorage.getItem('playerNodeKey') || null; 
-        
         const nameModal = document.getElementById('nameModal');
         const playerNameInput = document.getElementById('playerName');
         const leaderboardEntries = document.getElementById('leaderboardEntries');
+        const paginationContainer = document.getElementById('paginationContainer');
 
-        // ฟังก์ชันอัปเดตชื่อผู้เล่นบนปุ่ม
+        let count = 0;
+        let pendingClicks = 0;
+        let clickTimeout = null;
+        let currentPlayerName = localStorage.getItem('playerName') || '';
+        let playerNodeKey = localStorage.getItem('playerNodeKey') || null;
+
+        let allEntries = [];
+        let currentPage = 1;
+        const perPage = 10;
+
         function updateDisplay() {
-            if (currentPlayerName) {
-                playerNameDisplay.textContent = 'ผู้เล่น: ' + currentPlayerName;
-            } else {
-                playerNameDisplay.textContent = 'ใส่ชื่อ / เปลี่ยนชื่อ';
-            }
+            playerNameDisplay.textContent = currentPlayerName ? 'ผู้เล่น: ' + currentPlayerName : 'ใส่ชื่อ / เปลี่ยนชื่อ';
         }
-        updateDisplay(); // เรียกใช้ครั้งแรก
+        updateDisplay();
 
-        // โหลดคะแนนเดิมของผู้เล่นเมื่อเข้ามาที่หน้าเว็บ
         if (currentPlayerName) {
-            leaderboardRef.orderByChild('name').equalTo(currentPlayerName).once('value', (snapshot) => {
-                if (snapshot.exists()) {
-                    snapshot.forEach((childSnapshot) => {
-                        count = childSnapshot.val().score || 0;
+            leaderboardRef.orderByChild('name').equalTo(currentPlayerName).once('value', (snap) => {
+                if (snap.exists()) {
+                    snap.forEach((child) => {
+                        count = child.val().score || 0;
                         clickCount.textContent = count;
-                        playerNodeKey = childSnapshot.key;
+                        playerNodeKey = child.key;
                         localStorage.setItem('playerNodeKey', playerNodeKey);
                     });
                 }
             });
         }
 
-        // Real-time updates for total clicks
-        totalClicksRef.on('value', (snapshot) => {
-            savedTotalClicks = snapshot.val() || 0;
-            totalClicks.textContent = savedTotalClicks;
+        totalClicksRef.on('value', (snap) => { totalClicks.textContent = snap.val() || 0; });
+
+        leaderboardRef.on('value', (snapshot) => {
+            const tempEntries = [];
+            snapshot.forEach((child) => {
+                tempEntries.push({ name: child.val().name, score: child.val().score, timestamp: child.val().timestamp });
+            });
+            tempEntries.sort((a, b) => (b.score - a.score) || (a.timestamp - b.timestamp));
+            allEntries = tempEntries.slice(0, 50);
+            renderLeaderboard();
         });
 
-        // Real-time updates for leaderboard
-        leaderboardRef.on('value', (snapshot) => {
-            const entries = [];
-            
-            snapshot.forEach((child) => {
-                entries.push({
-                    name: child.val().name,
-                    score: child.val().score,
-                    timestamp: child.val().timestamp
-                });
-            });
+        function renderLeaderboard() {
+            const totalPages = Math.ceil(allEntries.length / perPage) || 1;
+            const start = (currentPage - 1) * perPage;
+            const pageData = allEntries.slice(start, start + perPage);
 
-            entries.sort((a, b) => {
-                if (b.score !== a.score) return b.score - a.score;
-                return b.timestamp - a.timestamp; 
-            });
-
-            while (entries.length < 5) {
-                entries.push({ name: "---", score: 0, timestamp: 0 });
-            }
-
-            const top5 = entries.slice(0, 5);
-
-            leaderboardEntries.innerHTML = top5.map((entry, index) => `
-                <div class="leaderboard-entry ${entry.name === '---' ? 'empty-spot' : ''}">
-                    <span class="rank">#${index + 1}</span>
+            leaderboardEntries.innerHTML = pageData.map((entry, i) => `
+                <div class="leaderboard-entry">
+                    <span class="rank">#${start + i + 1}</span>
                     <span class="player-name">${entry.name}</span>
-                    <span class="score">${entry.score || '---'}</span>
+                    <span class="score">${entry.score.toLocaleString()}</span>
                 </div>
             `).join('');
-        });
 
-        function showNameModal() {
-            nameModal.style.display = 'flex';
-            playerNameInput.focus();
+            let pgHtml = '';
+            for(let i=1; i<=totalPages; i++) {
+                pgHtml += `<button class="page-btn ${i===currentPage?'active':''}" onclick="changePage(${i})">${i}</button>`;
+            }
+            paginationContainer.innerHTML = pgHtml;
         }
 
-        function hideNameModal() {
-            nameModal.style.display = 'none';
-            playerNameInput.value = '';
-        }
+        window.changePage = (p) => { currentPage = p; renderLeaderboard(); };
 
         function submitScore() {
             const name = playerNameInput.value.trim();
-            if (name) {
-                currentPlayerName = name;
-                localStorage.setItem('playerName', name);
-                updateDisplay(); // อัปเดตชื่อบนปุ่มทันที
+            if (!name) return;
+            currentPlayerName = name;
+            localStorage.setItem('playerName', name);
+            updateDisplay();
 
-                leaderboardRef.orderByChild('name').equalTo(name).once('value', (snapshot) => {
-                    if (snapshot.exists()) {
-                        // มีอยู่แล้ว: นำยอดที่กดสะสมไว้ ไปบวกเพิ่มกับของเดิม
-                        snapshot.forEach((childSnapshot) => {
-                            playerNodeKey = childSnapshot.key;
-                            localStorage.setItem('playerNodeKey', playerNodeKey);
-                            
-                            childSnapshot.ref.update({
-                                score: firebase.database.ServerValue.increment(count),
-                                timestamp: firebase.database.ServerValue.TIMESTAMP
-                            }).then(() => {
-                                childSnapshot.ref.once('value').then(snap => {
-                                    count = snap.val().score;
-                                    clickCount.textContent = count;
-                                });
-                            });
-                        });
-                    } else {
-                        // ผู้เล่นใหม่: สร้างข้อมูลใหม่
-                        const newRef = leaderboardRef.push();
-                        playerNodeKey = newRef.key;
+            leaderboardRef.orderByChild('name').equalTo(name).once('value', (snap) => {
+                if (snap.exists()) {
+                    snap.forEach((child) => {
+                        playerNodeKey = child.key;
                         localStorage.setItem('playerNodeKey', playerNodeKey);
-                        newRef.set({
-                            name: name,
-                            score: count,
-                            timestamp: firebase.database.ServerValue.TIMESTAMP
-                        });
-                    }
-                });
-                
-                hideNameModal();
-            }
+                        child.ref.update({ score: firebase.database.ServerValue.increment(count), timestamp: firebase.database.ServerValue.TIMESTAMP })
+                        .then(() => child.ref.once('value').then(s => { count = s.val().score; clickCount.textContent = count; }));
+                    });
+                } else {
+                    const newRef = leaderboardRef.push();
+                    playerNodeKey = newRef.key;
+                    localStorage.setItem('playerNodeKey', playerNodeKey);
+                    newRef.set({ name: name, score: count, timestamp: firebase.database.ServerValue.TIMESTAMP });
+                }
+            });
+            nameModal.style.display = 'none';
         }
 
-        function handleClick(e) {
-            // ไม่นับคลิกถ้าไปโดนปุ่มเปลี่ยนชื่อ
-            if (e.target === changeNameBtn || changeNameBtn.contains(e.target)) return;
+        clickArea.addEventListener('click', (e) => {
+            if (e.target.closest('#changeNameBtn')) return;
             
-            count++;
-            pendingClicks++;
+            count++; pendingClicks++;
             clickCount.textContent = count;
             
             if (popSound) {
                 popSound.currentTime = 0;
                 popSound.play();
             }
-            
+
             catImageOpen.classList.add('active');
             catImage.classList.add('pop-animation');
-            
-            setTimeout(() => { catImage.classList.remove('pop-animation'); }, 80);
-            setTimeout(() => { catImageOpen.classList.remove('active'); }, 50);
+            setTimeout(() => catImage.classList.remove('pop-animation'), 80);
+            setTimeout(() => catImageOpen.classList.remove('active'), 50);
 
             clearTimeout(clickTimeout);
             clickTimeout = setTimeout(() => {
-                if (pendingClicks > 0) {
-                    const clicksToSave = pendingClicks;
-                    pendingClicks = 0;
-                    
-                    totalClicksRef.transaction((currentTotal) => {
-                        return (currentTotal || 0) + clicksToSave;
+                const save = pendingClicks; pendingClicks = 0;
+                totalClicksRef.transaction(c => (c || 0) + save);
+                if (currentPlayerName && playerNodeKey) {
+                    leaderboardRef.child(playerNodeKey).update({ 
+                        score: firebase.database.ServerValue.increment(save), 
+                        timestamp: firebase.database.ServerValue.TIMESTAMP 
                     });
-                    
-                    if (currentPlayerName) {
-                        if (playerNodeKey) {
-                            leaderboardRef.child(playerNodeKey).update({
-                                score: firebase.database.ServerValue.increment(clicksToSave),
-                                timestamp: firebase.database.ServerValue.TIMESTAMP
-                            });
-                        } else {
-                            leaderboardRef.orderByChild('name').equalTo(currentPlayerName).once('value', (snapshot) => {
-                                if (snapshot.exists()) {
-                                    snapshot.forEach((child) => {
-                                        playerNodeKey = child.key;
-                                        localStorage.setItem('playerNodeKey', playerNodeKey);
-                                        child.ref.update({
-                                            score: firebase.database.ServerValue.increment(clicksToSave),
-                                            timestamp: firebase.database.ServerValue.TIMESTAMP
-                                        });
-                                    });
-                                }
-                            });
-                        }
-                    } else {
-                        checkHighScore(count);
-                    }
                 }
             }, 500);
-        }
-
-        function checkHighScore(currentScore) {
-            if (currentPlayerName) return;
-
-            leaderboardRef.once('value').then((snapshot) => {
-                const entries = [];
-                snapshot.forEach((child) => { entries.push(child.val().score); });
-                entries.sort((a, b) => b - a);
-                const top5 = entries.slice(0, 5);
-
-                if (top5.length < 5 || currentScore > (top5[top5.length - 1] || 0)) {
-                    document.getElementById('nameModal').querySelector('h2').textContent = "New High Score!";
-                    document.getElementById('nameModal').querySelector('p').textContent = "กรอกชื่อเพื่อร่วมสนุกบน Leaderboard";
-                    showNameModal();
-                }
-            });
-        }
-
-        playerNameInput.addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') { submitScore(); }
         });
 
-        $(document).ready(function() {
-            clickArea.addEventListener('click', handleClick);
-            
-            changeNameBtn.onclick = function(e) {
-                e.stopPropagation(); // กันการนับคลิกซ้ำซ้อนเวลาเปลี่ยนชื่อ
-                currentPlayerName = '';
-                playerNodeKey = null;
-                localStorage.removeItem('playerName');
-                localStorage.removeItem('playerNodeKey');
-                count = 0;
-                clickCount.textContent = '0';
-                updateDisplay();
-                
-                document.getElementById('nameModal').querySelector('h2').textContent = "Welcome back!";
-                document.getElementById('nameModal').querySelector('p').textContent = "กรอกชื่อเดิมของคุณเพื่อเล่นต่อ หรือชื่อใหม่เพื่อเริ่มใหม่";
-                showNameModal();
-            };
-        });
+        changeNameBtn.onclick = () => {
+            currentPlayerName = ''; playerNodeKey = null;
+            localStorage.removeItem('playerName'); localStorage.removeItem('playerNodeKey');
+            count = 0; clickCount.textContent = '0'; updateDisplay();
+            document.getElementById('modalTitle').textContent = "Welcome back!";
+            nameModal.style.display = 'flex';
+        };
+
+        playerNameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') submitScore(); });
     </script>
 </body>
 </html>
