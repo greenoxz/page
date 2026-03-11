@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#18181b" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Wheel - ppknr</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    /* Layout */
+    .layout-wrapper { display: flex; flex-direction: column; gap: 30px; }
+    @media (min-width: 900px) {
+      .layout-wrapper { flex-direction: row; align-items: flex-start; justify-content: space-between; }
+      .wheel-column { flex: 1; display: flex; flex-direction: column; align-items: center; min-width: 0; }
+      .history-column { width: 320px; background: #f5f5f5; padding: 25px; border-radius: 15px; flex-shrink: 0; display: flex; flex-direction: column; max-height: 800px; }
+      .theme-dark .history-column { background: #1a1a1c; border: 1px solid #333; }
+    }
+    
+    .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+    .input-group { display: flex; gap: 8px; width: 100%; max-width: 550px; justify-content: center; flex-wrap: wrap; }
+    .input-group input[type="text"] { flex: 1; min-width: 150px; padding: 12px 15px; border-radius: 10px; border: 1px solid #ddd; font-family: 'Anuphan', sans-serif; font-size: 1rem; }
+    .theme-dark .input-group input[type="text"] { background: #111; color: #fff; border-color: #444; }
+    
+    .btn { padding: 12px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: background 0.2s, transform 0.1s; white-space: nowrap; }
+    .btn:hover { background: #e64519; }
+    .btn:active { transform: scale(0.97); }
+    .btn.secondary { background: #555; }
+    .btn.secondary:hover { background: #333; }
+    .btn.danger { background: #ff4444; }
+    .btn.danger:hover { background: #cc0000; }
+    .btn:disabled { background: #ccc !important; cursor: not-allowed; transform: none; }
+    .btn-icon-group { display: flex; gap: 8px; }
+    
+    /* วงล้อ */
+    .wheel-box { position: relative; width: 100%; max-width: 400px; aspect-ratio: 1/1; margin: 20px 0; }
+    #canvas { width: 100%; height: 100%; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+    .theme-dark #canvas { border-color: #333; }
+    .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 35px solid #FF4D1C; z-index: 10; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
+    
+    .options-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; list-style: none; padding: 0; margin: 0; max-width: 600px; }
+    .options-list li { background: #eee; padding: 8px 16px; border-radius: 20px; font-size: 15px; color: #333; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .theme-dark .options-list li { background: #333; color: #fff; }
+    .delete-btn { color: #ff4444; cursor: pointer; font-size: 1.1rem; }
+    
+    .checkbox-group { display: flex; align-items: center; gap: 10px; font-size: 1rem; cursor: pointer; background: rgba(0,0,0,0.05); padding: 10px 20px; border-radius: 12px; }
+    .theme-dark .checkbox-group { background: rgba(255,255,255,0.05); }
+    .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
+
+    /* History Column */
+    .history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+    .theme-dark .history-header { border-color: #333; }
+    .history-title { margin: 0; font-size: 1.3rem; font-weight: bold; }
+    .history-list { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; padding-right: 5px; min-height: 200px; }
+    .history-list::-webkit-scrollbar { width: 6px; }
+    .history-list::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 10px; }
+    .history-list li { padding: 15px; background: #fff; margin-bottom: 10px; border-radius: 12px; border-left: 5px solid #FF4D1C; font-size: 1.1rem; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .history-list li span { font-size: 0.85rem; color: #888; }
+    .theme-dark .history-list li { background: #222; color: #fff; }
+    .empty-history { text-align: center; color: #aaa; font-style: italic; padding: 40px 0; font-size: 1.1rem; }
+
+    /* Modal Popup */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; padding: 20px; box-sizing: border-box; }
+    .modal-overlay.active { display: flex; opacity: 1; }
+    .modal-content { background: #fff; padding: 35px 20px; border-radius: 20px; text-align: center; max-width: 400px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.3); transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+    .theme-dark .modal-content { background: #18181b; color: #fff; border: 1px solid #333; }
+    .modal-icon { font-size: 3.5rem; color: #FF4D1C; margin-bottom: 15px; flex-shrink: 0; }
+    .modal-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; flex-shrink: 0; }
+    .modal-winner { font-size: clamp(1.5rem, 6vw, 2.5rem); color: #FF4D1C; font-weight: bold; margin-bottom: 25px; line-height: 1.4; word-break: break-word; overflow-wrap: anywhere; width: 100%; overflow-y: auto; padding: 0 10px; }
+  </style>
+</head>
+<body class="theme-light" id="theme-body">
+  <div class="page-container">
+    <div id="navbar-include"></div>
+    
+    <main class="main-section">
+      <div class="content" style="max-width: 1100px; margin: 0 auto;">
+        <h1 class="page-title">Random Wheel</h1>
+        
+        <div class="content-box layout-wrapper">
+          
+          <div class="wheel-column wheel-container">
+            <div class="input-group">
+              <input type="text" id="optionInput" placeholder="ใส่สิ่งที่ต้องการสุ่ม...">
+              <button class="btn" onclick="addOption()">เพิ่ม</button>
+              <div class="btn-icon-group">
+                <button class="btn secondary" onclick="sortOptions()" title="เรียง A-Z"><i class="fas fa-sort-alpha-down"></i></button>
+                <button class="btn secondary" onclick="shuffleOptions()" title="สลับตัวเลือก"><i class="fas fa-random"></i></button>
+                <button class="btn danger" onclick="clearOptions()" title="ล้างตัวเลือกทั้งหมด"><i class="fas fa-trash-alt"></i></button>
+              </div>
+            </div>
+            
+            <ul class="options-list" id="optionsList"></ul>
+
+            <div class="wheel-box">
+              <div class="pointer"></div>
+              <canvas id="canvas" width="400" height="400"></canvas>
+            </div>
+            
+            <label class="checkbox-group">
+              <input type="checkbox" id="autoRemove">
+              ลบรายการที่สุ่มได้ออกอัตโนมัติ
+            </label>
+            
+            <button class="btn" id="spinBtn" style="width: 250px; font-size: 1.3rem; margin-top: 15px; padding: 15px;" onclick="spin()">หมุนวงล้อ!</button>
+          </div>
+
+          <div class="history-column">
+            <div class="history-header">
+              <h3 class="history-title"><i class="fas fa-history"></i> ประวัติผลลัพธ์</h3>
+            </div>
+            <ul class="history-list" id="historyList">
+              <div class="empty-history">ยังไม่มีประวัติการสุ่ม<br>ลองหมุนวงล้อดูสิ!</div>
+            </ul>
+            <button class="btn secondary" style="width: 100%; margin-top: 15px; padding: 12px;" onclick="clearHistory()">
+              <i class="fas fa-trash"></i> ล้างประวัติทั้งหมด
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </main>
+    <div id="footer-include"></div>
+  </div>
+
+  <div class="modal-overlay" id="winModal">
+    <div class="modal-content">
+      <i class="fas fa-trophy modal-icon"></i>
+      <div class="modal-title">ผู้ชนะคือ!</div>
+      <div class="modal-winner" id="winnerText">...</div>
+      <button class="btn" style="width: 100%; font-size: 1.2rem; padding: 12px; margin-top: auto;" onclick="closeModal()">ตกลง</button>
+    </div>
+  </div>
+  
+  <script>
+    fetch('nav.html').then(res => res.text()).then(html => document.getElementById('navbar-include').innerHTML = html);
+    fetch('footer.html').then(res => res.text()).then(html => {
+      document.getElementById('footer-include').innerHTML = html;
+      const yearElem = document.getElementById('year'); 
+      if (yearElem) yearElem.textContent = new Date().getFullYear();
+    });
+
+    let options = ["กินอะไรดี", "ดูหนัง", "เล่นเกม", "นอน"];
+    const colors = [
+      "#FF4D1C", "#2A9D8F", "#E9C46A", "#E63946", "#264653", 
+      "#F4A261", "#8AB17D", "#6D597A", "#4CC9F0", "#F72585",
+      "#4361EE", "#7209B7", "#3A0CA3", "#4CAF50", "#FF9800"
+    ];
+    let currentDeg = 0;
+    let isSpinning = false;
+    let historyData = [];
+
+    function drawWheel() {
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const center = canvas.width / 2;
+
+      if (options.length === 0) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        updateList();
+        return;
+      }
+
+      const sliceAngle = (2 * Math.PI) / options.length;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      
+      for (let i = 0; i < options.length; i++) {
+        ctx.beginPath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.moveTo(center, center);
+        ctx.arc(center, center, center, i * sliceAngle, (i + 1) * sliceAngle);
+        ctx.fill();
+        ctx.save();
+        
+        ctx.translate(center, center);
+        ctx.rotate(i * sliceAngle + sliceAngle / 2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#fff";
+        
+        let fontSize = options.length > 20 ? 14 : (options.length > 10 ? 18 : 22);
+        ctx.font = `bold ${fontSize}px 'Anuphan', sans-serif`;
+        
+        ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetX = 1;
+        ctx.shadowOffsetY = 1;
+        
+        ctx.fillText(options[i], center - 20, 8);
+        
+        ctx.shadowColor = "transparent";
+        ctx.restore();
+      }
+      updateList();
+    }
+
+    function addOption() {
+      const input = document.getElementById("optionInput");
+      const val = input.value.trim();
+      if (val !== "") {
+        options.push(val);
+        input.value = "";
+        drawWheel();
+      }
+    }
+
+    function removeOption(index) {
+      if(isSpinning) return;
+      options.splice(index, 1);
+      drawWheel();
+    }
+
+    // ฟังก์ชันล้างตัวเลือกทั้งหมด
+    function clearOptions() {
+      if(isSpinning) return;
+      if(confirm("ต้องการล้างตัวเลือกทั้งหมดหรือไม่?")) {
+        options = [];
+        drawWheel();
+      }
+    }
+
+    function sortOptions() {
+      if(isSpinning) return;
+      options.sort((a, b) => a.localeCompare(b, 'th'));
+      drawWheel();
+    }
+
+    function shuffleOptions() {
+      if(isSpinning) return;
+      for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+      }
+      drawWheel();
+    }
+
+    function updateList() {
+      const list = document.getElementById("optionsList");
+      list.innerHTML = options.map((opt, i) => `
+        <li>${opt} <i class="fas fa-times delete-btn" onclick="removeOption(${i})"></i></li>
+      `).join('');
+    }
+
+    function updateHistory() {
+      const list = document.getElementById("historyList");
+      if (historyData.length === 0) {
+        list.innerHTML = `<div class="empty-history">ยังไม่มีประวัติการสุ่ม<br>ลองหมุนวงล้อดูสิ!</div>`;
+        return;
+      }
+      
+      const reversedHistory = [...historyData].reverse();
+      const total = historyData.length;
+      
+      list.innerHTML = reversedHistory.map((item, index) => {
+        const realIndex = total - index;
+        return `
+          <li>
+            <span>รอบที่ #${realIndex}</span>
+            <b>${item}</b>
+          </li>
+        `;
+      }).join('');
+    }
+
+    function clearHistory() {
+      if(confirm("ต้องการล้างประวัติผลลัพธ์ทั้งหมดหรือไม่?")) {
+        historyData = [];
+        updateHistory();
+      }
+    }
+
+    function spin() {
+      if (options.length === 0 || isSpinning) return;
+      isSpinning = true;
+      document.getElementById('spinBtn').disabled = true;
+
+      const canvas = document.getElementById("canvas");
+      const randomDeg = Math.floor(Math.random() * 360) + 3600; 
+      currentDeg += randomDeg;
+      canvas.style.transform = `rotate(${currentDeg}deg)`;
+
+      setTimeout(() => {
+        const sliceDeg = 360 / options.length;
+        const actualDeg = currentDeg % 360;
+        const pointerAngle = (360 - actualDeg + 270) % 360;
+        const winnerIndex = Math.floor(pointerAngle / sliceDeg);
+        const winner = options[winnerIndex];
+        
+        historyData.push(winner);
+        updateHistory();
+
+        document.getElementById('winnerText').textContent = winner;
+        document.getElementById('winModal').classList.add('active');
+        
+        if (document.getElementById('autoRemove').checked) {
+          options.splice(winnerIndex, 1);
+          drawWheel();
+        }
+        
+        isSpinning = false;
+        document.getElementById('spinBtn').disabled = false;
+      }, 4000);
+    }
+
+    function closeModal() {
+      document.getElementById('winModal').classList.remove('active');
+    }
+
+    document.getElementById("optionInput").addEventListener("keypress", function(e) {
+      if (e.key === "Enter") addOption();
+    });
+
+    drawWheel();
+    updateHistory();
+  </script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
