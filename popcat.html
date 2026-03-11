@@ -101,7 +101,39 @@
 
         .pop-animation { animation: pop 0.08s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
 
-        /* --- Button Design (Match Wheel Page) --- */
+        /* --- Volume Overlay (Bottom Right) --- */
+        .volume-overlay {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            padding: 10px 18px;
+            border-radius: 30px;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            border: 1px solid rgba(0,0,0,0.05);
+            transition: opacity 0.3s;
+        }
+
+        body.theme-dark .volume-overlay {
+            background: rgba(24, 24, 27, 0.8);
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .volume-slider {
+            width: 120px;
+            cursor: pointer;
+            accent-color: #FF4D1C;
+        }
+
+        .volume-icon { color: #FF4D1C; font-size: 1.1rem; }
+
+        /* --- Button Design --- */
         .game-button {
             padding: 12px 24px;
             font-size: 1rem;
@@ -255,6 +287,11 @@
             </div>
         </div>
 
+        <div class="volume-overlay" id="volumeOverlay">
+            <i class="fas fa-volume-up volume-icon"></i>
+            <input type="range" id="volumeSlider" class="volume-slider" min="0" max="1" step="0.01" value="0.5">
+        </div>
+
         <div class="leaderboard">
             <div class="leaderboard-header">
                 <h2 class="leaderboard-title">Leaderboard (Top 50)</h2>
@@ -313,6 +350,7 @@
         const clickCount = document.getElementById('clickCount');
         const totalClicks = document.getElementById('totalClicks');
         const popSound = document.getElementById('popSound');
+        const volumeSlider = document.getElementById('volumeSlider');
         const playerNameDisplay = document.getElementById('playerNameDisplay');
         const changeNameBtn = document.getElementById('changeNameBtn');
         const nameModal = document.getElementById('nameModal');
@@ -329,6 +367,12 @@
         let allEntries = [];
         let currentPage = 1;
         const perPage = 10;
+
+        // Volume Logic
+        if (popSound) popSound.volume = volumeSlider.value;
+        volumeSlider.addEventListener('input', (e) => {
+            if (popSound) popSound.volume = e.target.value;
+        });
 
         function updateDisplay() {
             playerNameDisplay.textContent = currentPlayerName ? 'ผู้เล่น: ' + currentPlayerName : 'ใส่ชื่อ / เปลี่ยนชื่อ';
@@ -408,7 +452,8 @@
         }
 
         clickArea.addEventListener('click', (e) => {
-            if (e.target.closest('#changeNameBtn')) return;
+            // ป้องกันการนับคลิกเมื่อปรับเสียงหรือเปลี่ยนชื่อ
+            if (e.target.closest('#changeNameBtn') || e.target.closest('#volumeOverlay')) return;
             
             count++; pendingClicks++;
             clickCount.textContent = count;
