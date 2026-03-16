@@ -7,6 +7,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>สุ่มร้านอาหาร - ppknr</title>
+  <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
@@ -14,28 +15,44 @@
     .layout-wrapper { display: flex; flex-direction: column; gap: 30px; padding: 0 15px; box-sizing: border-box; }
     .history-column { width: 100%; background: #f5f5f5; padding: 20px; border-radius: 15px; display: flex; flex-direction: column; max-height: 500px; box-sizing: border-box; }
     .theme-dark .history-column { background: #1a1a1c; border: 1px solid #333; }
+    
     @media (min-width: 1000px) {
-      .layout-wrapper { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 20px; padding: 0; }
+      .layout-wrapper { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 50px; padding: 0; }
       .wheel-column { grid-column: 2; display: flex; flex-direction: column; align-items: center; min-width: 500px; }
       .history-column { grid-column: 3; justify-self: end; width: 320px; padding: 25px; max-height: 800px; }
     }
-    .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
     
+    .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
     .title-group { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 600px; margin: 0 auto 20px; padding: 0 15px; box-sizing: border-box; }
     .page-title { text-align: center; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 700; flex: 1; font-family: 'Anuphan', sans-serif; color: #FF4D1C; margin: 0; }
     
-    .input-group { display: flex; gap: 8px; width: 100%; max-width: 550px; justify-content: center; flex-wrap: wrap; }
-    .input-group input[type="number"], .input-group select { flex: 1; min-width: 120px; padding: 12px 15px; border-radius: 10px; border: 1px solid #ddd; font-family: 'Anuphan', sans-serif; font-size: 1rem; }
-    .theme-dark .input-group input[type="number"], .theme-dark .input-group select { background: #111; color: #fff; border-color: #444; }
+    .filter-box { width: 100%; background: #fafafa; padding: 20px; border-radius: 16px; border: 1px solid #eaeaea; margin-bottom: 5px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+    .theme-dark .filter-box { background: #1f1f22; border-color: #333; }
     
+    .filter-title { font-size: 1rem; font-weight: bold; color: #555; margin: 0 0 10px 0; text-align: left; }
+    .theme-dark .filter-title { color: #ccc; }
+
     .cat-label { background: #eee; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.95rem; font-weight: bold; transition: 0.2s; user-select: none; border: 2px solid transparent; color: #555; }
     .cat-label:has(input:checked) { background: #FF4D1C; color: white; border-color: #e64519; }
     .theme-dark .cat-label { background: #333; color: #ccc; }
     .theme-dark .cat-label:has(input:checked) { background: #FF4D1C; color: white; border-color: #FF4D1C; }
     .cat-label input { display: none; }
 
+    .toggle-wrapper { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: bold; color: #555; }
+    .theme-dark .toggle-wrapper { color: #ccc; }
+    .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+    .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+    input:checked + .slider { background-color: #4CAF50; }
+    input:checked + .slider:before { transform: translateX(14px); }
+
+    .radius-box { display: flex; align-items: center; background: #fff; padding: 0 15px; border-radius: 20px; border: 2px solid #ddd; height: 42px; box-sizing: border-box; }
+    .theme-dark .radius-box { background: #111; border-color: #444; }
+    .theme-dark .radius-box span { color: #ccc !important; }
+
     .action-menu { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 5px; width: 100%; max-width: 550px; }
-    .btn { padding: 12px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: background 0.2s, transform 0.1s; white-space: nowrap; }
+    .btn { padding: 10px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: background 0.2s, transform 0.1s; white-space: nowrap; height: 42px; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn:hover { background: #e64519; }
     .btn:active { transform: scale(0.97); }
     .btn.secondary { background: #555; }
@@ -49,8 +66,13 @@
     .theme-dark #canvas { border-color: #333; }
     .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 35px solid #FF4D1C; z-index: 10; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
     
-    .options-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; list-style: none; padding: 0; margin: 0; max-width: 600px; max-height: 200px; overflow-y: auto; padding-right: 5px; }
+    .options-list { 
+      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; 
+      list-style: none; padding: 0; margin: 0; max-width: 600px;
+      max-height: 180px; overflow-y: auto; padding-right: 5px; width: 100%;
+    }
     .options-list::-webkit-scrollbar { width: 6px; }
+    .options-list::-webkit-scrollbar-track { background: transparent; }
     .options-list::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 10px; }
     .theme-dark .options-list::-webkit-scrollbar-thumb { background-color: #555; }
     
@@ -68,43 +90,34 @@
     .history-list { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; padding-right: 5px; min-height: 200px; }
     .history-list::-webkit-scrollbar { width: 6px; }
     .history-list::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 10px; }
-    .history-list li { padding: 15px; background: #fff; margin-bottom: 10px; border-radius: 12px; border-left: 5px solid #FF4D1C; font-size: 1.1rem; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .history-list li span { font-size: 0.85rem; color: #888; }
+    
+    .history-list li { padding: 12px 15px; background: #fff; margin-bottom: 10px; border-radius: 12px; border-left: 5px solid #FF4D1C; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.2s; }
+    .history-list li:hover { background: #f9f9f9; transform: translateY(-2px); }
+    .history-list li a { color: inherit; text-decoration: none; display: flex; justify-content: space-between; align-items: center; width: 100%; }
+    .history-list li a:hover { color: #FF4D1C; }
+    .history-list li span.round-num { font-size: 0.85rem; color: #888; }
+    .history-list li b { font-size: 1.1rem; }
     .theme-dark .history-list li { background: #222; color: #fff; }
+    .theme-dark .history-list li:hover { background: #2a2a2a; }
+
     .empty-history { text-align: center; color: #aaa; font-style: italic; padding: 40px 0; font-size: 1.1rem; }
 
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; padding: 20px; box-sizing: border-box; }
     .modal-overlay.active { display: flex; opacity: 1; }
-    .modal-content { background: #fff; padding: 35px 20px; border-radius: 20px; text-align: center; max-width: 400px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.3); transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.12, 0.99); box-sizing: border-box; }
+    .modal-content { background: #fff; padding: 35px 20px; border-radius: 20px; text-align: center; max-width: 400px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.3); transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
     .modal-overlay.active .modal-content { transform: scale(1); }
     .theme-dark .modal-content { background: #18181b; color: #fff; border: 1px solid #333; }
     .modal-icon { font-size: 3.5rem; color: #FF4D1C; margin-bottom: 15px; flex-shrink: 0; }
     .modal-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; flex-shrink: 0; }
-    .modal-winner { font-size: clamp(1.5rem, 6vw, 2.5rem); color: #FF4D1C; font-weight: bold; margin-bottom: 20px; line-height: 1.4; word-break: break-word; overflow-wrap: anywhere; width: 100%; overflow-y: auto; padding: 0 10px; }
+    .modal-winner { font-size: clamp(1.5rem, 6vw, 2.5rem); color: #FF4D1C; font-weight: bold; margin-bottom: 25px; line-height: 1.4; word-break: break-word; overflow-wrap: anywhere; width: 100%; overflow-y: auto; padding: 0 10px; }
+
+    #navButton { background-color: #4CAF50; width: 90%; margin: 0 auto 15px auto; text-decoration: none; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
     #shareLinkInput { background: #f9f9f9; color: #555; }
     .theme-dark #shareLinkInput { background: #111; color: #ccc; border-color: #444; }
 
-    #map { width: 100%; height: 300px; border-radius: 12px; margin-top: 15px; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    #map { width: 100%; height: 400px; border-radius: 12px; margin-top: 15px; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
     .theme-dark #map { border-color: #333; }
-    
-    .history-nav-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; background-color: #2196F3; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-top: 5px; font-weight: bold; transition: background 0.2s; }
-    .history-nav-btn:hover { background-color: #1976D2; color: white; }
-    
-    .rating-badge { color: #F5B041; font-size: 0.9em; margin-left: 5px; white-space: nowrap; }
-    
-    /* สไตล์สำหรับรูปภาพใน Pop-up */
-    #winnerImage {
-      display: none;
-      width: 100%;
-      max-height: 220px;
-      object-fit: cover;
-      border-radius: 12px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-      border: 2px solid #eee;
-    }
-    .theme-dark #winnerImage { border-color: #333; }
   </style>
 </head>
 <body class="theme-light" id="theme-body">
@@ -117,43 +130,63 @@
       <div class="content" style="max-width: 1200px; margin: 0 auto;">
         
         <div class="title-group">
-          <h1 class="page-title"><i class="fas fa-utensils"></i> สุ่มร้านอาหารรอบตัวคุณ</h1>
-          <button class="btn secondary" onclick="shareWheel()" title="แชร์วงล้อนี้ให้เพื่อน"><i class="fas fa-share-alt"></i> แชร์</button>
+          <h1 class="page-title">สุ่มร้านอาหารรอบตัวคุณ</h1>
+          <button class="btn secondary" onclick="shareWheel()"><i class="fas fa-share-alt"></i></button>
         </div>
         
         <div class="content-box layout-wrapper">
           <div class="wheel-column wheel-container">
             
-            <div class="input-group" style="flex-direction: column; align-items: center;">
+            <div class="filter-box">
               
-              <div style="width: 100%; margin-bottom: 15px; text-align: center;">
-                <p style="font-size: 0.95rem; font-weight: bold; color: #888; margin-bottom: 10px;">หมวดหมู่อาหาร (เลือกได้หลายอัน หรือไม่เลือกเพื่อหามั่วๆ)</p>
-                <div class="category-filters" style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
-                  <label class="cat-label"><input type="checkbox" value="ชาบู">🍲 ชาบู/สุกี้</label>
-                  <label class="cat-label"><input type="checkbox" value="หมูกระทะ">🥓 หมูกระทะ</label>
-                  <label class="cat-label"><input type="checkbox" value="ก๋วยเตี๋ยว">🍜 ก๋วยเตี๋ยว</label>
-                  <label class="cat-label"><input type="checkbox" value="อาหารตามสั่ง">🍛 อาหารตามสั่ง</label>
-                  <label class="cat-label"><input type="checkbox" value="อาหารญี่ปุ่น">🍣 อาหารญี่ปุ่น</label>
-                  <label class="cat-label"><input type="checkbox" value="ส้มตำ">🌶️ ส้มตำ/ยำ</label>
-                  <label class="cat-label"><input type="checkbox" value="คาเฟ่">☕ คาเฟ่/ของหวาน</label>
+              <div style="margin-bottom: 15px;">
+                <p class="filter-title">หมวดหมู่อาหาร</p>
+                <div id="foodCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <label class="cat-label"><input type="checkbox" value="ชาบู">ชาบู/สุกี้</label>
+                  <label class="cat-label"><input type="checkbox" value="หมูกระทะ">หมูกระทะ</label>
+                  <label class="cat-label"><input type="checkbox" value="ก๋วยเตี๋ยว">ก๋วยเตี๋ยว</label>
+                  <label class="cat-label"><input type="checkbox" value="อาหารตามสั่ง">ตามสั่ง</label>
+                  <label class="cat-label"><input type="checkbox" value="อาหารญี่ปุ่น">ญี่ปุ่น</label>
+                  <label class="cat-label"><input type="checkbox" value="ส้มตำ">ส้มตำ/ยำ</label>
+                  <label class="cat-label"><input type="checkbox" value="คาเฟ่">คาเฟ่/ของหวาน</label>
                 </div>
               </div>
 
-              <div style="display: flex; gap: 8px; width: 100%; flex-wrap: wrap; justify-content: center;">
-                <input type="number" id="radiusInput" placeholder="ระยะค้นหาจากหมุด (เช่น 1000 เมตร)" value="1000" style="min-width: 150px;">
-                <select id="minRating">
-                  <option value="0">★ ทุกคะแนน</option>
-                  <option value="3">★★★ 3.0 ดาวขึ้นไป</option>
-                  <option value="4">★★★★ 4.0 ดาวขึ้นไป</option>
-                  <option value="4.5">★★★★ 4.5 ดาวขึ้นไป</option>
-                </select>
-                <button class="btn" style="min-width: 120px;" onclick="fetchRestaurants()"><i class="fas fa-search"></i> ค้นหาร้าน</button>
+              <div style="margin-bottom: 20px;">
+                <p class="filter-title">ระดับราคา (งบประมาณ)</p>
+                <div id="priceCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <label class="cat-label"><input type="checkbox" value="1">฿ (ประหยัด)</label>
+                  <label class="cat-label"><input type="checkbox" value="2">฿฿ (ปานกลาง)</label>
+                  <label class="cat-label"><input type="checkbox" value="3">฿฿฿ (แพง)</label>
+                  <label class="cat-label"><input type="checkbox" value="4">฿฿฿฿ (หรูหรา)</label>
+                </div>
               </div>
-              
-              <div id="map"></div>
-              <p style="font-size: 0.85rem; color: #888; margin-top: 5px;">*ลากหมุดหรือคลิกบนแผนที่เพื่อเลือกจุดที่ต้องการหาร้านอาหาร</p>
 
-              <div id="restaurantStatus" style="margin-top: 5px; font-size: 0.95rem; font-weight: bold; color: #888;"></div>
+              <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;">
+                
+                <div class="toggle-wrapper">
+                  เฉพาะร้านที่เปิดอยู่
+                  <label class="switch">
+                    <input type="checkbox" id="openNowCheck" checked>
+                    <span class="slider"></span>
+                  </label>
+                </div>
+
+                <div class="radius-box">
+                  <span style="color: #555; margin-right: 8px; font-weight: bold; font-size: 0.95rem;">ระยะค้นหา:</span>
+                  <input type="number" id="radiusInput" value="1000" style="border: none; outline: none; width: 55px; font-family: inherit; font-size: 1.05rem; font-weight: bold; color: #FF4D1C; text-align: center; background: transparent; padding: 0;" min="100" step="100">
+                  <span style="color: #555; margin-left: 8px; font-weight: bold; font-size: 0.95rem;">เมตร</span>
+                </div>
+                
+                <button class="btn" style="flex: 1; min-width: 120px;" onclick="fetchRestaurants()">
+                  <i class="fas fa-search"></i> ค้นหาร้าน
+                </button>
+              </div>
+
+              <div id="map"></div>
+              <p style="font-size: 0.85rem; color: #888; margin-top: 5px; text-align: center;">*ลากหมุดหรือคลิกบนแผนที่เพื่อเลือกจุดที่ต้องการหาร้านอาหาร</p>
+              <div id="restaurantStatus" style="margin-top: 5px; font-size: 0.95rem; font-weight: bold; color: #888; text-align: center;"></div>
+
             </div>
 
             <div class="action-menu">
@@ -174,7 +207,7 @@
               ลบร้านที่สุ่มได้ออกอัตโนมัติ
             </label>
             
-            <button class="btn" id="spinBtn" style="width: 250px; font-size: 1.3rem; margin-top: 15px; padding: 15px;" onclick="spin()">หมุนวงล้อ!</button>
+            <button class="btn" id="spinBtn" style="width: 250px; font-size: 1.4rem; height: 60px; margin-top: 15px; border-radius: 30px;" onclick="spin()">หมุน</button>
           </div>
 
           <div class="history-column">
@@ -184,7 +217,7 @@
             <ul class="history-list" id="historyList">
               <div class="empty-history">ยังไม่มีประวัติการสุ่ม<br>ค้นหาร้านแล้วลองหมุนดูสิ!</div>
             </ul>
-            <button class="btn secondary" style="width: 100%; margin-top: 15px; padding: 12px;" onclick="clearHistory()">
+            <button class="btn secondary" style="width: 100%; margin-top: 15px;" onclick="clearHistory()">
               <i class="fas fa-trash"></i> ล้างประวัติทั้งหมด
             </button>
           </div>
@@ -196,18 +229,16 @@
   </div>
 
   <div class="modal-overlay" id="winModal">
-    <div class="modal-content" style="box-sizing: border-box;">
+    <div class="modal-content">
       <i class="fas fa-trophy modal-icon"></i>
       <div class="modal-title">มื้อนี้กินที่นี่เลย!</div>
       <div class="modal-winner" id="winnerText">...</div>
       
-      <img id="winnerImage" src="" alt="ภาพบรรยากาศร้าน">
-      
-      <a id="navButton" href="#" target="_blank" class="btn" style="background-color: #2196F3; width: 85%; max-width: 300px; margin: 0 auto 15px auto; text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 8px; box-sizing: border-box; white-space: normal; line-height: 1.4;">
-        <i class="fas fa-map-marker-alt"></i> ดูข้อมูลร้านบนแผนที่
+      <a id="navButton" href="#" target="_blank" class="btn">
+        <i class="fas fa-map-marker-alt"></i> ดูตำแหน่งที่ตั้งร้าน
       </a>
       
-      <button class="btn secondary" style="width: 85%; max-width: 300px; font-size: 1.1rem; padding: 12px; margin: 0 auto; box-sizing: border-box;" onclick="closeModal()">ปิดหน้าต่าง</button>
+      <button class="btn secondary" style="width: 90%; font-size: 1.2rem; margin-top: auto; box-sizing: border-box;" onclick="closeModal()">ปิดหน้าต่าง</button>
     </div>
   </div>
 
@@ -220,7 +251,7 @@
         <input type="text" id="shareLinkInput" readonly style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; font-size: 0.9rem;">
         <button class="btn" onclick="copyShareLink()" id="copyShareBtn" style="padding: 10px 15px;" title="คัดลอกอีกครั้ง"><i class="fas fa-copy"></i></button>
       </div>
-      <button class="btn secondary" style="width: 100%; font-size: 1.1rem; padding: 12px;" onclick="closeShareModal()">ปิด</button>
+      <button class="btn secondary" style="width: 100%; font-size: 1.1rem;" onclick="closeShareModal()">ปิด</button>
     </div>
   </div>
   
@@ -238,6 +269,12 @@
       const yearElem = document.getElementById('year'); 
       if (yearElem) yearElem.textContent = new Date().getFullYear();
     });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => { console.log('SW fail: ', err); });
+      });
+    }
 
     let options = [];
     const colors = ["#FF4D1C", "#2A9D8F", "#E9C46A", "#E63946", "#264653", "#F4A261", "#8AB17D", "#6D597A", "#4CC9F0", "#F72585"];
@@ -292,13 +329,14 @@
       }
 
       const statusDiv = document.getElementById('restaurantStatus');
-      statusDiv.innerHTML = "📍 กำลังค้นหาร้านอาหาร...";
+      statusDiv.innerHTML = "กำลังค้นหาร้านอาหาร... (อาจใช้เวลาสักครู่หากร้านเยอะ)";
       
       const radiusValue = parseInt(document.getElementById('radiusInput').value) || 1000;
-      const minRatingValue = parseFloat(document.getElementById('minRating').value) || 0;
-      
-      const checkboxes = document.querySelectorAll('.category-filters input:checked');
-      const selectedCategories = Array.from(checkboxes).map(cb => cb.value);
+      const isOpenNow = document.getElementById('openNowCheck').checked;
+      const categoryCheckboxes = document.querySelectorAll('#foodCat input:checked');
+      const selectedCategories = Array.from(categoryCheckboxes).map(cb => cb.value);
+      const priceCheckboxes = document.querySelectorAll('#priceCat input:checked');
+      const selectedPrices = Array.from(priceCheckboxes).map(cb => parseInt(cb.value));
       
       const service = new google.maps.places.PlacesService(map);
       let allResults = [];
@@ -309,24 +347,24 @@
             location: selectedLocation,
             radius: radiusValue,
             type: 'restaurant',
-            keyword: keyword 
+            keyword: keyword
           };
-          
-          let categoryResults = [];
-          
-          service.nearbySearch(request, (results, status, pagination) => {
+          if (isOpenNow) request.openNow = true;
+
+          let currentCatResults = [];
+          service.nearbySearch(request, function callback(results, status, pagination) {
             if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-              categoryResults = categoryResults.concat(results);
+              currentCatResults = currentCatResults.concat(results);
               
-              if (pagination && pagination.hasNextPage) {
+              if (pagination && pagination.hasNextPage && currentCatResults.length < 60) {
                 setTimeout(() => {
                   pagination.nextPage();
-                }, 2000);
+                }, 2000); 
               } else {
-                resolve(categoryResults);
+                resolve(currentCatResults);
               }
             } else {
-              resolve(categoryResults);
+              resolve(currentCatResults);
             }
           });
         });
@@ -344,52 +382,48 @@
         }
 
         if (allResults.length > 0) {
-          const uniqueResults = [];
+          let uniqueResults = [];
           const mapPlaceIds = new Map();
-          
           for (const item of allResults) {
             if(!mapPlaceIds.has(item.place_id)){
               mapPlaceIds.set(item.place_id, true);
-              
-              if (minRatingValue > 0) {
-                if (!item.rating || item.rating < minRatingValue) continue;
-              }
               uniqueResults.push(item);
             }
           }
 
-          const shuffled = uniqueResults.sort(() => 0.5 - Math.random());
-          
+          if (selectedPrices.length > 0) {
+            uniqueResults = uniqueResults.filter(r => {
+              return r.price_level !== undefined && selectedPrices.includes(r.price_level);
+            });
+          }
+
+          if (uniqueResults.length === 0) {
+             statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบร้านที่ตรงกับระดับราคาที่คุณเลือก ลองปรับราคาดูครับ</span>';
+             clearOptions();
+             return;
+          }
+
+          const shuffled = uniqueResults.sort(() => 0.5 - Math.random()).slice(0, 60);
+
           options = shuffled.map(r => {
-            // ดึง URL รูปภาพจาก API (ตั้งขนาดกว้างสุด 400px เพื่อไม่ให้โหลดช้า)
-            const photoUrl = (r.photos && r.photos.length > 0) ? r.photos[0].getUrl({ maxWidth: 400 }) : '';
-            
             return { 
               text: r.name, 
-              rating: r.rating, 
               percent: 100/shuffled.length,
               place_id: r.place_id,
               lat: r.geometry.location.lat(),
-              lng: r.geometry.location.lng(),
-              photo: photoUrl // เก็บ URL รูปภาพไว้ใช้งาน
+              lng: r.geometry.location.lng()
             };
           });
           
           drawWheel();
           updateList();
-          
-          if (options.length > 0) {
-            statusDiv.innerHTML = '<span style="color:#4CAF50;">✅ เจอ ' + options.length + ' ร้าน พร้อมสุ่มแล้ว!</span>';
-          } else {
-            statusDiv.innerHTML = '<span style="color:#ff4444;">❌ ไม่พบร้านที่ตรงกับเงื่อนไขดาวที่เลือกครับ</span>';
-            clearOptions();
-          }
+          statusDiv.innerHTML = '<span style="color:#4CAF50;">เจอ ' + options.length + ' ร้านในหมวด/ราคาที่เลือก พร้อมสุ่มแล้ว!</span>';
         } else {
-          statusDiv.innerHTML = '<span style="color:#ff4444;">❌ ไม่พบร้านอาหารในหมวดหมู่หรือระยะนี้ ลองเพิ่มระยะดูครับ</span>';
+          statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบร้านที่ตรงกับเงื่อนไข ลองปรับระยะทางให้ไกลขึ้นครับ</span>';
           clearOptions();
         }
       } catch (error) {
-        statusDiv.innerHTML = '<span style="color:#ff4444;">❌ เกิดข้อผิดพลาดในการดึงข้อมูล</span>';
+        statusDiv.innerHTML = '<span style="color:#ff4444;">เกิดข้อผิดพลาดในการดึงข้อมูล</span>';
         clearOptions();
       }
     }
@@ -467,7 +501,9 @@
         ctx.rotate(startAngle + sliceAngle / 2);
         ctx.textAlign = "right";
         ctx.fillStyle = "#fff";
-        ctx.font = 'bold ' + (options.length > 15 ? 14 : 18) + 'px "Anuphan", sans-serif';
+        
+        let fontSize = options.length > 45 ? 10 : (options.length > 25 ? 12 : (options.length > 15 ? 14 : 18));
+        ctx.font = 'bold ' + fontSize + 'px "Anuphan", sans-serif';
         
         ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
         ctx.shadowBlur = 4;
@@ -475,10 +511,8 @@
         ctx.shadowOffsetY = 1;
         
         let textToShow = opt.text;
-        if(opt.rating) textToShow += ` (★${opt.rating})`;
-        
         if(textToShow.length > 20) textToShow = textToShow.substring(0, 20) + "...";
-        ctx.fillText(textToShow, center - 20, 6);
+        ctx.fillText(textToShow, center - 20, 5);
         
         ctx.shadowColor = "transparent";
         ctx.restore();
@@ -520,10 +554,9 @@
 
     function updateList() {
       const list = document.getElementById("optionsList");
-      list.innerHTML = options.map((opt, i) => {
-        let ratingIcon = opt.rating ? ` <span class="rating-badge"><i class="fas fa-star"></i> ${opt.rating}</span>` : '';
-        return '<li>' + opt.text + ratingIcon + ' <i class="fas fa-times delete-btn" style="margin-left: auto;" onclick="removeOption(' + i + ')"></i></li>';
-      }).join('');
+      list.innerHTML = options.map((opt, i) => 
+        '<li>' + opt.text + ' <i class="fas fa-times delete-btn" onclick="removeOption(' + i + ')"></i></li>'
+      ).join('');
     }
 
     function updateHistory() {
@@ -534,18 +567,8 @@
       }
       const reversedHistory = [...historyData].reverse();
       const total = historyData.length;
-      
       list.innerHTML = reversedHistory.map((item, index) => {
-        let navHtml = '';
-        if (typeof item === 'object' && item.lat && item.lng) {
-          const mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + item.lat + ',' + item.lng + '&query_place_id=' + item.place_id;
-          navHtml = '<a href="' + mapUrl + '" target="_blank" class="history-nav-btn"><i class="fas fa-map-marker-alt"></i> ดูร้าน</a>';
-        }
-        
-        const shopName = typeof item === 'string' ? item : item.text;
-        const ratingIcon = (typeof item === 'object' && item.rating) ? ` <span class="rating-badge"><i class="fas fa-star"></i> ${item.rating}</span>` : '';
-        
-        return '<li><span>รอบที่ #' + (total - index) + '</span><b style="display:flex; align-items:center;">' + shopName + ratingIcon + '</b>' + navHtml + '</li>';
+        return '<li><a href="' + item.url + '" target="_blank"><div><span class="round-num">รอบที่ #' + (total - index) + '</span><br><b>' + item.text + '</b></div><i class="fas fa-map-marker-alt" style="color: #4CAF50; font-size: 1.4rem;"></i></a></li>';
       }).join('');
     }
 
@@ -581,36 +604,33 @@
         }
         
         const winner = options[winnerIndex];
-        if (document.getElementById('autoRemove').checked) removeOption(winnerIndex);
-        
-        historyData.push(winner);
-        updateHistory();
+        const basicUrl = 'https://www.google.com/maps/search/?api=1&query=' + winner.lat + ',' + winner.lng + '&query_place_id=' + winner.place_id;
 
-        let ratingIcon = winner.rating ? ` <span class="rating-badge" style="font-size: 0.6em;"><i class="fas fa-star"></i> ${winner.rating}</span>` : '';
-        document.getElementById('winnerText').innerHTML = winner.text + ratingIcon;
-        
-        // เช็คว่ามีรูปภาพไหม ถ้ามีให้แสดง ถอด src ออกถ้าไม่มี
-        const winnerImg = document.getElementById('winnerImage');
-        if (winner.photo) {
-          winnerImg.src = winner.photo;
-          winnerImg.style.display = 'block';
-        } else {
-          winnerImg.src = '';
-          winnerImg.style.display = 'none';
-        }
-        
-        const navBtn = document.getElementById('navButton');
-        if (winner.lat && winner.lng) {
-          navBtn.style.display = 'flex';
-          navBtn.href = 'https://www.google.com/maps/search/?api=1&query=' + winner.lat + ',' + winner.lng + '&query_place_id=' + winner.place_id;
-        } else {
-          navBtn.style.display = 'none';
-        }
+        const service = new google.maps.places.PlacesService(map);
+        service.getDetails({ placeId: winner.place_id, fields: ['url'] }, (place, status) => {
+            let finalUrl = basicUrl;
 
-        document.getElementById('winModal').classList.add('active');
-        
-        isSpinning = false;
-        document.getElementById('spinBtn').disabled = false;
+            if (status === google.maps.places.PlacesServiceStatus.OK && place.url) {
+                finalUrl = place.url;
+            }
+
+            historyData.push({ text: winner.text, url: finalUrl });
+            updateHistory();
+
+            document.getElementById('winnerText').textContent = winner.text;
+            
+            const navBtn = document.getElementById('navButton');
+            navBtn.href = finalUrl;
+            navBtn.style.display = 'flex';
+
+            document.getElementById('winModal').classList.add('active');
+            
+            if (document.getElementById('autoRemove').checked) removeOption(winnerIndex);
+            
+            isSpinning = false;
+            document.getElementById('spinBtn').disabled = false;
+        });
+
       }, 4000);
     }
 
@@ -622,7 +642,6 @@
   </script>
   
   <script src="js/main.js" defer></script>
-  
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsZqohGF5WMcQMoUmxWAHoUqo_V26mw1A&libraries=places&loading=async&callback=initMap" async defer></script>
 </body>
 </html>
