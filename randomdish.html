@@ -10,7 +10,6 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="css/style.css">
-  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
     .layout-wrapper { display: flex; flex-direction: column; gap: 30px; padding: 0 15px; box-sizing: border-box; }
@@ -110,7 +109,10 @@
     .theme-dark .modal-content { background: #18181b; color: #fff; border: 1px solid #333; }
     .modal-icon { font-size: 3.5rem; color: #FF4D1C; margin-bottom: 15px; flex-shrink: 0; }
     .modal-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; flex-shrink: 0; }
-    .modal-winner { font-size: clamp(1.5rem, 6vw, 2.5rem); color: #FF4D1C; font-weight: bold; margin-bottom: 25px; line-height: 1.4; word-break: break-word; overflow-wrap: anywhere; width: 100%; overflow-y: auto; padding: 0 10px; }
+    .modal-winner { font-size: clamp(1.5rem, 6vw, 2.5rem); color: #FF4D1C; font-weight: bold; margin-bottom: 10px; line-height: 1.4; word-break: break-word; overflow-wrap: anywhere; width: 100%; overflow-y: auto; padding: 0 10px; }
+    
+    /* สไตล์สำหรับคะแนนดาวใน Modal */
+    .modal-rating { font-size: 1.2rem; font-weight: bold; margin-bottom: 25px; display: none; }
 
     #navButton { background-color: #4CAF50; width: 90%; margin: 0 auto 15px auto; text-decoration: none; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; }
 
@@ -153,13 +155,23 @@
                 </div>
               </div>
 
-              <div style="margin-bottom: 20px;">
+              <div style="margin-bottom: 15px;">
                 <p class="filter-title">ระดับราคา (งบประมาณ)</p>
                 <div id="priceCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
                   <label class="cat-label"><input type="checkbox" value="1">฿ (ประหยัด)</label>
                   <label class="cat-label"><input type="checkbox" value="2">฿฿ (ปานกลาง)</label>
                   <label class="cat-label"><input type="checkbox" value="3">฿฿฿ (แพง)</label>
                   <label class="cat-label"><input type="checkbox" value="4">฿฿฿฿ (หรูหรา)</label>
+                </div>
+              </div>
+
+              <div style="margin-bottom: 20px;">
+                <p class="filter-title">คะแนนดาวขั้นต่ำ</p>
+                <div id="ratingCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                  <label class="cat-label"><input type="radio" name="minRating" value="0" checked>ทุกระดับ</label>
+                  <label class="cat-label"><input type="radio" name="minRating" value="3"><i class="fas fa-star" style="color:#FFD700;"></i> 3.0+</label>
+                  <label class="cat-label"><input type="radio" name="minRating" value="4"><i class="fas fa-star" style="color:#FFD700;"></i> 4.0+</label>
+                  <label class="cat-label"><input type="radio" name="minRating" value="4.5"><i class="fas fa-star" style="color:#FFD700;"></i> 4.5+</label>
                 </div>
               </div>
 
@@ -235,6 +247,8 @@
       <div class="modal-title">มื้อนี้กินที่นี่เลย!</div>
       <div class="modal-winner" id="winnerText">...</div>
       
+      <div class="modal-rating" id="winnerRating"></div>
+      
       <a id="navButton" href="#" target="_blank" class="btn">
         <i class="fas fa-map-marker-alt"></i> ดูตำแหน่งที่ตั้งร้าน
       </a>
@@ -257,7 +271,6 @@
   </div>
   
   <script>
-    
     fetch('nav.html').then(res => res.text()).then(html => {
       document.getElementById('navbar-include').innerHTML = html;
       const themeToggle = document.getElementById('theme-toggle');
@@ -271,6 +284,26 @@
       const yearElem = document.getElementById('year'); 
       if (yearElem) yearElem.textContent = new Date().getFullYear();
     });
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('sw.js').catch(err => { console.log('SW fail: ', err); });
+      });
+    }
+
+    let timeOffset = 0;
+    async function syncServerTime() {
+      try {
+        const response = await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
+        const serverTimeStr = response.headers.get('Date');
+        if (serverTimeStr) {
+          const serverTime = new Date(serverTimeStr).getTime();
+          const localTime = Date.now();
+          timeOffset = serverTime - localTime; 
+        }
+      } catch (e) {}
+    }
+    syncServerTime();
 
     let options = [];
     const colors = ["#FF4D1C", "#2A9D8F", "#E9C46A", "#E63946", "#264653", "#F4A261", "#8AB17D", "#6D597A", "#4CC9F0", "#F72585"];
@@ -329,10 +362,15 @@
       
       const radiusValue = parseInt(document.getElementById('radiusInput').value) || 1000;
       const isOpenNow = document.getElementById('openNowCheck').checked;
+      
       const categoryCheckboxes = document.querySelectorAll('#foodCat input:checked');
       const selectedCategories = Array.from(categoryCheckboxes).map(cb => cb.value);
+      
       const priceCheckboxes = document.querySelectorAll('#priceCat input:checked');
       const selectedPrices = Array.from(priceCheckboxes).map(cb => parseInt(cb.value));
+      
+      // ดึงค่าเรตติ้งที่เลือก
+      const minRating = parseFloat(document.querySelector('input[name="minRating"]:checked').value);
       
       const service = new google.maps.places.PlacesService(map);
       let allResults = [];
@@ -388,13 +426,16 @@
           }
 
           if (selectedPrices.length > 0) {
-            uniqueResults = uniqueResults.filter(r => {
-              return r.price_level !== undefined && selectedPrices.includes(r.price_level);
-            });
+            uniqueResults = uniqueResults.filter(r => r.price_level !== undefined && selectedPrices.includes(r.price_level));
+          }
+
+          // กรองคะแนนดาวขั้นต่ำ
+          if (minRating > 0) {
+            uniqueResults = uniqueResults.filter(r => r.rating !== undefined && r.rating >= minRating);
           }
 
           if (uniqueResults.length === 0) {
-             statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบร้านที่ตรงกับระดับราคาที่คุณเลือก ลองปรับราคาดูครับ</span>';
+             statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบร้านที่ตรงกับเงื่อนไขราคา/ดาว ลองปรับตัวกรองดูครับ</span>';
              clearOptions();
              return;
           }
@@ -407,13 +448,15 @@
               percent: 100/shuffled.length,
               place_id: r.place_id,
               lat: r.geometry.location.lat(),
-              lng: r.geometry.location.lng()
+              lng: r.geometry.location.lng(),
+              rating: r.rating,
+              user_ratings_total: r.user_ratings_total
             };
           });
           
           drawWheel();
           updateList();
-          statusDiv.innerHTML = '<span style="color:#4CAF50;">เจอ ' + options.length + ' ร้านในหมวด/ราคาที่เลือก พร้อมสุ่มแล้ว!</span>';
+          statusDiv.innerHTML = '<span style="color:#4CAF50;">เจอ ' + options.length + ' ร้านในหมวด/ราคา/ดาวที่เลือก พร้อมสุ่มแล้ว!</span>';
         } else {
           statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบร้านที่ตรงกับเงื่อนไข ลองปรับระยะทางให้ไกลขึ้นครับ</span>';
           clearOptions();
@@ -614,6 +657,15 @@
             updateHistory();
 
             document.getElementById('winnerText').textContent = winner.text;
+            
+            // แสดงคะแนนดาวใน Modal ถ้ามีข้อมูล
+            const ratingDiv = document.getElementById('winnerRating');
+            if (winner.rating) {
+                ratingDiv.innerHTML = '<span style="color: #FFD700;"><i class="fas fa-star"></i> ' + winner.rating + '</span> <span style="font-size: 0.9rem; color: #888; font-weight: normal;">(' + (winner.user_ratings_total || 0) + ' รีวิว)</span>';
+                ratingDiv.style.display = 'block';
+            } else {
+                ratingDiv.style.display = 'none';
+            }
             
             const navBtn = document.getElementById('navButton');
             navBtn.href = finalUrl;
