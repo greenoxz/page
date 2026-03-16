@@ -1,7 +1,8 @@
 {
   "name": "สุ่มร้านอาหาร",
   "short_name": "สุ่มร้านอาหาร",
-  "start_url": "./",
+  "start_url": "randomdish.html",
+  "scope": "./",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#FF4D1C",

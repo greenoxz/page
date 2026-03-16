@@ -10,6 +10,7 @@
   <link rel="manifest" href="manifest.json">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
     .layout-wrapper { display: flex; flex-direction: column; gap: 30px; padding: 0 15px; box-sizing: border-box; }
@@ -256,6 +257,7 @@
   </div>
   
   <script>
+    
     fetch('nav.html').then(res => res.text()).then(html => {
       document.getElementById('navbar-include').innerHTML = html;
       const themeToggle = document.getElementById('theme-toggle');
@@ -269,12 +271,6 @@
       const yearElem = document.getElementById('year'); 
       if (yearElem) yearElem.textContent = new Date().getFullYear();
     });
-
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(err => { console.log('SW fail: ', err); });
-      });
-    }
 
     let options = [];
     const colors = ["#FF4D1C", "#2A9D8F", "#E9C46A", "#E63946", "#264653", "#F4A261", "#8AB17D", "#6D597A", "#4CC9F0", "#F72585"];

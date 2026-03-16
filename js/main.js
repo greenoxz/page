@@ -63,3 +63,10 @@ if (document.body.classList.contains('theme-dark')) {
 } else {
     metaThemeColor.setAttribute('content', '#fcfcfc'); // สีโหมดสว่าง
 }
+
+// ลงทะเบียน Service Worker (ถ้ามี)
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js').catch(err => { console.log('SW fail: ', err); });
+  });
+}
