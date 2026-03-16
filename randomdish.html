@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#18181b" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Random Wheel - ppknr</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <style>
+    /* Layout */
+    .layout-wrapper { display: flex; flex-direction: column; gap: 30px; padding: 0 15px; box-sizing: border-box; }
+    .history-column { width: 100%; background: #f5f5f5; padding: 20px; border-radius: 15px; display: flex; flex-direction: column; max-height: 500px; box-sizing: border-box; }
+    .theme-dark .history-column { background: #1a1a1c; border: 1px solid #333; }
+    @media (min-width: 1000px) {
+      .layout-wrapper { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 20px; padding: 0; }
+      .wheel-column { grid-column: 2; display: flex; flex-direction: column; align-items: center; min-width: 500px; }
+      .history-column { grid-column: 3; justify-self: end; width: 320px; padding: 25px; max-height: 800px; }
+    }
+    .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+    
+    /* Title & Share */
+    .title-group { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 600px; margin: 0 auto 20px; padding: 0 15px; box-sizing: border-box; }
+    .page-title { text-align: center; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 700; flex: 1; font-family: 'Anuphan', sans-serif; color: #FF4D1C; margin: 0; }
+    
+    .input-group { display: flex; gap: 8px; width: 100%; max-width: 550px; justify-content: center; flex-wrap: wrap; }
+    .input-group input { flex: 1; min-width: 120px; padding: 12px 15px; border-radius: 10px; border: 1px solid #ddd; font-family: 'Anuphan', sans-serif; font-size: 1rem; }
+    .theme-dark .input-group input { background: #111; color: #fff; border-color: #444; }
+    
+    .action-menu { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 5px; width: 100%; max-width: 550px; }
+    .btn { padding: 12px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: background 0.2s, transform 0.1s; white-space: nowrap; }
+    .btn:hover { background: #e64519; }
+    .btn:active { transform: scale(0.97); }
+    .btn.secondary { background: #555; }
+    .btn.secondary:hover { background: #333; }
+    .btn.danger { background: #ff4444; }
+    .btn.danger:hover { background: #cc0000; }
+    .btn:disabled { background: #ccc !important; cursor: not-allowed; transform: none; }
+    
+    /* วงล้อ */
+    .wheel-box { position: relative; width: 90%; max-width: 400px; aspect-ratio: 1/1; margin: 20px auto; flex-shrink: 0; }
+    #canvas { width: 100%; height: auto; aspect-ratio: 1/1; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.15); display: block; }
+    .theme-dark #canvas { border-color: #333; }
+    .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 35px solid #FF4D1C; z-index: 10; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
+    
+    .options-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; list-style: none; padding: 0; margin: 0; max-width: 600px; }
+    .options-list li { background: #eee; padding: 8px 16px; border-radius: 20px; font-size: 15px; color: #333; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .theme-dark .options-list li { background: #333; color: #fff; }
+    .delete-btn { color: #ff4444; cursor: pointer; font-size: 1.1rem; }
+    
+    .checkbox-group { display: flex; align-items: center; gap: 10px; font-size: 1rem; cursor: pointer; background: rgba(0,0,0,0.05); padding: 10px 20px; border-radius: 12px; margin-top: 10px; }
+    .theme-dark .checkbox-group { background: rgba(255,255,255,0.05); }
+    .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
+
+    /* History Column */
+    .history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
+    .theme-dark .history-header { border-color: #333; }
+    .history-title { margin: 0; font-size: 1.3rem; font-weight: bold; }
+    .history-list { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; padding-right: 5px; min-height: 200px; }
+    .history-list::-webkit-scrollbar { width: 6px; }
+    .history-list::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 10px; }
+    .history-list li { padding: 15px; background: #fff; margin-bottom: 10px; border-radius: 12px; border-left: 5px solid #FF4D1C; font-size: 1.1rem; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .history-list li span { font-size: 0.85rem; color: #888; }
+    .theme-dark .history-list li { background: #222; color: #fff; }
+    .empty-history { text-align: center; color: #aaa; font-style: italic; padding: 40px 0; font-size: 1.1rem; }
+
+    /* Modal Popup */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; padding: 20px; box-sizing: border-box; }
+    .modal-overlay.active { display: flex; opacity: 1; }
+    .modal-content { background: #fff; padding: 35px 20px; border-radius: 20px; text-align: center; max-width: 400px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.3); transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
+    .modal-overlay.active .modal-content { transform: scale(1); }
+    .theme-dark .modal-content { background: #18181b; color: #fff; border: 1px solid #333; }
+    .modal-icon { font-size: 3.5rem; color: #FF4D1C; margin-bottom: 15px; flex-shrink: 0; }
+    .modal-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; flex-shrink: 0; }
+    .modal-winner { font-size: clamp(1.5rem, 6vw, 2.5rem); color: #FF4D1C; font-weight: bold; margin-bottom: 25px; line-height: 1.4; word-break: break-word; overflow-wrap: anywhere; width: 100%; overflow-y: auto; padding: 0 10px; }
+
+    #shareLinkInput { background: #f9f9f9; color: #555; }
+    .theme-dark #shareLinkInput { background: #111; color: #ccc; border-color: #444; }
+
+    /* Map Box */
+    #map { width: 100%; height: 300px; border-radius: 12px; margin-top: 15px; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    .theme-dark #map { border-color: #333; }
+  </style>
+</head>
+<body class="theme-light" id="theme-body">
+  <div class="page-container">
+    <div id="navbar-include"></div>
+    
+    <main class="main-section">
+      <div class="content" style="max-width: 1200px; margin: 0 auto;">
+        
+        <div class="title-group">
+          <h1 class="page-title"><i class="fas fa-utensils"></i> สุ่มร้านอาหารรอบตัวคุณ</h1>
+          <button class="btn secondary" onclick="shareWheel()" title="แชร์วงล้อนี้ให้เพื่อน"><i class="fas fa-share-alt"></i> แชร์</button>
+        </div>
+        
+        <div class="content-box layout-wrapper">
+          <div class="wheel-column wheel-container">
+            
+            <div class="input-group" style="flex-direction: column; align-items: center;">
+              <div style="display: flex; gap: 8px; width: 100%;">
+                <input type="number" id="radiusInput" placeholder="ระยะค้นหาจากหมุด (เช่น 1000 เมตร)" value="1000">
+                <button class="btn" style="min-width: 120px;" onclick="fetchRestaurants()"><i class="fas fa-search"></i> ค้นหาร้าน</button>
+              </div>
+              
+              <div id="map"></div>
+              <p style="font-size: 0.85rem; color: #888; margin-top: 5px;">*ลากหมุดหรือคลิกบนแผนที่เพื่อเลือกจุดที่ต้องการหาร้านอาหาร</p>
+
+              <div id="restaurantStatus" style="margin-top: 5px; font-size: 0.95rem; font-weight: bold; color: #888;"></div>
+            </div>
+
+            <div class="action-menu">
+              <button class="btn secondary" onclick="sortOptions()"><i class="fas fa-sort-alpha-down"></i> เรียงชื่อ</button>
+              <button class="btn secondary" onclick="shuffleOptions()"><i class="fas fa-random"></i> สลับตำแหน่ง</button>
+              <button class="btn danger" onclick="clearOptions()"><i class="fas fa-trash-alt"></i> ล้างวงล้อ</button>
+            </div>
+            
+            <ul class="options-list" id="optionsList" style="margin-top: 10px;"></ul>
+
+            <div class="wheel-box">
+              <div class="pointer"></div>
+              <canvas id="canvas" width="400" height="400"></canvas>
+            </div>
+            
+            <label class="checkbox-group" id="autoRemoveLabel">
+              <input type="checkbox" id="autoRemove">
+              ลบร้านที่สุ่มได้ออกอัตโนมัติ
+            </label>
+            
+            <button class="btn" id="spinBtn" style="width: 250px; font-size: 1.3rem; margin-top: 15px; padding: 15px;" onclick="spin()">หมุนวงล้อ!</button>
+          </div>
+
+          <div class="history-column">
+            <div class="history-header">
+              <h3 class="history-title"><i class="fas fa-history"></i> ประวัติร้านที่ได้</h3>
+            </div>
+            <ul class="history-list" id="historyList">
+              <div class="empty-history">ยังไม่มีประวัติการสุ่ม<br>ค้นหาร้านแล้วลองหมุนดูสิ!</div>
+            </ul>
+            <button class="btn secondary" style="width: 100%; margin-top: 15px; padding: 12px;" onclick="clearHistory()">
+              <i class="fas fa-trash"></i> ล้างประวัติทั้งหมด
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </main>
+    <div id="footer-include"></div>
+  </div>
+
+  <div class="modal-overlay" id="winModal">
+    <div class="modal-content">
+      <i class="fas fa-trophy modal-icon"></i>
+      <div class="modal-title">มื้อนี้กินที่นี่เลย!</div>
+      <div class="modal-winner" id="winnerText">...</div>
+      <button class="btn" style="width: 100%; font-size: 1.2rem; padding: 12px; margin-top: auto;" onclick="closeModal()">ตกลง</button>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="shareModal">
+    <div class="modal-content">
+      <i class="fas fa-check-circle modal-icon" style="color: #4CAF50;"></i>
+      <div class="modal-title">คัดลอกลิงก์สำเร็จ!</div>
+      <p style="margin-bottom: 20px; color: #888; font-size: 0.95rem;">ส่งลิงก์ด้านล่างนี้ให้เพื่อนเพื่อแชร์วงล้อร้านอาหารของคุณได้เลย</p>
+      <div style="display: flex; gap: 8px; width: 100%; margin-bottom: 25px;">
+        <input type="text" id="shareLinkInput" readonly style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; font-size: 0.9rem;">
+        <button class="btn" onclick="copyShareLink()" id="copyShareBtn" style="padding: 10px 15px;" title="คัดลอกอีกครั้ง"><i class="fas fa-copy"></i></button>
+      </div>
+      <button class="btn secondary" style="width: 100%; font-size: 1.1rem; padding: 12px;" onclick="closeShareModal()">ปิด</button>
+    </div>
+  </div>
+  
+  <script>
+    fetch('nav.html').then(res => res.text()).then(html => document.getElementById('navbar-include').innerHTML = html);
+    fetch('footer.html').then(res => res.text()).then(html => {
+      document.getElementById('footer-include').innerHTML = html;
+      const yearElem = document.getElementById('year'); 
+      if (yearElem) yearElem.textContent = new Date().getFullYear();
+    });
+
+    let options = [];
+    const colors = ["#FF4D1C", "#2A9D8F", "#E9C46A", "#E63946", "#264653", "#F4A261", "#8AB17D", "#6D597A", "#4CC9F0", "#F72585"];
+    let currentDeg = 0;
+    let isSpinning = false;
+    let historyData = [];
+
+    // --- ส่วนของ Google Maps ---
+    let map;
+    let marker;
+    let selectedLocation = null;
+
+    function initMap() {
+      // ค่าเริ่มต้น (โซนปากเกร็ด นนทบุรี)
+      const defaultPos = { lat: 13.913, lng: 100.498 };
+      
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 14,
+        center: defaultPos,
+      });
+
+      marker = new google.maps.Marker({
+        position: defaultPos,
+        map: map,
+        draggable: true,
+        animation: google.maps.Animation.DROP,
+        title: "ลากเพื่อเลือกตำแหน่ง"
+      });
+      selectedLocation = defaultPos;
+
+      // พยายามขอพิกัดปัจจุบัน
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const pos = { lat: position.coords.latitude, lng: position.coords.longitude };
+          map.setCenter(pos);
+          marker.setPosition(pos);
+          selectedLocation = pos;
+        });
+      }
+
+      // อัปเดตพิกัดเมื่อลากหมุดเสร็จ
+      marker.addListener("dragend", () => {
+        selectedLocation = marker.getPosition();
+      });
+
+      // อัปเดตพิกัดเมื่อคลิกบนแผนที่
+      map.addListener("click", (mapsMouseEvent) => {
+        selectedLocation = mapsMouseEvent.latLng;
+        marker.setPosition(selectedLocation);
+      });
+    }
+
+    // เปิดให้ API เรียกใช้ initMap ได้
+    window.initMap = initMap;
+
+    function fetchRestaurants() {
+      if(isSpinning) return;
+      if(!selectedLocation) return;
+
+      const statusDiv = document.getElementById('restaurantStatus');
+      statusDiv.innerHTML = "📍 กำลังค้นหาร้านอาหารรอบหมุด...";
+      
+      const radius = document.getElementById('radiusInput').value || 1000;
+      const request = { location: selectedLocation, radius: radius, type: ['restaurant'] };
+      const service = new google.maps.places.PlacesService(map);
+
+      service.nearbySearch(request, (results, status) => {
+        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
+          // สุ่มร้านมาไม่เกิน 15 ร้าน
+          const shuffled = results.sort(() => 0.5 - Math.random()).slice(0, 15);
+          options = shuffled.map(r => ({ text: r.name, percent: 100/shuffled.length }));
+          drawWheel();
+          updateList();
+          statusDiv.innerHTML = `<span style="color:#4CAF50;">✅ เจอ ${options.length} ร้านรอบหมุดของคุณ พร้อมสุ่มแล้ว!</span>`;
+        } else {
+          statusDiv.innerHTML = "<span style="color:#ff4444;">❌ ไม่พบร้านอาหารบริเวณนี้ ลองขยายระยะค้นหาหรือเลื่อนหมุดดูครับ</span>";
+          clearOptions();
+        }
+      });
+    }
+
+    function shareWheel() {
+      const state = { items: options };
+      const encodedData = btoa(encodeURIComponent(JSON.stringify(state)));
+      const shareUrl = window.location.origin + window.location.pathname + '?d=' + encodedData;
+      document.getElementById('shareLinkInput').value = shareUrl;
+      navigator.clipboard.writeText(shareUrl).then(() => { showShareModal(true); }).catch(() => { showShareModal(false); });
+    }
+
+    function showShareModal(isCopied) {
+      document.getElementById('shareModal').classList.add('active');
+      const btn = document.getElementById('copyShareBtn');
+      if(isCopied) {
+        btn.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i>'; }, 2000);
+      }
+    }
+
+    function closeShareModal() { document.getElementById('shareModal').classList.remove('active'); }
+    function copyShareLink() {
+      const shareInput = document.getElementById('shareLinkInput');
+      shareInput.select();
+      shareInput.setSelectionRange(0, 99999); 
+      navigator.clipboard.writeText(shareInput.value).then(() => {
+        const btn = document.getElementById('copyShareBtn');
+        btn.innerHTML = '<i class="fas fa-check"></i>';
+        setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i>'; }, 2000);
+      });
+    }
+
+    function loadFromUrl() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const dataStr = urlParams.get('d');
+      if (dataStr) {
+        try {
+          const state = JSON.parse(decodeURIComponent(atob(dataStr)));
+          if(state.items && state.items.length > 0) {
+            options = state.items;
+            options.forEach(opt => opt.percent = 100/options.length);
+          }
+          window.history.replaceState({}, document.title, window.location.pathname);
+        } catch (e) { console.error("Invalid share link"); }
+      }
+    }
+
+    function drawWheel() {
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const center = canvas.width / 2;
+
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if (options.length === 0) {
+        updateList();
+        return;
+      }
+
+      let startAngle = 0;
+      for (let i = 0; i < options.length; i++) {
+        const opt = options[i];
+        const sliceAngle = (opt.percent / 100) * 2 * Math.PI;
+
+        if (sliceAngle <= 0) continue; 
+
+        ctx.beginPath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.moveTo(center, center);
+        ctx.arc(center, center, center, startAngle, startAngle + sliceAngle);
+        ctx.fill();
+        ctx.save();
+        
+        ctx.translate(center, center);
+        ctx.rotate(startAngle + sliceAngle / 2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#fff";
+        ctx.font = `bold ${options.length > 15 ? 14 : 18}px 'Anuphan', sans-serif`;
+        
+        ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
+        ctx.shadowBlur = 4;
+        ctx.shadowOffsetX = 1;
+        ctx.shadowOffsetY = 1;
+        
+        let textToShow = opt.text;
+        if(textToShow.length > 20) textToShow = textToShow.substring(0, 20) + "...";
+        ctx.fillText(textToShow, center - 20, 6);
+        
+        ctx.shadowColor = "transparent";
+        ctx.restore();
+        startAngle += sliceAngle;
+      }
+      updateList();
+    }
+
+    function removeOption(index) {
+      if(isSpinning) return;
+      options.splice(index, 1);
+      options.forEach(opt => opt.percent = 100/options.length);
+      drawWheel();
+    }
+
+    function clearOptions() {
+      if(isSpinning) return;
+      options = [];
+      drawWheel();
+      document.getElementById('restaurantStatus').innerText = '';
+    }
+
+    function sortOptions() {
+      if(isSpinning || options.length === 0) return;
+      options.sort((a, b) => a.text.localeCompare(b.text, 'th'));
+      drawWheel();
+    }
+
+    function shuffleOptions() {
+      if(isSpinning || options.length === 0) return;
+      for (let i = options.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [options[i], options[j]] = [options[j], options[i]];
+      }
+      drawWheel();
+    }
+
+    function updateList() {
+      const list = document.getElementById("optionsList");
+      if(options.length > 30) {
+        list.innerHTML = `<li>แสดงผล ${options.length} ร้าน (ซ่อนเพื่อความสวยงาม)</li>`;
+        return;
+      }
+      list.innerHTML = options.map((opt, i) => `
+        <li>${opt.text} <i class="fas fa-times delete-btn" onclick="removeOption(${i})"></i></li>
+      `).join('');
+    }
+
+    function updateHistory() {
+      const list = document.getElementById("historyList");
+      if (historyData.length === 0) {
+        list.innerHTML = `<div class="empty-history">ยังไม่มีประวัติการสุ่ม<br>ค้นหาร้านแล้วลองหมุนดูสิ!</div>`;
+        return;
+      }
+      const reversedHistory = [...historyData].reverse();
+      const total = historyData.length;
+      list.innerHTML = reversedHistory.map((item, index) => {
+        return `<li><span>รอบที่ #${total - index}</span><b>${item}</b></li>`;
+      }).join('');
+    }
+
+    function clearHistory() {
+      if(confirm("ต้องการล้างประวัติผลลัพธ์ทั้งหมดหรือไม่?")) {
+        historyData = [];
+        updateHistory();
+      }
+    }
+
+    function spin() {
+      if (options.length === 0 || isSpinning) return;
+      
+      isSpinning = true;
+      document.getElementById('spinBtn').disabled = true;
+
+      const canvas = document.getElementById("canvas");
+      const randomDeg = Math.floor(Math.random() * 360) + 3600; 
+      currentDeg += randomDeg;
+      canvas.style.transform = `rotate(${currentDeg}deg)`;
+
+      setTimeout(() => {
+        const pointerAngleDeg = (360 - (currentDeg % 360) + 270) % 360;
+        let cumulativeAngle = 0;
+        let winnerIndex = 0;
+        for (let i = 0; i < options.length; i++) {
+          const sliceAngleDeg = (options[i].percent / 100) * 360;
+          cumulativeAngle += sliceAngleDeg;
+          if (pointerAngleDeg <= cumulativeAngle) {
+            winnerIndex = i;
+            break;
+          }
+        }
+        
+        const winner = options[winnerIndex].text;
+        if (document.getElementById('autoRemove').checked) removeOption(winnerIndex);
+        
+        historyData.push(winner);
+        updateHistory();
+
+        document.getElementById('winnerText').textContent = winner;
+        document.getElementById('winModal').classList.add('active');
+        
+        isSpinning = false;
+        document.getElementById('spinBtn').disabled = false;
+      }, 4000);
+    }
+
+    function closeModal() { document.getElementById('winModal').classList.remove('active'); }
+
+    loadFromUrl();
+    drawWheel();
+    updateHistory();
+  </script>
+  
+  <script src="js/main.js" defer></script>
+  
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsZqohGF5WMcQMoUmxWAHoUqo_V26mw1A&libraries=places&callback=initMap" async defer></script>
+</body>
+</html>
