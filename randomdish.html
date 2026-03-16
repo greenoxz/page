@@ -6,12 +6,11 @@
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random Wheel - ppknr</title>
+  <title>สุ่มร้านอาหาร - ppknr</title>
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
-    /* Layout */
     .layout-wrapper { display: flex; flex-direction: column; gap: 30px; padding: 0 15px; box-sizing: border-box; }
     .history-column { width: 100%; background: #f5f5f5; padding: 20px; border-radius: 15px; display: flex; flex-direction: column; max-height: 500px; box-sizing: border-box; }
     .theme-dark .history-column { background: #1a1a1c; border: 1px solid #333; }
@@ -22,7 +21,6 @@
     }
     .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
     
-    /* Title & Share */
     .title-group { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 600px; margin: 0 auto 20px; padding: 0 15px; box-sizing: border-box; }
     .page-title { text-align: center; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 700; flex: 1; font-family: 'Anuphan', sans-serif; color: #FF4D1C; margin: 0; }
     
@@ -40,7 +38,6 @@
     .btn.danger:hover { background: #cc0000; }
     .btn:disabled { background: #ccc !important; cursor: not-allowed; transform: none; }
     
-    /* วงล้อ */
     .wheel-box { position: relative; width: 90%; max-width: 400px; aspect-ratio: 1/1; margin: 20px auto; flex-shrink: 0; }
     #canvas { width: 100%; height: auto; aspect-ratio: 1/1; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.15); display: block; }
     .theme-dark #canvas { border-color: #333; }
@@ -55,7 +52,6 @@
     .theme-dark .checkbox-group { background: rgba(255,255,255,0.05); }
     .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
 
-    /* History Column */
     .history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
     .theme-dark .history-header { border-color: #333; }
     .history-title { margin: 0; font-size: 1.3rem; font-weight: bold; }
@@ -67,7 +63,6 @@
     .theme-dark .history-list li { background: #222; color: #fff; }
     .empty-history { text-align: center; color: #aaa; font-style: italic; padding: 40px 0; font-size: 1.1rem; }
 
-    /* Modal Popup */
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; padding: 20px; box-sizing: border-box; }
     .modal-overlay.active { display: flex; opacity: 1; }
     .modal-content { background: #fff; padding: 35px 20px; border-radius: 20px; text-align: center; max-width: 400px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.3); transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
@@ -80,14 +75,15 @@
     #shareLinkInput { background: #f9f9f9; color: #555; }
     .theme-dark #shareLinkInput { background: #111; color: #ccc; border-color: #444; }
 
-    /* Map Box */
     #map { width: 100%; height: 300px; border-radius: 12px; margin-top: 15px; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
     .theme-dark #map { border-color: #333; }
   </style>
 </head>
 <body class="theme-light" id="theme-body">
   <div class="page-container">
-    <div id="navbar-include"></div>
+    <div id="navbar-include">
+      <input type="checkbox" id="theme-toggle" style="display: none;">
+    </div>
     
     <main class="main-section">
       <div class="content" style="max-width: 1200px; margin: 0 auto;">
@@ -174,7 +170,16 @@
   </div>
   
   <script>
-    fetch('nav.html').then(res => res.text()).then(html => document.getElementById('navbar-include').innerHTML = html);
+    // ส่วนดึง Navbar และ Footer
+    fetch('nav.html').then(res => res.text()).then(html => {
+      document.getElementById('navbar-include').innerHTML = html;
+      // พยายามตั้งค่าปุ่มสลับธีมอีกครั้งหลังจากโหลด nav เสร็จ
+      const themeToggle = document.getElementById('theme-toggle');
+      if(themeToggle && localStorage.getItem('theme') === 'dark') {
+        themeToggle.checked = true;
+      }
+    });
+    
     fetch('footer.html').then(res => res.text()).then(html => {
       document.getElementById('footer-include').innerHTML = html;
       const yearElem = document.getElementById('year'); 
@@ -187,15 +192,13 @@
     let isSpinning = false;
     let historyData = [];
 
-    // --- ส่วนของ Google Maps ---
     let map;
     let marker;
     let selectedLocation = null;
 
-    function initMap() {
-      // ค่าเริ่มต้น (โซนปากเกร็ด นนทบุรี)
+    // ต้องประกาศเป็น window.initMap เพื่อให้ Google Maps API เรียกใช้ได้
+    window.initMap = function() {
       const defaultPos = { lat: 13.913, lng: 100.498 };
-      
       map = new google.maps.Map(document.getElementById("map"), {
         zoom: 14,
         center: defaultPos,
@@ -210,7 +213,6 @@
       });
       selectedLocation = defaultPos;
 
-      // พยายามขอพิกัดปัจจุบัน
       if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition((position) => {
           const pos = { lat: position.coords.latitude, lng: position.coords.longitude };
@@ -220,42 +222,56 @@
         });
       }
 
-      // อัปเดตพิกัดเมื่อลากหมุดเสร็จ
       marker.addListener("dragend", () => {
         selectedLocation = marker.getPosition();
       });
 
-      // อัปเดตพิกัดเมื่อคลิกบนแผนที่
       map.addListener("click", (mapsMouseEvent) => {
         selectedLocation = mapsMouseEvent.latLng;
         marker.setPosition(selectedLocation);
       });
-    }
-
-    // เปิดให้ API เรียกใช้ initMap ได้
-    window.initMap = initMap;
+    };
 
     function fetchRestaurants() {
       if(isSpinning) return;
-      if(!selectedLocation) return;
+      if(!selectedLocation) {
+        alert("กรุณารอให้แผนที่โหลด หรือเลือกตำแหน่งบนแผนที่ก่อนครับ");
+        return;
+      }
 
       const statusDiv = document.getElementById('restaurantStatus');
       statusDiv.innerHTML = "📍 กำลังค้นหาร้านอาหารรอบหมุด...";
       
-      const radius = document.getElementById('radiusInput').value || 1000;
-      const request = { location: selectedLocation, radius: radius, type: ['restaurant'] };
+      // แปลงค่าจากช่อง Input ให้เป็นตัวเลข (สำคัญมาก Google API ไม่รับค่า Text)
+      const radiusValue = parseInt(document.getElementById('radiusInput').value) || 1000;
+      
+      const request = { 
+        location: selectedLocation, 
+        radius: radiusValue, 
+        type: 'restaurant' 
+      };
+      
       const service = new google.maps.places.PlacesService(map);
 
       service.nearbySearch(request, (results, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK && results.length > 0) {
-          // สุ่มร้านมาไม่เกิน 15 ร้าน
+        // กรณีค้นหาสำเร็จและเจอร้าน
+        if (status === google.maps.places.PlacesServiceStatus.OK && results && results.length > 0) {
           const shuffled = results.sort(() => 0.5 - Math.random()).slice(0, 15);
           options = shuffled.map(r => ({ text: r.name, percent: 100/shuffled.length }));
+          
           drawWheel();
           updateList();
-          statusDiv.innerHTML = `<span style="color:#4CAF50;">✅ เจอ ${options.length} ร้านรอบหมุดของคุณ พร้อมสุ่มแล้ว!</span>`;
-        } else {
-          statusDiv.innerHTML = "<span style="color:#ff4444;">❌ ไม่พบร้านอาหารบริเวณนี้ ลองขยายระยะค้นหาหรือเลื่อนหมุดดูครับ</span>";
+          statusDiv.innerHTML = '<span style="color:#4CAF50;">✅ เจอ ' + options.length + ' ร้านรอบหมุด พร้อมสุ่มแล้ว!</span>';
+        } 
+        // กรณีระบบทำงานปกติ แต่ตรงนั้นไม่มีร้านอาหารเลย
+        else if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+          statusDiv.innerHTML = '<span style="color:#ff4444;">❌ ไม่พบร้านอาหารในระยะ ' + radiusValue + ' เมตร ลองเลื่อนหมุดดูครับ</span>';
+          clearOptions();
+        } 
+        // กรณี Error จากฝั่ง Google (เช่น ยังไม่เปิด API หรือไม่ได้ผูกบัตร)
+        else {
+          statusDiv.innerHTML = '<span style="color:#ff4444;">❌ ค้นหาไม่สำเร็จ (สถานะ: ' + status + ') ลองกด F12 เพื่อดู Error</span>';
+          console.error("Google Places API Error Status:", status);
           clearOptions();
         }
       });
@@ -334,7 +350,7 @@
         ctx.rotate(startAngle + sliceAngle / 2);
         ctx.textAlign = "right";
         ctx.fillStyle = "#fff";
-        ctx.font = `bold ${options.length > 15 ? 14 : 18}px 'Anuphan', sans-serif`;
+        ctx.font = 'bold ' + (options.length > 15 ? 14 : 18) + 'px "Anuphan", sans-serif';
         
         ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
         ctx.shadowBlur = 4;
@@ -376,7 +392,9 @@
       if(isSpinning || options.length === 0) return;
       for (let i = options.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
-        [options[i], options[j]] = [options[j], options[i]];
+        const temp = options[i];
+        options[i] = options[j];
+        options[j] = temp;
       }
       drawWheel();
     }
@@ -384,24 +402,24 @@
     function updateList() {
       const list = document.getElementById("optionsList");
       if(options.length > 30) {
-        list.innerHTML = `<li>แสดงผล ${options.length} ร้าน (ซ่อนเพื่อความสวยงาม)</li>`;
+        list.innerHTML = '<li>แสดงผล ' + options.length + ' ร้าน (ซ่อนเพื่อความสวยงาม)</li>';
         return;
       }
-      list.innerHTML = options.map((opt, i) => `
-        <li>${opt.text} <i class="fas fa-times delete-btn" onclick="removeOption(${i})"></i></li>
-      `).join('');
+      list.innerHTML = options.map((opt, i) => 
+        '<li>' + opt.text + ' <i class="fas fa-times delete-btn" onclick="removeOption(' + i + ')"></i></li>'
+      ).join('');
     }
 
     function updateHistory() {
       const list = document.getElementById("historyList");
       if (historyData.length === 0) {
-        list.innerHTML = `<div class="empty-history">ยังไม่มีประวัติการสุ่ม<br>ค้นหาร้านแล้วลองหมุนดูสิ!</div>`;
+        list.innerHTML = '<div class="empty-history">ยังไม่มีประวัติการสุ่ม<br>ค้นหาร้านแล้วลองหมุนดูสิ!</div>';
         return;
       }
       const reversedHistory = [...historyData].reverse();
       const total = historyData.length;
       list.innerHTML = reversedHistory.map((item, index) => {
-        return `<li><span>รอบที่ #${total - index}</span><b>${item}</b></li>`;
+        return '<li><span>รอบที่ #' + (total - index) + '</span><b>' + item + '</b></li>';
       }).join('');
     }
 
@@ -421,7 +439,7 @@
       const canvas = document.getElementById("canvas");
       const randomDeg = Math.floor(Math.random() * 360) + 3600; 
       currentDeg += randomDeg;
-      canvas.style.transform = `rotate(${currentDeg}deg)`;
+      canvas.style.transform = 'rotate(' + currentDeg + 'deg)';
 
       setTimeout(() => {
         const pointerAngleDeg = (360 - (currentDeg % 360) + 270) % 360;
@@ -459,6 +477,6 @@
   
   <script src="js/main.js" defer></script>
   
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsZqohGF5WMcQMoUmxWAHoUqo_V26mw1A&libraries=places&callback=initMap" async defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsZqohGF5WMcQMoUmxWAHoUqo_V26mw1A&libraries=places&loading=async&callback=initMap" async defer></script>
 </body>
 </html>
