@@ -80,7 +80,7 @@
     .theme-dark .modal-content { background: #18181b; color: #fff; border: 1px solid #333; }
     .modal-icon { font-size: 3.5rem; color: #FF4D1C; margin-bottom: 15px; flex-shrink: 0; }
     .modal-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; flex-shrink: 0; }
-    .modal-winner { font-size: clamp(1.5rem, 6vw, 2.5rem); color: #FF4D1C; font-weight: bold; margin-bottom: 25px; line-height: 1.4; word-break: break-word; overflow-wrap: anywhere; width: 100%; overflow-y: auto; padding: 0 10px; }
+    .modal-winner { font-size: clamp(1.5rem, 6vw, 2.5rem); color: #FF4D1C; font-weight: bold; margin-bottom: 20px; line-height: 1.4; word-break: break-word; overflow-wrap: anywhere; width: 100%; overflow-y: auto; padding: 0 10px; }
 
     #shareLinkInput { background: #f9f9f9; color: #555; }
     .theme-dark #shareLinkInput { background: #111; color: #ccc; border-color: #444; }
@@ -92,6 +92,19 @@
     .history-nav-btn:hover { background-color: #1976D2; color: white; }
     
     .rating-badge { color: #F5B041; font-size: 0.9em; margin-left: 5px; white-space: nowrap; }
+    
+    /* สไตล์สำหรับรูปภาพใน Pop-up */
+    #winnerImage {
+      display: none;
+      width: 100%;
+      max-height: 220px;
+      object-fit: cover;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      border: 2px solid #eee;
+    }
+    .theme-dark #winnerImage { border-color: #333; }
   </style>
 </head>
 <body class="theme-light" id="theme-body">
@@ -187,6 +200,8 @@
       <i class="fas fa-trophy modal-icon"></i>
       <div class="modal-title">มื้อนี้กินที่นี่เลย!</div>
       <div class="modal-winner" id="winnerText">...</div>
+      
+      <img id="winnerImage" src="" alt="ภาพบรรยากาศร้าน">
       
       <a id="navButton" href="#" target="_blank" class="btn" style="background-color: #2196F3; width: 85%; max-width: 300px; margin: 0 auto 15px auto; text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 8px; box-sizing: border-box; white-space: normal; line-height: 1.4;">
         <i class="fas fa-map-marker-alt"></i> ดูข้อมูลร้านบนแผนที่
@@ -339,21 +354,26 @@
               if (minRatingValue > 0) {
                 if (!item.rating || item.rating < minRatingValue) continue;
               }
-              
               uniqueResults.push(item);
             }
           }
 
           const shuffled = uniqueResults.sort(() => 0.5 - Math.random());
           
-          options = shuffled.map(r => ({ 
-            text: r.name, 
-            rating: r.rating, // เก็บค่า rating ไว้แยกต่างหาก
-            percent: 100/shuffled.length,
-            place_id: r.place_id,
-            lat: r.geometry.location.lat(),
-            lng: r.geometry.location.lng()
-          }));
+          options = shuffled.map(r => {
+            // ดึง URL รูปภาพจาก API (ตั้งขนาดกว้างสุด 400px เพื่อไม่ให้โหลดช้า)
+            const photoUrl = (r.photos && r.photos.length > 0) ? r.photos[0].getUrl({ maxWidth: 400 }) : '';
+            
+            return { 
+              text: r.name, 
+              rating: r.rating, 
+              percent: 100/shuffled.length,
+              place_id: r.place_id,
+              lat: r.geometry.location.lat(),
+              lng: r.geometry.location.lng(),
+              photo: photoUrl // เก็บ URL รูปภาพไว้ใช้งาน
+            };
+          });
           
           drawWheel();
           updateList();
@@ -454,7 +474,6 @@
         ctx.shadowOffsetX = 1;
         ctx.shadowOffsetY = 1;
         
-        // บน Canvas ใช้สัญลักษณ์ดาว ★ เพื่อให้เนียนไปกับตัวอักษรสีขาว
         let textToShow = opt.text;
         if(opt.rating) textToShow += ` (★${opt.rating})`;
         
@@ -502,7 +521,6 @@
     function updateList() {
       const list = document.getElementById("optionsList");
       list.innerHTML = options.map((opt, i) => {
-        // ใช้ FontAwesome Icon สำหรับรายชื่อ
         let ratingIcon = opt.rating ? ` <span class="rating-badge"><i class="fas fa-star"></i> ${opt.rating}</span>` : '';
         return '<li>' + opt.text + ratingIcon + ' <i class="fas fa-times delete-btn" style="margin-left: auto;" onclick="removeOption(' + i + ')"></i></li>';
       }).join('');
@@ -525,7 +543,6 @@
         }
         
         const shopName = typeof item === 'string' ? item : item.text;
-        // ใช้ FontAwesome Icon สำหรับประวัติ
         const ratingIcon = (typeof item === 'object' && item.rating) ? ` <span class="rating-badge"><i class="fas fa-star"></i> ${item.rating}</span>` : '';
         
         return '<li><span>รอบที่ #' + (total - index) + '</span><b style="display:flex; align-items:center;">' + shopName + ratingIcon + '</b>' + navHtml + '</li>';
@@ -569,9 +586,18 @@
         historyData.push(winner);
         updateHistory();
 
-        // แสดงผล Icon ดาวตอนสุ่มได้
         let ratingIcon = winner.rating ? ` <span class="rating-badge" style="font-size: 0.6em;"><i class="fas fa-star"></i> ${winner.rating}</span>` : '';
         document.getElementById('winnerText').innerHTML = winner.text + ratingIcon;
+        
+        // เช็คว่ามีรูปภาพไหม ถ้ามีให้แสดง ถอด src ออกถ้าไม่มี
+        const winnerImg = document.getElementById('winnerImage');
+        if (winner.photo) {
+          winnerImg.src = winner.photo;
+          winnerImg.style.display = 'block';
+        } else {
+          winnerImg.src = '';
+          winnerImg.style.display = 'none';
+        }
         
         const navBtn = document.getElementById('navButton');
         if (winner.lat && winner.lng) {
