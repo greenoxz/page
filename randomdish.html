@@ -49,7 +49,7 @@
 
     .radius-box { display: flex; align-items: center; background: #fff; padding: 0 15px; border-radius: 20px; border: 2px solid #ddd; height: 42px; box-sizing: border-box; }
     .theme-dark .radius-box { background: #111; border-color: #444; }
-    .theme-dark .radius-box span { color: #ccc !important; }
+    .theme-dark .radius-box span { color: #ccc !important;if (document.getElementById('autoRemove').checked) removeOption(winnerIndex); }
 
     .action-menu { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 5px; width: 100%; max-width: 550px; }
     .btn { padding: 10px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: background 0.2s, transform 0.1s; white-space: nowrap; height: 42px; display: flex; align-items: center; justify-content: center; gap: 8px; }
@@ -436,6 +436,7 @@
 
           if (uniqueResults.length === 0) {
              statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบร้านที่ตรงกับเงื่อนไขราคา/ดาว ลองปรับตัวกรองดูครับ</span>';
+             alert("ไม่พบร้านที่ตรงกับเงื่อนไขราคาหรือดาวที่กำหนด ลองปรับตัวกรองใหม่นะครับ");
              clearOptions();
              return;
           }
@@ -459,12 +460,15 @@
           statusDiv.innerHTML = '<span style="color:#4CAF50;">เจอ ' + options.length + ' ร้านในหมวด/ราคา/ดาวที่เลือก พร้อมสุ่มแล้ว!</span>';
         } else {
           statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบร้านที่ตรงกับเงื่อนไข ลองปรับระยะทางให้ไกลขึ้นครับ</span>';
+          alert("ไม่พบร้านอาหารเลยครับ ลองปรับระยะทางให้ไกลขึ้นดูนะครับ");
           clearOptions();
         }
       } catch (error) {
         statusDiv.innerHTML = '<span style="color:#ff4444;">เกิดข้อผิดพลาดในการดึงข้อมูล</span>';
+        alert("เกิดข้อผิดพลาดในการค้นหาร้านอาหาร กรุณาลองใหม่อีกครั้งครับ");
         clearOptions();
       }
+
     }
 
     function shareWheel() {
@@ -673,10 +677,28 @@
 
             document.getElementById('winModal').classList.add('active');
             
-            if (document.getElementById('autoRemove').checked) removeOption(winnerIndex);
-            
+            // ปลดล็อคสถานะการหมุนก่อน
             isSpinning = false;
             document.getElementById('spinBtn').disabled = false;
+
+            // ค่อยสั่งลบร้าน
+            if (document.getElementById('autoRemove').checked) removeOption(winnerIndex);
+
+            document.getElementById('winModal').classList.add('active');
+            
+            // 1. ปลดล็อคสถานะการหมุนก่อนเสมอ
+            isSpinning = false;
+            document.getElementById('spinBtn').disabled = false;
+
+            // 2. เช็คว่าติ๊กให้ลบอัตโนมัติไหม และลบแบบเจาะจง
+            if (document.getElementById('autoRemove').checked) {
+                const targetIndex = options.findIndex(opt => opt.place_id === winner.place_id);
+                if (targetIndex !== -1) {
+                    options.splice(targetIndex, 1);
+                    options.forEach(opt => opt.percent = 100 / options.length);
+                    drawWheel();
+                }
+            }
         });
 
       }, 4000);
