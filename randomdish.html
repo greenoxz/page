@@ -25,9 +25,15 @@
     .page-title { text-align: center; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 700; flex: 1; font-family: 'Anuphan', sans-serif; color: #FF4D1C; margin: 0; }
     
     .input-group { display: flex; gap: 8px; width: 100%; max-width: 550px; justify-content: center; flex-wrap: wrap; }
-    .input-group input { flex: 1; min-width: 120px; padding: 12px 15px; border-radius: 10px; border: 1px solid #ddd; font-family: 'Anuphan', sans-serif; font-size: 1rem; }
-    .theme-dark .input-group input { background: #111; color: #fff; border-color: #444; }
+    .input-group input[type="number"], .input-group select { flex: 1; min-width: 120px; padding: 12px 15px; border-radius: 10px; border: 1px solid #ddd; font-family: 'Anuphan', sans-serif; font-size: 1rem; }
+    .theme-dark .input-group input[type="number"], .theme-dark .input-group select { background: #111; color: #fff; border-color: #444; }
     
+    .cat-label { background: #eee; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.95rem; font-weight: bold; transition: 0.2s; user-select: none; border: 2px solid transparent; color: #555; }
+    .cat-label:has(input:checked) { background: #FF4D1C; color: white; border-color: #e64519; }
+    .theme-dark .cat-label { background: #333; color: #ccc; }
+    .theme-dark .cat-label:has(input:checked) { background: #FF4D1C; color: white; border-color: #FF4D1C; }
+    .cat-label input { display: none; }
+
     .action-menu { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 5px; width: 100%; max-width: 550px; }
     .btn { padding: 12px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: background 0.2s, transform 0.1s; white-space: nowrap; }
     .btn:hover { background: #e64519; }
@@ -43,14 +49,18 @@
     .theme-dark #canvas { border-color: #333; }
     .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 35px solid #FF4D1C; z-index: 10; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
     
-    .options-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; list-style: none; padding: 0; margin: 0; max-width: 600px; }
+    .options-list { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; list-style: none; padding: 0; margin: 0; max-width: 600px; max-height: 200px; overflow-y: auto; padding-right: 5px; }
+    .options-list::-webkit-scrollbar { width: 6px; }
+    .options-list::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 10px; }
+    .theme-dark .options-list::-webkit-scrollbar-thumb { background-color: #555; }
+    
     .options-list li { background: #eee; padding: 8px 16px; border-radius: 20px; font-size: 15px; color: #333; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
     .theme-dark .options-list li { background: #333; color: #fff; }
     .delete-btn { color: #ff4444; cursor: pointer; font-size: 1.1rem; }
     
     .checkbox-group { display: flex; align-items: center; gap: 10px; font-size: 1rem; cursor: pointer; background: rgba(0,0,0,0.05); padding: 10px 20px; border-radius: 12px; margin-top: 10px; }
     .theme-dark .checkbox-group { background: rgba(255,255,255,0.05); }
-    .checkbox-group input { width: 20px; height: 20px; cursor: pointer; }
+    .checkbox-group input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; }
 
     .history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
     .theme-dark .history-header { border-color: #333; }
@@ -58,14 +68,14 @@
     .history-list { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; padding-right: 5px; min-height: 200px; }
     .history-list::-webkit-scrollbar { width: 6px; }
     .history-list::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 10px; }
-    .history-list li { padding: 15px; background: #fff; margin-bottom: 10px; border-radius: 12px; border-left: 5px solid #FF4D1C; font-size: 1.1rem; display: flex; flex-direction: column; gap: 5px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+    .history-list li { padding: 15px; background: #fff; margin-bottom: 10px; border-radius: 12px; border-left: 5px solid #FF4D1C; font-size: 1.1rem; display: flex; flex-direction: column; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
     .history-list li span { font-size: 0.85rem; color: #888; }
     .theme-dark .history-list li { background: #222; color: #fff; }
     .empty-history { text-align: center; color: #aaa; font-style: italic; padding: 40px 0; font-size: 1.1rem; }
 
     .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; padding: 20px; box-sizing: border-box; }
     .modal-overlay.active { display: flex; opacity: 1; }
-    .modal-content { background: #fff; padding: 35px 20px; border-radius: 20px; text-align: center; max-width: 400px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.3); transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
+    .modal-content { background: #fff; padding: 35px 20px; border-radius: 20px; text-align: center; max-width: 400px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.3); transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.12, 0.99); box-sizing: border-box; }
     .modal-overlay.active .modal-content { transform: scale(1); }
     .theme-dark .modal-content { background: #18181b; color: #fff; border: 1px solid #333; }
     .modal-icon { font-size: 3.5rem; color: #FF4D1C; margin-bottom: 15px; flex-shrink: 0; }
@@ -77,6 +87,11 @@
 
     #map { width: 100%; height: 300px; border-radius: 12px; margin-top: 15px; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
     .theme-dark #map { border-color: #333; }
+    
+    .history-nav-btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; background-color: #2196F3; color: white; padding: 6px 12px; border-radius: 6px; text-decoration: none; font-size: 0.9rem; margin-top: 5px; font-weight: bold; transition: background 0.2s; }
+    .history-nav-btn:hover { background-color: #1976D2; color: white; }
+    
+    .rating-badge { color: #F5B041; font-size: 0.9em; margin-left: 5px; white-space: nowrap; }
   </style>
 </head>
 <body class="theme-light" id="theme-body">
@@ -97,8 +112,28 @@
           <div class="wheel-column wheel-container">
             
             <div class="input-group" style="flex-direction: column; align-items: center;">
-              <div style="display: flex; gap: 8px; width: 100%;">
-                <input type="number" id="radiusInput" placeholder="ระยะค้นหาจากหมุด (เช่น 1000 เมตร)" value="1000">
+              
+              <div style="width: 100%; margin-bottom: 15px; text-align: center;">
+                <p style="font-size: 0.95rem; font-weight: bold; color: #888; margin-bottom: 10px;">หมวดหมู่อาหาร (เลือกได้หลายอัน หรือไม่เลือกเพื่อหามั่วๆ)</p>
+                <div class="category-filters" style="display: flex; flex-wrap: wrap; gap: 8px; justify-content: center;">
+                  <label class="cat-label"><input type="checkbox" value="ชาบู">🍲 ชาบู/สุกี้</label>
+                  <label class="cat-label"><input type="checkbox" value="หมูกระทะ">🥓 หมูกระทะ</label>
+                  <label class="cat-label"><input type="checkbox" value="ก๋วยเตี๋ยว">🍜 ก๋วยเตี๋ยว</label>
+                  <label class="cat-label"><input type="checkbox" value="อาหารตามสั่ง">🍛 อาหารตามสั่ง</label>
+                  <label class="cat-label"><input type="checkbox" value="อาหารญี่ปุ่น">🍣 อาหารญี่ปุ่น</label>
+                  <label class="cat-label"><input type="checkbox" value="ส้มตำ">🌶️ ส้มตำ/ยำ</label>
+                  <label class="cat-label"><input type="checkbox" value="คาเฟ่">☕ คาเฟ่/ของหวาน</label>
+                </div>
+              </div>
+
+              <div style="display: flex; gap: 8px; width: 100%; flex-wrap: wrap; justify-content: center;">
+                <input type="number" id="radiusInput" placeholder="ระยะค้นหาจากหมุด (เช่น 1000 เมตร)" value="1000" style="min-width: 150px;">
+                <select id="minRating">
+                  <option value="0">★ ทุกคะแนน</option>
+                  <option value="3">★★★ 3.0 ดาวขึ้นไป</option>
+                  <option value="4">★★★★ 4.0 ดาวขึ้นไป</option>
+                  <option value="4.5">★★★★ 4.5 ดาวขึ้นไป</option>
+                </select>
                 <button class="btn" style="min-width: 120px;" onclick="fetchRestaurants()"><i class="fas fa-search"></i> ค้นหาร้าน</button>
               </div>
               
@@ -148,11 +183,16 @@
   </div>
 
   <div class="modal-overlay" id="winModal">
-    <div class="modal-content">
+    <div class="modal-content" style="box-sizing: border-box;">
       <i class="fas fa-trophy modal-icon"></i>
       <div class="modal-title">มื้อนี้กินที่นี่เลย!</div>
       <div class="modal-winner" id="winnerText">...</div>
-      <button class="btn" style="width: 100%; font-size: 1.2rem; padding: 12px; margin-top: auto;" onclick="closeModal()">ตกลง</button>
+      
+      <a id="navButton" href="#" target="_blank" class="btn" style="background-color: #2196F3; width: 85%; max-width: 300px; margin: 0 auto 15px auto; text-decoration: none; display: flex; justify-content: center; align-items: center; gap: 8px; box-sizing: border-box; white-space: normal; line-height: 1.4;">
+        <i class="fas fa-map-marker-alt"></i> ดูข้อมูลร้านบนแผนที่
+      </a>
+      
+      <button class="btn secondary" style="width: 85%; max-width: 300px; font-size: 1.1rem; padding: 12px; margin: 0 auto; box-sizing: border-box;" onclick="closeModal()">ปิดหน้าต่าง</button>
     </div>
   </div>
 
@@ -170,10 +210,8 @@
   </div>
   
   <script>
-    // ส่วนดึง Navbar และ Footer
     fetch('nav.html').then(res => res.text()).then(html => {
       document.getElementById('navbar-include').innerHTML = html;
-      // พยายามตั้งค่าปุ่มสลับธีมอีกครั้งหลังจากโหลด nav เสร็จ
       const themeToggle = document.getElementById('theme-toggle');
       if(themeToggle && localStorage.getItem('theme') === 'dark') {
         themeToggle.checked = true;
@@ -196,7 +234,6 @@
     let marker;
     let selectedLocation = null;
 
-    // ต้องประกาศเป็น window.initMap เพื่อให้ Google Maps API เรียกใช้ได้
     window.initMap = function() {
       const defaultPos = { lat: 13.913, lng: 100.498 };
       map = new google.maps.Map(document.getElementById("map"), {
@@ -232,7 +269,7 @@
       });
     };
 
-    function fetchRestaurants() {
+    async function fetchRestaurants() {
       if(isSpinning) return;
       if(!selectedLocation) {
         alert("กรุณารอให้แผนที่โหลด หรือเลือกตำแหน่งบนแผนที่ก่อนครับ");
@@ -240,41 +277,101 @@
       }
 
       const statusDiv = document.getElementById('restaurantStatus');
-      statusDiv.innerHTML = "📍 กำลังค้นหาร้านอาหารรอบหมุด...";
+      statusDiv.innerHTML = "📍 กำลังค้นหาร้านอาหาร...";
       
-      // แปลงค่าจากช่อง Input ให้เป็นตัวเลข (สำคัญมาก Google API ไม่รับค่า Text)
       const radiusValue = parseInt(document.getElementById('radiusInput').value) || 1000;
+      const minRatingValue = parseFloat(document.getElementById('minRating').value) || 0;
       
-      const request = { 
-        location: selectedLocation, 
-        radius: radiusValue, 
-        type: 'restaurant' 
-      };
+      const checkboxes = document.querySelectorAll('.category-filters input:checked');
+      const selectedCategories = Array.from(checkboxes).map(cb => cb.value);
       
       const service = new google.maps.places.PlacesService(map);
+      let allResults = [];
 
-      service.nearbySearch(request, (results, status) => {
-        // กรณีค้นหาสำเร็จและเจอร้าน
-        if (status === google.maps.places.PlacesServiceStatus.OK && results && results.length > 0) {
-          const shuffled = results.sort(() => 0.5 - Math.random()).slice(0, 15);
-          options = shuffled.map(r => ({ text: r.name, percent: 100/shuffled.length }));
+      const searchPromise = (keyword) => {
+        return new Promise((resolve) => {
+          const request = {
+            location: selectedLocation,
+            radius: radiusValue,
+            type: 'restaurant',
+            keyword: keyword 
+          };
+          
+          let categoryResults = [];
+          
+          service.nearbySearch(request, (results, status, pagination) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+              categoryResults = categoryResults.concat(results);
+              
+              if (pagination && pagination.hasNextPage) {
+                setTimeout(() => {
+                  pagination.nextPage();
+                }, 2000);
+              } else {
+                resolve(categoryResults);
+              }
+            } else {
+              resolve(categoryResults);
+            }
+          });
+        });
+      };
+
+      try {
+        if (selectedCategories.length === 0) {
+          allResults = await searchPromise(undefined);
+        } else {
+          const promises = selectedCategories.map(cat => searchPromise(cat));
+          const resultsArray = await Promise.all(promises);
+          resultsArray.forEach(res => {
+            allResults = allResults.concat(res);
+          });
+        }
+
+        if (allResults.length > 0) {
+          const uniqueResults = [];
+          const mapPlaceIds = new Map();
+          
+          for (const item of allResults) {
+            if(!mapPlaceIds.has(item.place_id)){
+              mapPlaceIds.set(item.place_id, true);
+              
+              if (minRatingValue > 0) {
+                if (!item.rating || item.rating < minRatingValue) continue;
+              }
+              
+              uniqueResults.push(item);
+            }
+          }
+
+          const shuffled = uniqueResults.sort(() => 0.5 - Math.random());
+          
+          options = shuffled.map(r => ({ 
+            text: r.name, 
+            rating: r.rating, // เก็บค่า rating ไว้แยกต่างหาก
+            percent: 100/shuffled.length,
+            place_id: r.place_id,
+            lat: r.geometry.location.lat(),
+            lng: r.geometry.location.lng()
+          }));
           
           drawWheel();
           updateList();
-          statusDiv.innerHTML = '<span style="color:#4CAF50;">✅ เจอ ' + options.length + ' ร้านรอบหมุด พร้อมสุ่มแล้ว!</span>';
-        } 
-        // กรณีระบบทำงานปกติ แต่ตรงนั้นไม่มีร้านอาหารเลย
-        else if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
-          statusDiv.innerHTML = '<span style="color:#ff4444;">❌ ไม่พบร้านอาหารในระยะ ' + radiusValue + ' เมตร ลองเลื่อนหมุดดูครับ</span>';
-          clearOptions();
-        } 
-        // กรณี Error จากฝั่ง Google (เช่น ยังไม่เปิด API หรือไม่ได้ผูกบัตร)
-        else {
-          statusDiv.innerHTML = '<span style="color:#ff4444;">❌ ค้นหาไม่สำเร็จ (สถานะ: ' + status + ') ลองกด F12 เพื่อดู Error</span>';
-          console.error("Google Places API Error Status:", status);
+          
+          if (options.length > 0) {
+            statusDiv.innerHTML = '<span style="color:#4CAF50;">✅ เจอ ' + options.length + ' ร้าน พร้อมสุ่มแล้ว!</span>';
+          } else {
+            statusDiv.innerHTML = '<span style="color:#ff4444;">❌ ไม่พบร้านที่ตรงกับเงื่อนไขดาวที่เลือกครับ</span>';
+            clearOptions();
+          }
+        } else {
+          statusDiv.innerHTML = '<span style="color:#ff4444;">❌ ไม่พบร้านอาหารในหมวดหมู่หรือระยะนี้ ลองเพิ่มระยะดูครับ</span>';
           clearOptions();
         }
-      });
+      } catch (error) {
+        statusDiv.innerHTML = '<span style="color:#ff4444;">❌ เกิดข้อผิดพลาดในการดึงข้อมูล</span>';
+        clearOptions();
+      }
     }
 
     function shareWheel() {
@@ -357,7 +454,10 @@
         ctx.shadowOffsetX = 1;
         ctx.shadowOffsetY = 1;
         
+        // บน Canvas ใช้สัญลักษณ์ดาว ★ เพื่อให้เนียนไปกับตัวอักษรสีขาว
         let textToShow = opt.text;
+        if(opt.rating) textToShow += ` (★${opt.rating})`;
+        
         if(textToShow.length > 20) textToShow = textToShow.substring(0, 20) + "...";
         ctx.fillText(textToShow, center - 20, 6);
         
@@ -401,13 +501,11 @@
 
     function updateList() {
       const list = document.getElementById("optionsList");
-      if(options.length > 30) {
-        list.innerHTML = '<li>แสดงผล ' + options.length + ' ร้าน (ซ่อนเพื่อความสวยงาม)</li>';
-        return;
-      }
-      list.innerHTML = options.map((opt, i) => 
-        '<li>' + opt.text + ' <i class="fas fa-times delete-btn" onclick="removeOption(' + i + ')"></i></li>'
-      ).join('');
+      list.innerHTML = options.map((opt, i) => {
+        // ใช้ FontAwesome Icon สำหรับรายชื่อ
+        let ratingIcon = opt.rating ? ` <span class="rating-badge"><i class="fas fa-star"></i> ${opt.rating}</span>` : '';
+        return '<li>' + opt.text + ratingIcon + ' <i class="fas fa-times delete-btn" style="margin-left: auto;" onclick="removeOption(' + i + ')"></i></li>';
+      }).join('');
     }
 
     function updateHistory() {
@@ -418,8 +516,19 @@
       }
       const reversedHistory = [...historyData].reverse();
       const total = historyData.length;
+      
       list.innerHTML = reversedHistory.map((item, index) => {
-        return '<li><span>รอบที่ #' + (total - index) + '</span><b>' + item + '</b></li>';
+        let navHtml = '';
+        if (typeof item === 'object' && item.lat && item.lng) {
+          const mapUrl = 'https://www.google.com/maps/search/?api=1&query=' + item.lat + ',' + item.lng + '&query_place_id=' + item.place_id;
+          navHtml = '<a href="' + mapUrl + '" target="_blank" class="history-nav-btn"><i class="fas fa-map-marker-alt"></i> ดูร้าน</a>';
+        }
+        
+        const shopName = typeof item === 'string' ? item : item.text;
+        // ใช้ FontAwesome Icon สำหรับประวัติ
+        const ratingIcon = (typeof item === 'object' && item.rating) ? ` <span class="rating-badge"><i class="fas fa-star"></i> ${item.rating}</span>` : '';
+        
+        return '<li><span>รอบที่ #' + (total - index) + '</span><b style="display:flex; align-items:center;">' + shopName + ratingIcon + '</b>' + navHtml + '</li>';
       }).join('');
     }
 
@@ -454,13 +563,24 @@
           }
         }
         
-        const winner = options[winnerIndex].text;
+        const winner = options[winnerIndex];
         if (document.getElementById('autoRemove').checked) removeOption(winnerIndex);
         
         historyData.push(winner);
         updateHistory();
 
-        document.getElementById('winnerText').textContent = winner;
+        // แสดงผล Icon ดาวตอนสุ่มได้
+        let ratingIcon = winner.rating ? ` <span class="rating-badge" style="font-size: 0.6em;"><i class="fas fa-star"></i> ${winner.rating}</span>` : '';
+        document.getElementById('winnerText').innerHTML = winner.text + ratingIcon;
+        
+        const navBtn = document.getElementById('navButton');
+        if (winner.lat && winner.lng) {
+          navBtn.style.display = 'flex';
+          navBtn.href = 'https://www.google.com/maps/search/?api=1&query=' + winner.lat + ',' + winner.lng + '&query_place_id=' + winner.place_id;
+        } else {
+          navBtn.style.display = 'none';
+        }
+
         document.getElementById('winModal').classList.add('active');
         
         isSpinning = false;
