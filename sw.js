@@ -1,6 +1,6 @@
 const CACHE_NAME = 'random-restaurant-v2';
 const urlsToCache = [
-  'randomdish',
+  'randomdish.html',
   'css/style.css',
   'js/main.js',
   'pic/logo.webp'
