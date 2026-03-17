@@ -64,8 +64,10 @@
     .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 35px solid #FF4D1C; z-index: 10; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
     
     /* สไตล์ช่องค้นหาและแผนที่ */
-    #search-container { margin-bottom: 10px; width: 100%; }
-    #pac-input { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 1rem; font-family: 'Anuphan', sans-serif; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); outline: none; }
+    #search-container { margin-bottom: 10px; width: 100%; position: relative; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; font-size: 1.1rem; pointer-events: none; }
+    .theme-dark .search-icon { color: #bbb; }
+    #pac-input { width: 100%; padding: 12px 15px 12px 38px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 1rem; font-family: 'Anuphan', sans-serif; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); outline: none; }
     #pac-input:focus { border-color: #FF4D1C; }
     .theme-dark #pac-input { background: #222; color: #fff; border-color: #444; }
     #map { width: 100%; height: 350px; border-radius: 12px; border: 2px solid #eee; }
@@ -107,8 +109,9 @@
         <div class="wheel-column wheel-container">
           <div class="filter-box">
             
-            <div id="search-container">
-              <input id="pac-input" type="text" placeholder="🔍 พิมพ์ชื่อสถานที่ หรือถนน เพื่อย้ายตำแหน่งหมุด...">
+            <div id="search-container" class="search-container">
+              <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+              <input id="pac-input" type="text" placeholder="พิมพ์ชื่อสถานที่ หรือถนน เพื่อย้ายตำแหน่งหมุด...">
             </div>
             <div id="map"></div>
             <p style="font-size: 0.85rem; color: #888; margin-top: 5px; text-align: center;">*ลากหมุดหรือคลิกบนแผนที่เพื่อเลือกจุดศูนย์กลาง</p>
@@ -116,13 +119,13 @@
             <div style="margin-top: 20px;">
               <p class="filter-title">หมวดหมู่อาหาร</p>
               <div id="foodCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                <label class="cat-label"><input type="checkbox" value="ชาบู">ชาบู/สุกี้</label>
-                <label class="cat-label"><input type="checkbox" value="หมูกระทะ">หมูกระทะ</label>
-                <label class="cat-label"><input type="checkbox" value="ก๋วยเตี๋ยว">ก๋วยเตี๋ยว</label>
-                <label class="cat-label"><input type="checkbox" value="อาหารตามสั่ง">ตามสั่ง</label>
-                <label class="cat-label"><input type="checkbox" value="อาหารญี่ปุ่น">ญี่ปุ่น</label>
-                <label class="cat-label"><input type="checkbox" value="ส้มตำ">ส้มตำ/ยำ</label>
-                <label class="cat-label"><input type="checkbox" value="คาเฟ่">คาเฟ่/ของหวาน</label>
+                <label class="cat-label"><input type="checkbox" value="ชาบู">🍲 ชาบู/สุกี้</label>
+                <label class="cat-label"><input type="checkbox" value="หมูกระทะ">🥓 หมูกระทะ</label>
+                <label class="cat-label"><input type="checkbox" value="ก๋วยเตี๋ยว">🍜 ก๋วยเตี๋ยว</label>
+                <label class="cat-label"><input type="checkbox" value="อาหารตามสั่ง">🍛 ตามสั่ง</label>
+                <label class="cat-label"><input type="checkbox" value="อาหารญี่ปุ่น">🍣 ญี่ปุ่น</label>
+                <label class="cat-label"><input type="checkbox" value="ส้มตำ">🌶️ ส้มตำ/ยำ</label>
+                <label class="cat-label"><input type="checkbox" value="คาเฟ่">☕ คาเฟ่/ของหวาน</label>
               </div>
             </div>
 
@@ -189,7 +192,7 @@
         </div>
       </div>
     </div>
-  </main><i class="fa-solid fa-magnifying-glass"></i> พิมพ์ชื่อสถานที่ หรือถนน เพื่อย้ายตำแหน่งหมุด...
+  </main>
 
   <div id="footer-include"></div>
 
