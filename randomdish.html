@@ -713,5 +713,34 @@
   
   <script src="js/main.js" defer></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsZqohGF5WMcQMoUmxWAHoUqo_V26mw1A&libraries=places&loading=async&callback=initMap" async defer></script>
+  
+  <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
+  <script>
+    // ฟังก์ชั่นเรียกใช้งานทันทีที่สคริปต์พร้อม
+    function showKofi() {
+      if (typeof kofiWidgetOverlay !== 'undefined') {
+        kofiWidgetOverlay.draw('pisitz', {
+          'type': 'floating-chat',
+          'floating-chat.donateButton.text': 'Tip Me',
+          'floating-chat.donateButton.background-color': '#f45d22',
+          'floating-chat.donateButton.text-color': '#fff'
+        });
+      } else {
+        // ถ้าสคริปต์ยังไม่มา ให้รอ 0.5 วินาทีแล้วลองใหม่
+        setTimeout(showKofi, 500);
+      }
+    }
+    
+    // รันทันที ไม่ต้องรอหน้าเว็บโหลดเสร็จทั้งหมด
+    showKofi();
+  </script>
+
+  <style>
+    /* ป้องกันปุ่มจมหายไปในเลเยอร์แผนที่ */
+    .kofi-widget-overlay-container {
+      z-index: 10000 !important;
+    }
+  </style>
+
 </body>
 </html>
