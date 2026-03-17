@@ -20,11 +20,19 @@
       .history-column { grid-column: 3; justify-self: end; width: 320px; padding: 25px; max-height: 800px; }
     }
     
+    :root {
+      --card-bg: #ffffff;
+      --text-color: #333333;
+}
+    .theme-dark {
+      --card-bg: #1f1f22;
+      --text-color: #ccc; }
+
     .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
     .page-title { text-align: center; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 700; color: #FF4D1C; margin: 0; font-family: 'Anuphan', sans-serif;}
     .filter-box { width: 100%; background: #fafafa; padding: 20px; border-radius: 16px; border: 1px solid #eaeaea; margin-bottom: 5px; }
     .theme-dark .filter-box { background: #1f1f22; border-color: #333; }
-    .filter-title { font-size: 1rem; font-weight: bold; color: #555; margin: 0 0 10px 0; text-align: left; }
+    .filter-title { font-size: 1rem; font-weight: bold; color: #555; margin: 0 0 10px 0; text-align: left;}
     .theme-dark .filter-title { color: #ccc; }
     
     /* สไตล์ตัวกรอง */
@@ -91,7 +99,10 @@
   <main class="main-section">
     <div class="content" style="max-width: 1200px; margin: 20px auto;">
       <h1 class="page-title">สุ่มร้านอาหารรอบตัวคุณ</h1>
-      
+        <p style="text-align: center; color: #666; font-size: 0.9rem; max-width: 1200px; margin-bottom: 2rem auto;">
+          ค้นหาข้อมูลร้านจาก Google Maps ตามรัศมีและเงื่อนไขที่คุณเลือก 
+          โดยจะสุ่มร้านที่น่าสนใจมาให้เลือกสูงสุด 20 ร้าน
+        </p>
       <div class="layout-wrapper">
         <div class="wheel-column wheel-container">
           <div class="filter-box">
@@ -454,11 +465,12 @@
         list.innerHTML = `<div style="text-align: center; color: #aaa; padding: 20px 0; font-style: italic;">ยังไม่มีประวัติการสุ่ม</div>`;
         return;
       }
+      // แก้ไขในฟังก์ชัน updateHistory()
       list.innerHTML = [...historyData].reverse().map((h, i) => `
-        <li style="padding: 12px; background: #fff; margin-bottom: 8px; border-radius: 10px; border-left: 4px solid #FF4D1C; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <li style="padding: 12px; background: var(--card-bg, #fff); color: var(--text-color, #333); margin-bottom: 8px; border-radius: 10px; border-left: 4px solid #FF4D1C; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
           <a href="${h.url}" target="_blank" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: center;">
             <div style="flex: 1; margin-right: 10px;">
-              <span style="font-size: 0.8rem; color: #888;">รอบที่ ${historyData.length - i}</span><br>
+              <span style="font-size: 0.8rem; opacity: 0.7;">รอบที่ ${historyData.length - i}</span><br>
               <strong style="font-size: 1rem;">${h.text}</strong>
             </div>
             <i class="fas fa-map-marker-alt" style="color: #4CAF50; font-size: 1.2rem;"></i>
