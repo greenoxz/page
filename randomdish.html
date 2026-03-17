@@ -1,17 +1,15 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
-  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#18181b" />
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>สุ่มร้านอาหาร - ppknr</title>
-  <link rel="manifest" href="manifest.json">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="css/style.css">
+  
+  <link rel="stylesheet" href="css/style.css?v=3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
   <style>
+    /* โครงสร้างหลัก */
     .layout-wrapper { display: flex; flex-direction: column; gap: 30px; padding: 0 15px; box-sizing: border-box; }
     .history-column { width: 100%; background: #f5f5f5; padding: 20px; border-radius: 15px; display: flex; flex-direction: column; max-height: 500px; box-sizing: border-box; }
     .theme-dark .history-column { background: #1a1a1c; border: 1px solid #333; }
@@ -23,21 +21,20 @@
     }
     
     .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
-    .title-group { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 600px; margin: 0 auto 20px; padding: 0 15px; box-sizing: border-box; }
-    .page-title { text-align: center; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 700; flex: 1; font-family: 'Anuphan', sans-serif; color: #FF4D1C; margin: 0; }
-    
-    .filter-box { width: 100%; background: #fafafa; padding: 20px; border-radius: 16px; border: 1px solid #eaeaea; margin-bottom: 5px; box-shadow: 0 4px 15px rgba(0,0,0,0.02); }
+    .page-title { text-align: center; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 700; color: #FF4D1C; margin: 0; font-family: 'Anuphan', sans-serif;}
+    .filter-box { width: 100%; background: #fafafa; padding: 20px; border-radius: 16px; border: 1px solid #eaeaea; margin-bottom: 5px; }
     .theme-dark .filter-box { background: #1f1f22; border-color: #333; }
-    
     .filter-title { font-size: 1rem; font-weight: bold; color: #555; margin: 0 0 10px 0; text-align: left; }
     .theme-dark .filter-title { color: #ccc; }
-
-    .cat-label { background: #eee; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.95rem; font-weight: bold; transition: 0.2s; user-select: none; border: 2px solid transparent; color: #555; }
+    
+    /* สไตล์ตัวกรอง */
+    .cat-label { background: #eee; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.95rem; font-weight: bold; transition: 0.2s; color: #555; border: 2px solid transparent; user-select: none; }
     .cat-label:has(input:checked) { background: #FF4D1C; color: white; border-color: #e64519; }
-    .theme-dark .cat-label { background: #333; color: #ccc; }
-    .theme-dark .cat-label:has(input:checked) { background: #FF4D1C; color: white; border-color: #FF4D1C; }
     .cat-label input { display: none; }
+    .theme-dark .cat-label { background: #333; color: #ccc; }
+    .theme-dark .cat-label:has(input:checked) { background: #FF4D1C; color: white; }
 
+    /* Switch */
     .toggle-wrapper { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: bold; color: #555; }
     .theme-dark .toggle-wrapper { color: #ccc; }
     .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
@@ -46,319 +43,221 @@
     .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
     input:checked + .slider { background-color: #4CAF50; }
     input:checked + .slider:before { transform: translateX(14px); }
-
-    .radius-box { display: flex; align-items: center; background: #fff; padding: 0 15px; border-radius: 20px; border: 2px solid #ddd; height: 42px; box-sizing: border-box; }
-    .theme-dark .radius-box { background: #111; border-color: #444; }
-    .theme-dark .radius-box span { color: #ccc !important;if (document.getElementById('autoRemove').checked) removeOption(winnerIndex); }
-
-    .action-menu { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 5px; width: 100%; max-width: 550px; }
-    .btn { padding: 10px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: background 0.2s, transform 0.1s; white-space: nowrap; height: 42px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    
+    .btn { padding: 10px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn:hover { background: #e64519; }
-    .btn:active { transform: scale(0.97); }
     .btn.secondary { background: #555; }
     .btn.secondary:hover { background: #333; }
-    .btn.danger { background: #ff4444; }
-    .btn.danger:hover { background: #cc0000; }
-    .btn:disabled { background: #ccc !important; cursor: not-allowed; transform: none; }
-    
-    .wheel-box { position: relative; width: 90%; max-width: 400px; aspect-ratio: 1/1; margin: 20px auto; flex-shrink: 0; }
-    #canvas { width: 100%; height: auto; aspect-ratio: 1/1; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.15); display: block; }
+    .btn:disabled { background: #ccc !important; cursor: not-allowed; }
+
+    .wheel-box { position: relative; width: 90%; max-width: 400px; aspect-ratio: 1/1; margin: 20px auto; }
+    #canvas { width: 100%; height: auto; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
     .theme-dark #canvas { border-color: #333; }
     .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 35px solid #FF4D1C; z-index: 10; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
     
-    .options-list { 
-      display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; 
-      list-style: none; padding: 0; margin: 0; max-width: 600px;
-      max-height: 180px; overflow-y: auto; padding-right: 5px; width: 100%;
-    }
-    .options-list::-webkit-scrollbar { width: 6px; }
-    .options-list::-webkit-scrollbar-track { background: transparent; }
-    .options-list::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 10px; }
-    .theme-dark .options-list::-webkit-scrollbar-thumb { background-color: #555; }
-    
-    .options-list li { background: #eee; padding: 8px 16px; border-radius: 20px; font-size: 15px; color: #333; display: flex; align-items: center; gap: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-    .theme-dark .options-list li { background: #333; color: #fff; }
-    .delete-btn { color: #ff4444; cursor: pointer; font-size: 1.1rem; }
-    
-    .checkbox-group { display: flex; align-items: center; gap: 10px; font-size: 1rem; cursor: pointer; background: rgba(0,0,0,0.05); padding: 10px 20px; border-radius: 12px; margin-top: 10px; }
-    .theme-dark .checkbox-group { background: rgba(255,255,255,0.05); }
-    .checkbox-group input[type="checkbox"] { width: 20px; height: 20px; cursor: pointer; }
-
-    .history-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 15px; margin-bottom: 15px; }
-    .theme-dark .history-header { border-color: #333; }
-    .history-title { margin: 0; font-size: 1.3rem; font-weight: bold; }
-    .history-list { list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto; padding-right: 5px; min-height: 200px; }
-    .history-list::-webkit-scrollbar { width: 6px; }
-    .history-list::-webkit-scrollbar-thumb { background-color: #ccc; border-radius: 10px; }
-    
-    .history-list li { padding: 12px 15px; background: #fff; margin-bottom: 10px; border-radius: 12px; border-left: 5px solid #FF4D1C; box-shadow: 0 2px 5px rgba(0,0,0,0.05); transition: 0.2s; }
-    .history-list li:hover { background: #f9f9f9; transform: translateY(-2px); }
-    .history-list li a { color: inherit; text-decoration: none; display: flex; justify-content: space-between; align-items: center; width: 100%; }
-    .history-list li a:hover { color: #FF4D1C; }
-    .history-list li span.round-num { font-size: 0.85rem; color: #888; }
-    .history-list li b { font-size: 1.1rem; }
-    .theme-dark .history-list li { background: #222; color: #fff; }
-    .theme-dark .history-list li:hover { background: #2a2a2a; }
-
-    .empty-history { text-align: center; color: #aaa; font-style: italic; padding: 40px 0; font-size: 1.1rem; }
-
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; padding: 20px; box-sizing: border-box; }
-    .modal-overlay.active { display: flex; opacity: 1; }
-    .modal-content { background: #fff; padding: 35px 20px; border-radius: 20px; text-align: center; max-width: 400px; width: 100%; max-height: 90vh; display: flex; flex-direction: column; align-items: center; box-shadow: 0 15px 40px rgba(0,0,0,0.3); transform: scale(0.8); transition: transform 0.3s cubic-bezier(0.17, 0.67, 0.12, 0.99); }
-    .modal-overlay.active .modal-content { transform: scale(1); }
-    .theme-dark .modal-content { background: #18181b; color: #fff; border: 1px solid #333; }
-    .modal-icon { font-size: 3.5rem; color: #FF4D1C; margin-bottom: 15px; flex-shrink: 0; }
-    .modal-title { font-size: 1.5rem; font-weight: bold; margin-bottom: 10px; flex-shrink: 0; }
-    .modal-winner { font-size: clamp(1.5rem, 6vw, 2.5rem); color: #FF4D1C; font-weight: bold; margin-bottom: 10px; line-height: 1.4; word-break: break-word; overflow-wrap: anywhere; width: 100%; overflow-y: auto; padding: 0 10px; }
-    
-    /* สไตล์สำหรับคะแนนดาวใน Modal */
-    .modal-rating { font-size: 1.2rem; font-weight: bold; margin-bottom: 25px; display: none; }
-
-    #navButton { background-color: #4CAF50; width: 90%; margin: 0 auto 15px auto; text-decoration: none; box-sizing: border-box; display: flex; align-items: center; justify-content: center; gap: 8px; }
-
-    #shareLinkInput { background: #f9f9f9; color: #555; }
-    .theme-dark #shareLinkInput { background: #111; color: #ccc; border-color: #444; }
-
-    #map { width: 100%; height: 400px; border-radius: 12px; margin-top: 15px; border: 2px solid #eee; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+    /* สไตล์ช่องค้นหาและแผนที่ */
+    #search-container { margin-bottom: 10px; width: 100%; }
+    #pac-input { width: 100%; padding: 12px 15px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 1rem; font-family: 'Anuphan', sans-serif; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); outline: none; }
+    #pac-input:focus { border-color: #FF4D1C; }
+    .theme-dark #pac-input { background: #222; color: #fff; border-color: #444; }
+    #map { width: 100%; height: 350px; border-radius: 12px; border: 2px solid #eee; }
     .theme-dark #map { border-color: #333; }
+
+    /* สไตล์ Modal และรูปภาพ */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; }
+    .modal-overlay.active { display: flex; opacity: 1; }
+    .modal-content { background: #fff; padding: 25px; border-radius: 20px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 15px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; }
+    .theme-dark .modal-content { background: #18181b; color: #fff; border: 1px solid #333; }
+    
+    #winnerPhoto { width: 100%; height: 180px; border-radius: 12px; margin-bottom: 15px; background: #eee; overflow: hidden; display: none; border: 2px solid #f0f0f0; }
+    .theme-dark #winnerPhoto { border-color: #333; background: #222; }
+    #storeImg { width: 100%; height: 100%; object-fit: cover; }
+    
+    .modal-winner { font-size: 1.8rem; font-weight: bold; color: #FF4D1C; margin-bottom: 5px; line-height: 1.3; }
+    #winnerRating { margin-bottom: 20px; font-weight: bold; font-size: 1.1rem; }
+
+    /* Ko-fi Widget */
+    .kofi-widget-overlay-container { z-index: 999999 !important; }
   </style>
 </head>
-<body class="theme-light" id="theme-body">
-  <div class="page-container">
-    <div id="navbar-include">
-      <input type="checkbox" id="theme-toggle" style="display: none;">
-    </div>
-    
-    <main class="main-section">
-      <div class="content" style="max-width: 1200px; margin: 0 auto;">
-        
-        <div class="title-group">
-          <h1 class="page-title">สุ่มร้านอาหารรอบตัวคุณ</h1>
-          <button class="btn secondary" onclick="shareWheel()"><i class="fas fa-share-alt"></i></button>
+
+<script>
+  if(localStorage.getItem('theme') === 'dark') { document.documentElement.classList.add('theme-dark'); }
+</script>
+
+<body id="theme-body">
+  <div id="navbar-include"></div>
+
+  <main class="main-section">
+    <div class="content" style="max-width: 1200px; margin: 20px auto;">
+      <h1 class="page-title">สุ่มร้านอาหารรอบตัวคุณ</h1>
+      
+      <div class="layout-wrapper">
+        <div class="wheel-column wheel-container">
+          <div class="filter-box">
+            
+            <div id="search-container">
+              <input id="pac-input" type="text" placeholder="🔍 พิมพ์ชื่อสถานที่ หรือถนน เพื่อย้ายตำแหน่งหมุด...">
+            </div>
+            <div id="map"></div>
+            <p style="font-size: 0.85rem; color: #888; margin-top: 5px; text-align: center;">*ลากหมุดหรือคลิกบนแผนที่เพื่อเลือกจุดศูนย์กลาง</p>
+
+            <div style="margin-top: 20px;">
+              <p class="filter-title">หมวดหมู่อาหาร</p>
+              <div id="foodCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <label class="cat-label"><input type="checkbox" value="ชาบู">ชาบู/สุกี้</label>
+                <label class="cat-label"><input type="checkbox" value="หมูกระทะ">หมูกระทะ</label>
+                <label class="cat-label"><input type="checkbox" value="ก๋วยเตี๋ยว">ก๋วยเตี๋ยว</label>
+                <label class="cat-label"><input type="checkbox" value="อาหารตามสั่ง">ตามสั่ง</label>
+                <label class="cat-label"><input type="checkbox" value="อาหารญี่ปุ่น">ญี่ปุ่น</label>
+                <label class="cat-label"><input type="checkbox" value="ส้มตำ">ส้มตำ/ยำ</label>
+                <label class="cat-label"><input type="checkbox" value="คาเฟ่">คาเฟ่/ของหวาน</label>
+              </div>
+            </div>
+
+            <div style="margin-top: 15px;">
+              <p class="filter-title">ระดับราคา (งบประมาณ)</p>
+              <div id="priceCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <label class="cat-label"><input type="checkbox" value="1">฿ (ประหยัด)</label>
+                <label class="cat-label"><input type="checkbox" value="2">฿฿ (ปานกลาง)</label>
+                <label class="cat-label"><input type="checkbox" value="3">฿฿฿ (แพง)</label>
+                <label class="cat-label"><input type="checkbox" value="4">฿฿฿฿ (หรูหรา)</label>
+              </div>
+            </div>
+
+            <div style="margin-top: 15px;">
+              <p class="filter-title">คะแนนดาวขั้นต่ำ</p>
+              <div id="ratingCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <label class="cat-label"><input type="radio" name="minRating" value="0" checked>ทุกระดับ</label>
+                <label class="cat-label"><input type="radio" name="minRating" value="3"><i class="fas fa-star" style="color:#FFD700;"></i> 3.0+</label>
+                <label class="cat-label"><input type="radio" name="minRating" value="4"><i class="fas fa-star" style="color:#FFD700;"></i> 4.0+</label>
+                <label class="cat-label"><input type="radio" name="minRating" value="4.5"><i class="fas fa-star" style="color:#FFD700;"></i> 4.5+</label>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center; margin-top: 20px; flex-wrap: wrap; justify-content: space-between;">
+              <div class="toggle-wrapper">
+                เฉพาะร้านที่เปิดอยู่
+                <label class="switch">
+                  <input type="checkbox" id="openNowCheck" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div style="display: flex; align-items: center; gap: 8px; background: rgba(0,0,0,0.05); padding: 5px 12px; border-radius: 10px;">
+                <span style="font-weight: bold; font-size: 0.9rem;">ระยะค้นหา:</span>
+                <input type="number" id="radiusInput" value="1000" min="100" step="100" style="width: 60px; padding: 5px; border-radius: 5px; border: 1px solid #ddd; text-align: center; font-weight: bold; color: #FF4D1C;">
+                <span style="font-weight: bold; font-size: 0.9rem;">ม.</span>
+              </div>
+            </div>
+            
+            <button class="btn" onclick="fetchRestaurants()" style="width: 100%; height: 45px; margin-top: 15px;"><i class="fas fa-search"></i> ค้นหาร้านอาหาร</button>
+            <div id="restaurantStatus" style="text-align: center; margin-top: 10px; font-weight: bold; color: #888;"></div>
+          </div>
+
+          <div class="wheel-box">
+            <div class="pointer"></div>
+            <canvas id="canvas" width="400" height="400"></canvas>
+          </div>
+          
+          <button class="btn" id="spinBtn" style="width: 250px; font-size: 1.5rem; height: 60px; border-radius: 30px; margin-top: 10px;" onclick="spin()">หมุนวงล้อ!</button>
+          
+          <label style="margin-top: 15px; cursor: pointer; font-size: 1rem; color: #555; font-weight: bold;">
+            <input type="checkbox" id="autoRemove" style="width: 18px; height: 18px; vertical-align: middle;"> ลบร้านที่สุ่มได้ออกอัตโนมัติ
+          </label>
         </div>
-        
-        <div class="content-box layout-wrapper">
-          <div class="wheel-column wheel-container">
-            
-            <div class="filter-box">
-              
-              <div style="margin-bottom: 15px;">
-                <p class="filter-title">หมวดหมู่อาหาร</p>
-                <div id="foodCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                  <label class="cat-label"><input type="checkbox" value="ชาบู">ชาบู/สุกี้</label>
-                  <label class="cat-label"><input type="checkbox" value="หมูกระทะ">หมูกระทะ</label>
-                  <label class="cat-label"><input type="checkbox" value="ก๋วยเตี๋ยว">ก๋วยเตี๋ยว</label>
-                  <label class="cat-label"><input type="checkbox" value="อาหารตามสั่ง">ตามสั่ง</label>
-                  <label class="cat-label"><input type="checkbox" value="อาหารญี่ปุ่น">ญี่ปุ่น</label>
-                  <label class="cat-label"><input type="checkbox" value="ส้มตำ">ส้มตำ/ยำ</label>
-                  <label class="cat-label"><input type="checkbox" value="คาเฟ่">คาเฟ่/ของหวาน</label>
-                </div>
-              </div>
 
-              <div style="margin-bottom: 15px;">
-                <p class="filter-title">ระดับราคา (งบประมาณ)</p>
-                <div id="priceCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                  <label class="cat-label"><input type="checkbox" value="1">฿ (ประหยัด)</label>
-                  <label class="cat-label"><input type="checkbox" value="2">฿฿ (ปานกลาง)</label>
-                  <label class="cat-label"><input type="checkbox" value="3">฿฿฿ (แพง)</label>
-                  <label class="cat-label"><input type="checkbox" value="4">฿฿฿฿ (หรูหรา)</label>
-                </div>
-              </div>
-
-              <div style="margin-bottom: 20px;">
-                <p class="filter-title">คะแนนดาวขั้นต่ำ</p>
-                <div id="ratingCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
-                  <label class="cat-label"><input type="radio" name="minRating" value="0" checked>ทุกระดับ</label>
-                  <label class="cat-label"><input type="radio" name="minRating" value="3"><i class="fas fa-star" style="color:#FFD700;"></i> 3.0+</label>
-                  <label class="cat-label"><input type="radio" name="minRating" value="4"><i class="fas fa-star" style="color:#FFD700;"></i> 4.0+</label>
-                  <label class="cat-label"><input type="radio" name="minRating" value="4.5"><i class="fas fa-star" style="color:#FFD700;"></i> 4.5+</label>
-                </div>
-              </div>
-
-              <div style="display: flex; flex-wrap: wrap; gap: 10px; align-items: center; justify-content: space-between;">
-                
-                <div class="toggle-wrapper">
-                  เฉพาะร้านที่เปิดอยู่
-                  <label class="switch">
-                    <input type="checkbox" id="openNowCheck" checked>
-                    <span class="slider"></span>
-                  </label>
-                </div>
-
-                <div class="radius-box">
-                  <span style="color: #555; margin-right: 8px; font-weight: bold; font-size: 0.95rem;">ระยะค้นหา:</span>
-                  <input type="number" id="radiusInput" value="1000" style="border: none; outline: none; width: 55px; font-family: inherit; font-size: 1.05rem; font-weight: bold; color: #FF4D1C; text-align: center; background: transparent; padding: 0;" min="100" step="100">
-                  <span style="color: #555; margin-left: 8px; font-weight: bold; font-size: 0.95rem;">เมตร</span>
-                </div>
-                
-                <button class="btn" style="flex: 1; min-width: 120px;" onclick="fetchRestaurants()">
-                  <i class="fas fa-search"></i> ค้นหาร้าน
-                </button>
-              </div>
-
-              <div id="map"></div>
-              <p style="font-size: 0.85rem; color: #888; margin-top: 5px; text-align: center;">*ลากหมุดหรือคลิกบนแผนที่เพื่อเลือกจุดที่ต้องการหาร้านอาหาร</p>
-              <div id="restaurantStatus" style="margin-top: 5px; font-size: 0.95rem; font-weight: bold; color: #888; text-align: center;"></div>
-
-            </div>
-
-            <div class="action-menu">
-              <button class="btn secondary" onclick="sortOptions()"><i class="fas fa-sort-alpha-down"></i> เรียงชื่อ</button>
-              <button class="btn secondary" onclick="shuffleOptions()"><i class="fas fa-random"></i> สลับตำแหน่ง</button>
-              <button class="btn danger" onclick="clearOptions()"><i class="fas fa-trash-alt"></i> ล้างวงล้อ</button>
-            </div>
-            
-            <ul class="options-list" id="optionsList" style="margin-top: 10px;"></ul>
-
-            <div class="wheel-box">
-              <div class="pointer"></div>
-              <canvas id="canvas" width="400" height="400"></canvas>
-            </div>
-            
-            <label class="checkbox-group" id="autoRemoveLabel">
-              <input type="checkbox" id="autoRemove">
-              ลบร้านที่สุ่มได้ออกอัตโนมัติ
-            </label>
-            
-            <button class="btn" id="spinBtn" style="width: 250px; font-size: 1.4rem; height: 60px; margin-top: 15px; border-radius: 30px;" onclick="spin()">หมุน</button>
+        <div class="history-column">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
+            <h3 style="margin: 0; font-size: 1.2rem;"><i class="fas fa-history"></i> ประวัติร้านที่ได้</h3>
           </div>
-
-          <div class="history-column">
-            <div class="history-header">
-              <h3 class="history-title"><i class="fas fa-history"></i> ประวัติร้านที่ได้</h3>
-            </div>
-            <ul class="history-list" id="historyList">
-              <div class="empty-history">ยังไม่มีประวัติการสุ่ม<br>ค้นหาร้านแล้วลองหมุนดูสิ!</div>
-            </ul>
-            <button class="btn secondary" style="width: 100%; margin-top: 15px;" onclick="clearHistory()">
-              <i class="fas fa-trash"></i> ล้างประวัติทั้งหมด
-            </button>
-          </div>
-
+          <ul id="historyList" style="list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto;">
+            <div style="text-align: center; color: #aaa; padding: 20px 0; font-style: italic;">ยังไม่มีประวัติการสุ่ม</div>
+          </ul>
+          <button class="btn secondary" style="width: 100%; margin-top: 15px;" onclick="clearHistory()"><i class="fas fa-trash-alt"></i> ล้างประวัติ</button>
         </div>
       </div>
-    </main>
-    <div id="footer-include"></div>
-  </div>
+    </div>
+  </main>
+
+  <div id="footer-include"></div>
 
   <div class="modal-overlay" id="winModal">
     <div class="modal-content">
-      <i class="fas fa-trophy modal-icon"></i>
-      <div class="modal-title">มื้อนี้กินที่นี่เลย!</div>
+      <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #555;"><i class="fas fa-utensils"></i> มื้อนี้กินที่นี่เลย!</div>
+      <div id="winnerPhoto"><img id="storeImg" src="" alt="Restaurant"></div>
       <div class="modal-winner" id="winnerText">...</div>
-      
-      <div class="modal-rating" id="winnerRating"></div>
-      
-      <a id="navButton" href="#" target="_blank" class="btn">
-        <i class="fas fa-map-marker-alt"></i> ดูตำแหน่งที่ตั้งร้าน
+      <div id="winnerRating"></div>
+      <a id="navButton" href="#" target="_blank" class="btn" style="width: 85%; margin-bottom: 10px; height: 45px; font-size: 1.1rem;">
+        <i class="fas fa-map-marker-alt"></i> เปิดดูใน Google Maps
       </a>
-      
-      <button class="btn secondary" style="width: 90%; font-size: 1.2rem; margin-top: auto; box-sizing: border-box;" onclick="closeModal()">ปิดหน้าต่าง</button>
+      <button class="btn secondary" style="width: 85%; height: 45px; font-size: 1.1rem;" onclick="closeModal()">ปิดหน้าต่าง</button>
     </div>
   </div>
 
-  <div class="modal-overlay" id="shareModal">
-    <div class="modal-content">
-      <i class="fas fa-check-circle modal-icon" style="color: #4CAF50;"></i>
-      <div class="modal-title">คัดลอกลิงก์สำเร็จ!</div>
-      <p style="margin-bottom: 20px; color: #888; font-size: 0.95rem;">ส่งลิงก์ด้านล่างนี้ให้เพื่อนเพื่อแชร์วงล้อร้านอาหารของคุณได้เลย</p>
-      <div style="display: flex; gap: 8px; width: 100%; margin-bottom: 25px;">
-        <input type="text" id="shareLinkInput" readonly style="flex: 1; padding: 10px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit; font-size: 0.9rem;">
-        <button class="btn" onclick="copyShareLink()" id="copyShareBtn" style="padding: 10px 15px;" title="คัดลอกอีกครั้ง"><i class="fas fa-copy"></i></button>
-      </div>
-      <button class="btn secondary" style="width: 100%; font-size: 1.1rem;" onclick="closeShareModal()">ปิด</button>
-    </div>
-  </div>
-  
+  <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
   <script>
-    fetch('nav.html').then(res => res.text()).then(html => {
-      document.getElementById('navbar-include').innerHTML = html;
-      const themeToggle = document.getElementById('theme-toggle');
-      if(themeToggle && localStorage.getItem('theme') === 'dark') {
-        themeToggle.checked = true;
-      }
-    });
-    
-    fetch('footer.html').then(res => res.text()).then(html => {
-      document.getElementById('footer-include').innerHTML = html;
-      const yearElem = document.getElementById('year'); 
-      if (yearElem) yearElem.textContent = new Date().getFullYear();
-    });
-
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('sw.js').catch(err => { console.log('SW fail: ', err); });
-      });
-    }
-
-    let timeOffset = 0;
-    async function syncServerTime() {
-      try {
-        const response = await fetch(window.location.href, { method: 'HEAD', cache: 'no-store' });
-        const serverTimeStr = response.headers.get('Date');
-        if (serverTimeStr) {
-          const serverTime = new Date(serverTimeStr).getTime();
-          const localTime = Date.now();
-          timeOffset = serverTime - localTime; 
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        if (typeof kofiWidgetOverlay !== 'undefined') {
+          kofiWidgetOverlay.draw('pisitz', {
+            'type': 'floating-chat',
+            'floating-chat.donateButton.text': 'Tip Me',
+            'floating-chat.donateButton.background-color': '#f45d22',
+            'floating-chat.donateButton.text-color': '#fff'
+          });
         }
-      } catch (e) {}
-    }
-    syncServerTime();
+      }, 1500);
+    });
+  </script>
+
+  <script>
+    fetch('nav.html').then(r => r.text()).then(h => { document.getElementById('navbar-include').innerHTML = h; });
+    fetch('footer.html').then(r => r.text()).then(h => { document.getElementById('footer-include').innerHTML = h; });
 
     let options = [];
-    const colors = ["#FF4D1C", "#2A9D8F", "#E9C46A", "#E63946", "#264653", "#F4A261", "#8AB17D", "#6D597A", "#4CC9F0", "#F72585"];
+    let map, marker, selectedLocation;
     let currentDeg = 0;
     let isSpinning = false;
     let historyData = [];
-
-    let map;
-    let marker;
-    let selectedLocation = null;
+    const colors = ["#FF4D1C", "#2A9D8F", "#E9C46A", "#E63946", "#264653", "#F4A261", "#8AB17D", "#6D597A"];
 
     window.initMap = function() {
       const defaultPos = { lat: 13.913, lng: 100.498 };
       map = new google.maps.Map(document.getElementById("map"), {
-        zoom: 14,
-        center: defaultPos,
+        zoom: 14, center: defaultPos, mapTypeControl: false, streetViewControl: false
       });
 
-      marker = new google.maps.Marker({
-        position: defaultPos,
-        map: map,
-        draggable: true,
-        animation: google.maps.Animation.DROP,
-        title: "ลากเพื่อเลือกตำแหน่ง"
-      });
+      marker = new google.maps.Marker({ position: defaultPos, map: map, draggable: true, animation: google.maps.Animation.DROP });
       selectedLocation = defaultPos;
 
-      if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition((position) => {
-          const pos = { lat: position.coords.latitude, lng: position.coords.longitude };
-          map.setCenter(pos);
-          marker.setPosition(pos);
-          selectedLocation = pos;
-        });
-      }
+      const input = document.getElementById("pac-input");
+      const searchBox = new google.maps.places.SearchBox(input);
 
-      marker.addListener("dragend", () => {
-        selectedLocation = marker.getPosition();
+      searchBox.addListener("places_changed", () => {
+        const places = searchBox.getPlaces();
+        if (places.length === 0) return;
+        const place = places[0];
+        if (!place.geometry || !place.geometry.location) return;
+
+        if (place.geometry.viewport) { map.fitBounds(place.geometry.viewport); } 
+        else { map.setCenter(place.geometry.location); map.setZoom(15); }
+        
+        marker.setPosition(place.geometry.location);
+        selectedLocation = place.geometry.location;
       });
 
-      map.addListener("click", (mapsMouseEvent) => {
-        selectedLocation = mapsMouseEvent.latLng;
-        marker.setPosition(selectedLocation);
-      });
+      marker.addListener("dragend", () => { selectedLocation = marker.getPosition(); });
+      map.addListener("click", (e) => { selectedLocation = e.latLng; marker.setPosition(selectedLocation); });
     };
 
+    // ระบบค้นหาและตัวกรองที่สมบูรณ์แบบเดิม
     async function fetchRestaurants() {
       if(isSpinning) return;
-      if(!selectedLocation) {
-        alert("กรุณารอให้แผนที่โหลด หรือเลือกตำแหน่งบนแผนที่ก่อนครับ");
-        return;
-      }
+      if(!selectedLocation) return alert("กรุณาเลือกตำแหน่งบนแผนที่ก่อนครับ");
 
       const statusDiv = document.getElementById('restaurantStatus');
-      statusDiv.innerHTML = "กำลังค้นหาร้านอาหาร... (อาจใช้เวลาสักครู่หากร้านเยอะ)";
+      statusDiv.innerHTML = "กำลังค้นหาร้านอาหาร... (อาจใช้เวลาสักครู่)";
       
       const radiusValue = parseInt(document.getElementById('radiusInput').value) || 1000;
       const isOpenNow = document.getElementById('openNowCheck').checked;
@@ -369,7 +268,6 @@
       const priceCheckboxes = document.querySelectorAll('#priceCat input:checked');
       const selectedPrices = Array.from(priceCheckboxes).map(cb => parseInt(cb.value));
       
-      // ดึงค่าเรตติ้งที่เลือก
       const minRating = parseFloat(document.querySelector('input[name="minRating"]:checked').value);
       
       const service = new google.maps.places.PlacesService(map);
@@ -385,34 +283,24 @@
           };
           if (isOpenNow) request.openNow = true;
 
-          let currentCatResults = [];
-          service.nearbySearch(request, function callback(results, status, pagination) {
+          service.nearbySearch(request, (results, status) => {
             if (status === google.maps.places.PlacesServiceStatus.OK && results) {
-              currentCatResults = currentCatResults.concat(results);
-              
-              if (pagination && pagination.hasNextPage && currentCatResults.length < 60) {
-                setTimeout(() => {
-                  pagination.nextPage();
-                }, 2000); 
-              } else {
-                resolve(currentCatResults);
-              }
+              resolve(results);
             } else {
-              resolve(currentCatResults);
+              resolve([]);
             }
           });
         });
       };
 
       try {
+        // ค้นหาตามหมวดหมู่
         if (selectedCategories.length === 0) {
           allResults = await searchPromise(undefined);
         } else {
           const promises = selectedCategories.map(cat => searchPromise(cat));
           const resultsArray = await Promise.all(promises);
-          resultsArray.forEach(res => {
-            allResults = allResults.concat(res);
-          });
+          resultsArray.forEach(res => { allResults = allResults.concat(res); });
         }
 
         if (allResults.length > 0) {
@@ -425,93 +313,42 @@
             }
           }
 
+          // กรองราคา
           if (selectedPrices.length > 0) {
             uniqueResults = uniqueResults.filter(r => r.price_level !== undefined && selectedPrices.includes(r.price_level));
           }
 
-          // กรองคะแนนดาวขั้นต่ำ
+          // กรองดาว
           if (minRating > 0) {
             uniqueResults = uniqueResults.filter(r => r.rating !== undefined && r.rating >= minRating);
           }
 
           if (uniqueResults.length === 0) {
              statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบร้านที่ตรงกับเงื่อนไขราคา/ดาว ลองปรับตัวกรองดูครับ</span>';
-             alert("ไม่พบร้านที่ตรงกับเงื่อนไขราคาหรือดาวที่กำหนด ลองปรับตัวกรองใหม่นะครับ");
-             clearOptions();
+             options = [];
+             drawWheel();
              return;
           }
 
-          const shuffled = uniqueResults.sort(() => 0.5 - Math.random()).slice(0, 60);
+          const shuffled = uniqueResults.sort(() => 0.5 - Math.random()).slice(0, 50);
 
-          options = shuffled.map(r => {
-            return { 
-              text: r.name, 
-              percent: 100/shuffled.length,
-              place_id: r.place_id,
-              lat: r.geometry.location.lat(),
-              lng: r.geometry.location.lng(),
-              rating: r.rating,
-              user_ratings_total: r.user_ratings_total
-            };
-          });
+          options = shuffled.map(r => ({
+            text: r.name, 
+            place_id: r.place_id, 
+            percent: 100/shuffled.length,
+            lat: r.geometry.location.lat(), 
+            lng: r.geometry.location.lng()
+          }));
           
           drawWheel();
-          updateList();
-          statusDiv.innerHTML = '<span style="color:#4CAF50;">เจอ ' + options.length + ' ร้านในหมวด/ราคา/ดาวที่เลือก พร้อมสุ่มแล้ว!</span>';
+          statusDiv.innerHTML = `<span style="color:#4CAF50;">เจอ ${options.length} ร้าน พร้อมสุ่มแล้ว!</span>`;
         } else {
-          statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบร้านที่ตรงกับเงื่อนไข ลองปรับระยะทางให้ไกลขึ้นครับ</span>';
-          alert("ไม่พบร้านอาหารเลยครับ ลองปรับระยะทางให้ไกลขึ้นดูนะครับ");
-          clearOptions();
+          statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบร้านอาหารในระยะนี้ ลองขยายระยะทางดูครับ</span>';
+          options = [];
+          drawWheel();
         }
       } catch (error) {
         statusDiv.innerHTML = '<span style="color:#ff4444;">เกิดข้อผิดพลาดในการดึงข้อมูล</span>';
-        alert("เกิดข้อผิดพลาดในการค้นหาร้านอาหาร กรุณาลองใหม่อีกครั้งครับ");
-        clearOptions();
-      }
-
-    }
-
-    function shareWheel() {
-      const state = { items: options };
-      const encodedData = btoa(encodeURIComponent(JSON.stringify(state)));
-      const shareUrl = window.location.origin + window.location.pathname + '?d=' + encodedData;
-      document.getElementById('shareLinkInput').value = shareUrl;
-      navigator.clipboard.writeText(shareUrl).then(() => { showShareModal(true); }).catch(() => { showShareModal(false); });
-    }
-
-    function showShareModal(isCopied) {
-      document.getElementById('shareModal').classList.add('active');
-      const btn = document.getElementById('copyShareBtn');
-      if(isCopied) {
-        btn.innerHTML = '<i class="fas fa-check"></i>';
-        setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i>'; }, 2000);
-      }
-    }
-
-    function closeShareModal() { document.getElementById('shareModal').classList.remove('active'); }
-    function copyShareLink() {
-      const shareInput = document.getElementById('shareLinkInput');
-      shareInput.select();
-      shareInput.setSelectionRange(0, 99999); 
-      navigator.clipboard.writeText(shareInput.value).then(() => {
-        const btn = document.getElementById('copyShareBtn');
-        btn.innerHTML = '<i class="fas fa-check"></i>';
-        setTimeout(() => { btn.innerHTML = '<i class="fas fa-copy"></i>'; }, 2000);
-      });
-    }
-
-    function loadFromUrl() {
-      const urlParams = new URLSearchParams(window.location.search);
-      const dataStr = urlParams.get('d');
-      if (dataStr) {
-        try {
-          const state = JSON.parse(decodeURIComponent(atob(dataStr)));
-          if(state.items && state.items.length > 0) {
-            options = state.items;
-            options.forEach(opt => opt.percent = 100/options.length);
-          }
-          window.history.replaceState({}, document.title, window.location.pathname);
-        } catch (e) { console.error("Invalid share link"); }
       }
     }
 
@@ -519,20 +356,12 @@
       const canvas = document.getElementById("canvas");
       const ctx = canvas.getContext("2d");
       const center = canvas.width / 2;
-
       ctx.clearRect(0, 0, canvas.width, canvas.height);
-      if (options.length === 0) {
-        updateList();
-        return;
-      }
+      if(options.length === 0) return;
 
       let startAngle = 0;
-      for (let i = 0; i < options.length; i++) {
-        const opt = options[i];
+      options.forEach((opt, i) => {
         const sliceAngle = (opt.percent / 100) * 2 * Math.PI;
-
-        if (sliceAngle <= 0) continue; 
-
         ctx.beginPath();
         ctx.fillStyle = colors[i % colors.length];
         ctx.moveTo(center, center);
@@ -544,203 +373,107 @@
         ctx.rotate(startAngle + sliceAngle / 2);
         ctx.textAlign = "right";
         ctx.fillStyle = "#fff";
+        let fontSize = options.length > 25 ? 10 : (options.length > 15 ? 12 : 16);
+        ctx.font = `bold ${fontSize}px "Anuphan", sans-serif`;
         
-        let fontSize = options.length > 45 ? 10 : (options.length > 25 ? 12 : (options.length > 15 ? 14 : 18));
-        ctx.font = 'bold ' + fontSize + 'px "Anuphan", sans-serif';
-        
-        ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
-        ctx.shadowBlur = 4;
-        ctx.shadowOffsetX = 1;
-        ctx.shadowOffsetY = 1;
-        
-        let textToShow = opt.text;
-        if(textToShow.length > 20) textToShow = textToShow.substring(0, 20) + "...";
+        let textToShow = opt.text.length > 20 ? opt.text.substring(0, 20) + "..." : opt.text;
         ctx.fillText(textToShow, center - 20, 5);
-        
-        ctx.shadowColor = "transparent";
         ctx.restore();
         startAngle += sliceAngle;
-      }
-      updateList();
-    }
-
-    function removeOption(index) {
-      if(isSpinning) return;
-      options.splice(index, 1);
-      options.forEach(opt => opt.percent = 100/options.length);
-      drawWheel();
-    }
-
-    function clearOptions() {
-      if(isSpinning) return;
-      options = [];
-      drawWheel();
-      document.getElementById('restaurantStatus').innerText = '';
-    }
-
-    function sortOptions() {
-      if(isSpinning || options.length === 0) return;
-      options.sort((a, b) => a.text.localeCompare(b.text, 'th'));
-      drawWheel();
-    }
-
-    function shuffleOptions() {
-      if(isSpinning || options.length === 0) return;
-      for (let i = options.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        const temp = options[i];
-        options[i] = options[j];
-        options[j] = temp;
-      }
-      drawWheel();
-    }
-
-    function updateList() {
-      const list = document.getElementById("optionsList");
-      list.innerHTML = options.map((opt, i) => 
-        '<li>' + opt.text + ' <i class="fas fa-times delete-btn" onclick="removeOption(' + i + ')"></i></li>'
-      ).join('');
-    }
-
-    function updateHistory() {
-      const list = document.getElementById("historyList");
-      if (historyData.length === 0) {
-        list.innerHTML = '<div class="empty-history">ยังไม่มีประวัติการสุ่ม<br>ค้นหาร้านแล้วลองหมุนดูสิ!</div>';
-        return;
-      }
-      const reversedHistory = [...historyData].reverse();
-      const total = historyData.length;
-      list.innerHTML = reversedHistory.map((item, index) => {
-        return '<li><a href="' + item.url + '" target="_blank"><div><span class="round-num">รอบที่ #' + (total - index) + '</span><br><b>' + item.text + '</b></div><i class="fas fa-map-marker-alt" style="color: #4CAF50; font-size: 1.4rem;"></i></a></li>';
-      }).join('');
-    }
-
-    function clearHistory() {
-      if(confirm("ต้องการล้างประวัติผลลัพธ์ทั้งหมดหรือไม่?")) {
-        historyData = [];
-        updateHistory();
-      }
+      });
     }
 
     function spin() {
       if (options.length === 0 || isSpinning) return;
-      
       isSpinning = true;
       document.getElementById('spinBtn').disabled = true;
 
-      const canvas = document.getElementById("canvas");
       const randomDeg = Math.floor(Math.random() * 360) + 3600; 
       currentDeg += randomDeg;
-      canvas.style.transform = 'rotate(' + currentDeg + 'deg)';
+      document.getElementById("canvas").style.transform = `rotate(${currentDeg}deg)`;
 
       setTimeout(() => {
-        const pointerAngleDeg = (360 - (currentDeg % 360) + 270) % 360;
+        const pointerAngle = (360 - (currentDeg % 360) + 270) % 360;
         let cumulativeAngle = 0;
         let winnerIndex = 0;
-        for (let i = 0; i < options.length; i++) {
-          const sliceAngleDeg = (options[i].percent / 100) * 360;
-          cumulativeAngle += sliceAngleDeg;
-          if (pointerAngleDeg <= cumulativeAngle) {
-            winnerIndex = i;
-            break;
-          }
-        }
         
+        for (let i = 0; i < options.length; i++) {
+          cumulativeAngle += (options[i].percent / 100) * 360;
+          if (pointerAngle <= cumulativeAngle) { winnerIndex = i; break; }
+        }
+
         const winner = options[winnerIndex];
-        const basicUrl = 'https://www.google.com/maps/search/?api=1&query=' + winner.lat + ',' + winner.lng + '&query_place_id=' + winner.place_id;
-
         const service = new google.maps.places.PlacesService(map);
-        service.getDetails({ placeId: winner.place_id, fields: ['url'] }, (place, status) => {
-            let finalUrl = basicUrl;
+        
+        service.getDetails({ 
+          placeId: winner.place_id, 
+          fields: ['photos', 'url', 'rating', 'user_ratings_total'] 
+        }, (place, status) => {
+          
+          const photoDiv = document.getElementById('winnerPhoto');
+          const imgTag = document.getElementById('storeImg');
+          
+          if (status === google.maps.places.PlacesServiceStatus.OK && place && place.photos && place.photos.length > 0) {
+            imgTag.src = place.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 });
+            photoDiv.style.display = 'block';
+          } else {
+            photoDiv.style.display = 'none';
+          }
 
-            if (status === google.maps.places.PlacesServiceStatus.OK && place.url) {
-                finalUrl = place.url;
-            }
+          const ratingDiv = document.getElementById('winnerRating');
+          if (place && place.rating) {
+            ratingDiv.innerHTML = `<span style="color: #FFD700;"><i class="fas fa-star"></i> ${place.rating}</span> <span style="font-size: 0.9rem; color: #888; font-weight: normal;">(${place.user_ratings_total || 0} รีวิว)</span>`;
+            ratingDiv.style.display = 'block';
+          } else {
+            ratingDiv.style.display = 'none';
+          }
 
-            historyData.push({ text: winner.text, url: finalUrl });
-            updateHistory();
+          let finalUrl = place && place.url ? place.url : `https://www.google.com/maps/search/?api=1&query=${winner.lat},${winner.lng}&query_place_id=${winner.place_id}`;
+          document.getElementById('navButton').href = finalUrl;
+          document.getElementById('winnerText').textContent = winner.text;
+          document.getElementById('winModal').classList.add('active');
 
-            document.getElementById('winnerText').textContent = winner.text;
-            
-            // แสดงคะแนนดาวใน Modal ถ้ามีข้อมูล
-            const ratingDiv = document.getElementById('winnerRating');
-            if (winner.rating) {
-                ratingDiv.innerHTML = '<span style="color: #FFD700;"><i class="fas fa-star"></i> ' + winner.rating + '</span> <span style="font-size: 0.9rem; color: #888; font-weight: normal;">(' + (winner.user_ratings_total || 0) + ' รีวิว)</span>';
-                ratingDiv.style.display = 'block';
-            } else {
-                ratingDiv.style.display = 'none';
-            }
-            
-            const navBtn = document.getElementById('navButton');
-            navBtn.href = finalUrl;
-            navBtn.style.display = 'flex';
+          historyData.push({ text: winner.text, url: finalUrl });
+          updateHistory();
 
-            document.getElementById('winModal').classList.add('active');
-            
-            // ปลดล็อคสถานะการหมุนก่อน
-            isSpinning = false;
-            document.getElementById('spinBtn').disabled = false;
+          isSpinning = false;
+          document.getElementById('spinBtn').disabled = false;
 
-            // ค่อยสั่งลบร้าน
-            if (document.getElementById('autoRemove').checked) removeOption(winnerIndex);
-
-            document.getElementById('winModal').classList.add('active');
-            
-            // 1. ปลดล็อคสถานะการหมุนก่อนเสมอ
-            isSpinning = false;
-            document.getElementById('spinBtn').disabled = false;
-
-            // 2. เช็คว่าติ๊กให้ลบอัตโนมัติไหม และลบแบบเจาะจง
-            if (document.getElementById('autoRemove').checked) {
-                const targetIndex = options.findIndex(opt => opt.place_id === winner.place_id);
-                if (targetIndex !== -1) {
-                    options.splice(targetIndex, 1);
-                    options.forEach(opt => opt.percent = 100 / options.length);
-                    drawWheel();
-                }
-            }
+          if (document.getElementById('autoRemove').checked) {
+            options.splice(winnerIndex, 1);
+            options.forEach(opt => opt.percent = 100 / options.length);
+            drawWheel();
+          }
         });
-
       }, 4000);
     }
 
-    function closeModal() { document.getElementById('winModal').classList.remove('active'); }
-
-    loadFromUrl();
-    drawWheel();
-    updateHistory();
-  </script>
-  
-  <script src="js/main.js" defer></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsZqohGF5WMcQMoUmxWAHoUqo_V26mw1A&libraries=places&loading=async&callback=initMap" async defer></script>
-  
-  <script src='https://storage.ko-fi.com/cdn/scripts/overlay-widget.js'></script>
-  <script>
-    // ฟังก์ชั่นเรียกใช้งานทันทีที่สคริปต์พร้อม
-    function showKofi() {
-      if (typeof kofiWidgetOverlay !== 'undefined') {
-        kofiWidgetOverlay.draw('pisitz', {
-          'type': 'floating-chat',
-          'floating-chat.donateButton.text': 'Tip Me',
-          'floating-chat.donateButton.background-color': '#f45d22',
-          'floating-chat.donateButton.text-color': '#fff'
-        });
-      } else {
-        // ถ้าสคริปต์ยังไม่มา ให้รอ 0.5 วินาทีแล้วลองใหม่
-        setTimeout(showKofi, 500);
+    function updateHistory() {
+      const list = document.getElementById("historyList");
+      if(historyData.length === 0) {
+        list.innerHTML = `<div style="text-align: center; color: #aaa; padding: 20px 0; font-style: italic;">ยังไม่มีประวัติการสุ่ม</div>`;
+        return;
       }
+      list.innerHTML = [...historyData].reverse().map((h, i) => `
+        <li style="padding: 12px; background: #fff; margin-bottom: 8px; border-radius: 10px; border-left: 4px solid #FF4D1C; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+          <a href="${h.url}" target="_blank" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: center;">
+            <div style="flex: 1; margin-right: 10px;">
+              <span style="font-size: 0.8rem; color: #888;">รอบที่ ${historyData.length - i}</span><br>
+              <strong style="font-size: 1rem;">${h.text}</strong>
+            </div>
+            <i class="fas fa-map-marker-alt" style="color: #4CAF50; font-size: 1.2rem;"></i>
+          </a>
+        </li>
+      `).join('');
     }
-    
-    // รันทันที ไม่ต้องรอหน้าเว็บโหลดเสร็จทั้งหมด
-    showKofi();
+
+    function clearHistory() { 
+      if(confirm("ต้องการล้างประวัติผลลัพธ์ทั้งหมดหรือไม่?")) { historyData = []; updateHistory(); }
+    }
+    function closeModal() { document.getElementById('winModal').classList.remove('active'); }
   </script>
-
-  <style>
-    /* ป้องกันปุ่มจมหายไปในเลเยอร์แผนที่ */
-    .kofi-widget-overlay-container {
-      z-index: 10000 !important;
-    }
-  </style>
-
+  
+  <script src="js/main.js?v=3" defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsZqohGF5WMcQMoUmxWAHoUqo_V26mw1A&libraries=places&loading=async&callback=initMap" async defer></script>
 </body>
 </html>
