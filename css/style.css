@@ -45,6 +45,15 @@ h1, h2, h3, h4, h5, h6,
   position: sticky;
   top: 0;
   z-index: 50;
+  font-family: "Noto Sans Thai", sans-serif;
+  font-weight: 700;
+}
+
+.navbar a,
+.navbar .site-title,
+.mobile-menu a {
+  font-family: "Noto Sans Thai", sans-serif;
+  font-weight: 700;
 }
 
 .theme-dark .navbar {
