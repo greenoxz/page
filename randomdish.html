@@ -29,7 +29,7 @@
       --text-color: #ccc; }
 
     .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
-    .page-title { text-align: center; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 700; color: #FF4D1C; margin: 0; font-family: 'Anuphan', sans-serif;}
+    .page-title { text-align: center; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 700; color: #FF4D1C; margin: 0; font-family: "Noto Sans Thai", sans-serif;}
     .filter-box { width: 100%; background: #fafafa; padding: 20px; border-radius: 16px; border: 1px solid #eaeaea; margin-bottom: 5px; }
     .theme-dark .filter-box { background: #1f1f22; border-color: #333; }
     .filter-title { font-size: 1rem; font-weight: bold; color: #555; margin: 0 0 10px 0; text-align: left;}
@@ -52,7 +52,7 @@
     input:checked + .slider { background-color: #4CAF50; }
     input:checked + .slider:before { transform: translateX(14px); }
     
-    .btn { padding: 10px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+    .btn { padding: 10px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: "Google Sans", sans-serif; font-size: 1rem; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
     .btn:hover { background: #e64519; }
     .btn.secondary { background: #555; }
     .btn.secondary:hover { background: #333; }
@@ -67,7 +67,7 @@
     #search-container { margin-bottom: 10px; width: 100%; position: relative; }
     .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; font-size: 1.1rem; pointer-events: none; }
     .theme-dark .search-icon { color: #bbb; }
-    #pac-input { width: 100%; padding: 12px 15px 12px 38px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 1rem; font-family: 'Anuphan', sans-serif; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); outline: none; }
+    #pac-input { width: 100%; padding: 12px 15px 12px 38px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 1rem; font-family: "Google Sans", sans-serif; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); outline: none; }
     #pac-input:focus { border-color: #FF4D1C; }
     .theme-dark #pac-input { background: #222; color: #fff; border-color: #444; }
     #map { width: 100%; height: 350px; border-radius: 12px; border: 2px solid #eee; }
@@ -388,7 +388,7 @@
         ctx.textAlign = "right";
         ctx.fillStyle = "#fff";
         let fontSize = options.length > 25 ? 10 : (options.length > 15 ? 12 : 16);
-        ctx.font = `bold ${fontSize}px "Anuphan", sans-serif`;
+        ctx.font = `bold ${fontSize}px "Google Sans", sans-serif`;
         
         let textToShow = opt.text.length > 20 ? opt.text.substring(0, 20) + "..." : opt.text;
         ctx.fillText(textToShow, center - 20, 5);

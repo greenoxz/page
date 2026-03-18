@@ -36,7 +36,7 @@
     
     /* Editable Title & Share */
     .title-group { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 600px; margin: 0 auto 20px; padding: 0 15px; box-sizing: border-box; }
-    .page-title-input { text-align: center; font-size: clamp(1.5rem, 6vw, 2.2rem); font-weight: 700; display: block; flex: 1; background: transparent; border: 2px dashed transparent; color: inherit; font-family: 'Anuphan', sans-serif; border-radius: 12px; padding: 5px 15px; transition: all 0.2s; min-width: 0; }
+    .page-title-input { text-align: center; font-size: clamp(1.5rem, 6vw, 2.2rem); font-weight: 700; display: block; flex: 1; background: transparent; border: 2px dashed transparent; color: inherit; font-family: "Noto Sans Thai", sans-serif; border-radius: 12px; padding: 5px 15px; transition: all 0.2s; min-width: 0; }
     .page-title-input:hover { border-color: #ddd; }
     .page-title-input:focus { border-color: #FF4D1C; outline: none; background: rgba(0,0,0,0.02); }
     .theme-dark .page-title-input:hover { border-color: #444; }
@@ -44,18 +44,18 @@
 
     /* Tabs Mode */
     .tab-group { display: flex; gap: 10px; margin-bottom: 5px; width: 100%; justify-content: center; flex-wrap: wrap; }
-    .tab-btn { padding: 8px 20px; border-radius: 20px; border: 2px solid #FF4D1C; background: transparent; color: #FF4D1C; cursor: pointer; font-family: 'Anuphan', sans-serif; font-weight: bold; transition: all 0.2s; white-space: nowrap; }
+    .tab-btn { padding: 8px 20px; border-radius: 20px; border: 2px solid #FF4D1C; background: transparent; color: #FF4D1C; cursor: pointer; font-family: "Google Sans", sans-serif; font-weight: bold; transition: all 0.2s; white-space: nowrap; }
     .tab-btn.active { background: #FF4D1C; color: #fff; }
     .theme-dark .tab-btn { border-color: #FF4D1C; color: #FF4D1C; }
     .theme-dark .tab-btn.active { background: #FF4D1C; color: #fff; }
 
     .input-group { display: flex; gap: 8px; width: 100%; max-width: 550px; justify-content: center; flex-wrap: wrap; }
-    .input-group input { flex: 1; min-width: 120px; padding: 12px 15px; border-radius: 10px; border: 1px solid #ddd; font-family: 'Anuphan', sans-serif; font-size: 1rem; }
+    .input-group input { flex: 1; min-width: 120px; padding: 12px 15px; border-radius: 10px; border: 1px solid #ddd; font-family: "Google Sans", sans-serif; font-size: 1rem; }
     .theme-dark .input-group input { background: #111; color: #fff; border-color: #444; }
     
     .action-menu { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; margin-top: 5px; width: 100%; max-width: 550px; }
 
-    .btn { padding: 12px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: 'Anuphan', sans-serif; font-size: 1rem; transition: background 0.2s, transform 0.1s; white-space: nowrap; }
+    .btn { padding: 12px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: "Google Sans", sans-serif; font-size: 1rem; transition: background 0.2s, transform 0.1s; white-space: nowrap; }
     .btn:hover { background: #e64519; }
     .btn:active { transform: scale(0.97); }
     .btn.secondary { background: #555; }
@@ -134,7 +134,7 @@
     .weight-input-wrapper:focus-within { border-color: #FF4D1C; box-shadow: 0 0 0 3px rgba(255, 77, 28, 0.1); }
     .theme-dark .weight-input-wrapper { background: #111; border-color: #444; }
     
-    .weight-input-wrapper input { border: none; background: transparent; width: 100%; padding: 0; font-weight: bold; font-size: 1.05rem; text-align: center; outline: none; color: #333; -moz-appearance: textfield; font-family: 'Anuphan', sans-serif; }
+    .weight-input-wrapper input { border: none; background: transparent; width: 100%; padding: 0; font-weight: bold; font-size: 1.05rem; text-align: center; outline: none; color: #333; -moz-appearance: textfield; font-family: "Google Sans", sans-serif; }
   .theme-dark .weight-input-wrapper input { color: #fff; }
   .weight-input-wrapper input::-webkit-outer-spin-button, .weight-input-wrapper input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 
@@ -592,7 +592,7 @@
         
         let fontSize = drawOptions.length > 30 ? 12 : (drawOptions.length > 15 ? 16 : 22);
         if(isLargeNumberMode) fontSize = 28;
-        ctx.font = `bold ${fontSize}px 'Anuphan', sans-serif`;
+        ctx.font = `bold ${fontSize}px "Google Sans", sans-serif`; 
         
         ctx.shadowColor = "rgba(0, 0, 0, 0.7)";
         ctx.shadowBlur = 4;
@@ -619,9 +619,9 @@
         ctx.fillStyle = "#333";
         ctx.textAlign = "center";
         ctx.textBaseline = "middle";
-        ctx.font = "bold 22px 'Anuphan', sans-serif";
+        ctx.font = "bold 22px \"Google Sans\", sans-serif"; 
         ctx.fillText("สุ่มตัวเลข", center, center - 15);
-        ctx.font = "bold 16px 'Anuphan', sans-serif";
+        ctx.font = "bold 16px \"Google Sans\", sans-serif"; 
         ctx.fillText(`${largeNumMin} - ${largeNumMax}`, center, center + 15);
       }
       updateList();
