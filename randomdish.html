@@ -7,8 +7,49 @@
   <meta name="theme-color" content="#fcfcfc"> <!-- js/main.js will update this dynamically based on theme -->
   <link rel="manifest" href="manifest.json">
   <link rel="apple-touch-icon" href="pic/logo.webp">
-  <title>สุ่มร้านอาหาร - ppknr</title>
   
+  <!-- SEO Primary Meta Tags -->
+  <title>สุ่มร้านอาหารใกล้ฉัน คิดไม่ออกบอกเรา สุ่มของกินรอบตัว - ppknr</title>
+  <meta name="title" content="สุ่มร้านอาหารใกล้ฉัน คิดไม่ออกบอกเรา สุ่มของกินรอบตัว - ppknr">
+  <meta name="description" content="วันนี้กินอะไรดี? ไม่ต้องคิดให้ปวดหัว! ใช้หน้าเว็บสุ่มร้านอาหารรอบตัวคุณ ค้นหาร้านอร่อยใกล้ฉัน ชาบู หมูกระทะ คาเฟ่ พร้อมกำหนดงบและหาร้านที่กำลังเปิดอยู่จาก Google Maps ได้ทันที">
+  <meta name="keywords" content="สุ่มร้านอาหาร, สุ่มของกิน, กินอะไรดี, หาร้านอาหารใกล้ฉัน, ร้านอาหาร, แอพสุ่มอาหาร, สุ่มร้านอร่อย, ชาบูใกล้ฉัน, หมูกระทะใกล้ฉัน, คาเฟ่ใกล้ฉัน, ร้านอาหารเปิดอยู่">
+  <meta name="author" content="pisitz">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://greenoxz.github.io/page/randomdish">
+
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://greenoxz.github.io/page/randomdish">
+  <meta property="og:title" content="สุ่มร้านอาหารใกล้ฉัน คิดไม่ออกบอกเรา สุ่มของกินรอบตัว">
+  <meta property="og:description" content="วันนี้กินอะไรดี? ไม่ต้องคิดให้ปวดหัว! ใช้เว็บเว็บสุ่มร้านอาหารง่ายๆ เลือกร้านใกล้ตัว เลือกระดับราคา พร้อมเปิดนำทางบน Google Maps ทันที">
+  <meta property="og:image" content="https://greenoxz.github.io/page/pic/logo.webp">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://greenoxz.github.io/page/randomdish">
+  <meta property="twitter:title" content="สุ่มร้านอาหารใกล้ฉัน คิดไม่ออกบอกเรา">
+  <meta property="twitter:description" content="วันนี้กินอะไรดี? ใช้แอปสุ่มร้านอาหารง่ายๆ เลือกร้านใกล้ตัว เลือกระดับราคา พร้อมเปิดนำทางบน Google Maps">
+  <meta property="twitter:image" content="https://greenoxz.github.io/page/pic/logo.webp">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "สุ่มร้านอาหารใกล้ฉัน ppknr",
+    "url": "https://greenoxz.github.io/page/randomdish",
+    "description": "เครื่องมือสุ่มร้านอาหารใกล้ตัวผ่าน Google Maps เลือกร้านได้ตรงใจทั้งงบและชนิดอาหาร สำหรับคนที่คิดไม่ออกว่าจะกินอะไรดี",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "THB"
+    }
+  }
+  </script>
+
   <link rel="stylesheet" href="css/style.css?v=3">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   
@@ -215,7 +256,7 @@
   <div class="modal-overlay" id="winModal">
     <div class="modal-content">
       <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #555;"><i class="fas fa-utensils"></i> มื้อนี้กินที่นี่เลย!</div>
-      <div id="winnerPhoto"><img id="storeImg" src="" alt="Restaurant"></div>
+      <div id="winnerPhoto"><img id="storeImg" src="" alt="ภาพถ่ายร้านอาหารที่สุ่มได้"></div>
       <div class="modal-winner" id="winnerText">...</div>
       <div id="winnerRating"></div>
       <a id="navButton" href="#" target="_blank" class="btn" style="width: 85%; margin-bottom: 10px; height: 45px; font-size: 1.1rem;">
