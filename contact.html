@@ -16,10 +16,22 @@
   <style>
     .contact-wrapper {
       max-width: 480px;
-      margin: 0 auto;
-      padding: 2rem 1rem;
+      margin: 2rem auto;
+      padding: 3rem 2rem;
       text-align: center;
       width: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(40px) saturate(150%);
+      -webkit-backdrop-filter: blur(40px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 36px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+    }
+
+    .theme-dark .contact-wrapper {
+      background: rgba(30, 30, 32, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
     }
 
     .profile-img {
@@ -67,36 +79,39 @@
       align-items: center;
       width: 100%;
       padding: 16px 20px;
-      background: #ffffff;
-      border-radius: 99px; /* ทรงแคปซูล */
+      background: rgba(255, 255, 255, 0.45);
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border-radius: 999px; /* ทรงแคปซูล */
       color: #1f2937;
       text-decoration: none;
       font-weight: 600;
       font-size: 1.1rem;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-      border: 1px solid rgba(0,0,0,0.03);
-      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s, background 0.4s, border-color 0.4s;
       position: relative;
       overflow: hidden;
     }
 
     .link-box:hover {
       transform: translateY(-4px) scale(1.02);
-      box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-      border-color: rgba(0,0,0,0.08);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+      background: rgba(255, 255, 255, 0.65);
+      border-color: rgba(255, 255, 255, 0.8);
     }
 
     .theme-dark .link-box {
-      background: #111111;
+      background: rgba(30, 30, 32, 0.4);
       color: #ffffff;
-      border-color: rgba(255,255,255,0.05);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
     }
 
     .theme-dark .link-box:hover {
-      background: #1a1a1a;
-      box-shadow: 0 10px 25px rgba(0,0,0,0.4);
-      border-color: rgba(255,255,255,0.1);
+      background: rgba(30, 30, 32, 0.6);
+      box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+      border-color: rgba(255, 255, 255, 0.15);
     }
 
     .link-icon {
@@ -124,26 +139,36 @@
       gap: 10px;
       margin-top: 35px;
       padding: 12px 24px;
-      border-radius: 99px;
-      background: rgba(0,0,0,0.04);
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(12px) saturate(200%);
+      -webkit-backdrop-filter: blur(12px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
       text-decoration: none;
       color: inherit;
       font-size: 1rem;
-      font-weight: 500;
-      transition: all 0.3s ease;
+      font-weight: 600;
+      transition: all 0.4s ease;
     }
 
     .email-link:hover {
-      background: rgba(0,0,0,0.08);
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
       transform: translateY(-2px);
     }
 
     .theme-dark .email-link {
-      background: rgba(255,255,255,0.05);
+      background: rgba(30, 30, 32, 0.4);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
     .theme-dark .email-link:hover {
-      background: rgba(255,255,255,0.1);
+      background: rgba(30, 30, 32, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
   </style>
 </head>
@@ -160,7 +185,7 @@
         <div class="linktree-links">
           <a class="link-box" href="https://www.instagram.com/ppknr" target="_blank">
             <div class="link-icon">
-              <i class="fab fa-instagram" style="background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent;"></i>
+              <i class="fab fa-instagram" style="background: -webkit-linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;"></i>
             </div>
             <span class="link-text">Instagram</span>
           </a>
@@ -200,18 +225,7 @@
     <div id="footer-include"></div>
   </div>
 
-  <script>
-    fetch('nav.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-include').innerHTML = html;
-      });
-    fetch('footer.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('footer-include').innerHTML = html;
-      });
-  </script>
+
   <script>
     fetch('nav.html')
       .then(res => res.text())

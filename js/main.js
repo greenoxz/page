@@ -11,14 +11,17 @@ function applyTheme(theme) {
   const body = document.getElementById("theme-body");
   const checkbox = document.getElementById("theme-toggle");
   
-  body.classList.remove("theme-dark", "theme-light");
+  if (body) {
+    body.classList.remove("theme-dark", "theme-light");
+    if (theme === "dark") {
+      body.classList.add("theme-dark");
+    } else {
+      body.classList.add("theme-light");
+    }
+  }
   
-  if (theme === "dark") {
-    body.classList.add("theme-dark");
-    checkbox.checked = true;
-  } else {
-    body.classList.add("theme-light");
-    checkbox.checked = false;
+  if (checkbox) {
+    checkbox.checked = (theme === "dark");
   }
   
   setCookie("theme", theme, 365);
@@ -52,6 +55,27 @@ function toggleMenu() {
 (function () {
   const savedTheme = getCookie("theme") || "light";
   applyTheme(savedTheme);
+
+  // Sync theme toggle state when nav.html is injected
+  function syncThemeToggle() {
+    const checkbox = document.getElementById("theme-toggle");
+    if (checkbox) {
+      checkbox.checked = document.body.classList.contains("theme-dark");
+      return true;
+    }
+    return false;
+  }
+
+  // Check immediately in case it's already there
+  if (!syncThemeToggle()) {
+    const observer = new MutationObserver((mutations, obs) => {
+      if (syncThemeToggle()) {
+        obs.disconnect(); // Stop observing once found
+      }
+    });
+    // ใช้ document.body เพื่อครอบคลุมทุกหน้า ไม่ว่า ID ของ container จะเป็นอะไร
+    observer.observe(document.body, { childList: true, subtree: true });
+  }
 })();
 
 // ดึง meta tag theme-color มา

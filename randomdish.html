@@ -56,8 +56,22 @@
   <style>
     /* โครงสร้างหลัก */
     .layout-wrapper { display: flex; flex-direction: column; gap: 30px; padding: 0 15px; box-sizing: border-box; }
-    .history-column { width: 100%; background: #f5f5f5; padding: 20px; border-radius: 15px; display: flex; flex-direction: column; max-height: 500px; box-sizing: border-box; }
-    .theme-dark .history-column { background: #1a1a1c; border: 1px solid #333; }
+    .history-column { 
+      width: 100%; 
+      background: rgba(255, 255, 255, 0.4); 
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      padding: 24px; 
+      border-radius: 28px; 
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+      display: flex; flex-direction: column; max-height: 500px; box-sizing: border-box; 
+    }
+    .theme-dark .history-column { 
+      background: rgba(30, 30, 32, 0.4); 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
     
     @media (min-width: 1000px) {
       .layout-wrapper { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 50px; padding: 0; }
@@ -66,26 +80,67 @@
     }
     
     :root {
-      --card-bg: #ffffff;
+      --card-bg: rgba(255, 255, 255, 0.6);
+      --card-border: rgba(255, 255, 255, 0.8);
       --text-color: #333333;
-}
+    }
     .theme-dark {
-      --card-bg: #1f1f22;
-      --text-color: #ccc; }
+      --card-bg: rgba(40, 40, 44, 0.5);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --text-color: #ccc; 
+    }
 
     .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
     .page-title { text-align: center; font-size: clamp(1.8rem, 6vw, 2.5rem); font-weight: 700; color: #FF4D1C; margin: 0; font-family: "Noto Sans Thai", sans-serif;}
-    .filter-box { width: 100%; background: #fafafa; padding: 20px; border-radius: 16px; border: 1px solid #eaeaea; margin-bottom: 5px; }
-    .theme-dark .filter-box { background: #1f1f22; border-color: #333; }
+    .filter-box { 
+      width: 100%; 
+      background: rgba(255, 255, 255, 0.4); 
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      padding: 24px; 
+      border-radius: 28px; 
+      border: 1px solid rgba(255, 255, 255, 0.6); 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+      margin-bottom: 5px; 
+      box-sizing: border-box;
+    }
+    .theme-dark .filter-box { 
+      background: rgba(30, 30, 32, 0.4); 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
     .filter-title { font-size: 1rem; font-weight: bold; color: #555; margin: 0 0 10px 0; text-align: left;}
     .theme-dark .filter-title { color: #ccc; }
     
     /* สไตล์ตัวกรอง */
-    .cat-label { background: #eee; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.95rem; font-weight: bold; transition: 0.2s; color: #555; border: 2px solid transparent; user-select: none; }
-    .cat-label:has(input:checked) { background: #FF4D1C; color: white; border-color: #e64519; }
+    .cat-label { 
+      background: rgba(0, 0, 0, 0.05); 
+      padding: 8px 16px; 
+      border-radius: 999px; 
+      cursor: pointer; 
+      font-size: 0.95rem; 
+      font-weight: bold; 
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+      color: #555; 
+      border: 1px solid transparent; 
+      user-select: none; 
+      backdrop-filter: blur(8px);
+    }
+    .cat-label:hover { transform: scale(1.05); background: rgba(0, 0, 0, 0.1); }
+    .cat-label:has(input:checked) { 
+      background: rgba(255, 77, 28, 0.15); 
+      color: #FF4D1C; 
+      border-color: #FF4D1C; 
+      box-shadow: 0 4px 15px rgba(255, 77, 28, 0.2);
+    }
     .cat-label input { display: none; }
-    .theme-dark .cat-label { background: #333; color: #ccc; }
-    .theme-dark .cat-label:has(input:checked) { background: #FF4D1C; color: white; }
+    .theme-dark .cat-label { background: rgba(255, 255, 255, 0.1); color: #ccc; }
+    .theme-dark .cat-label:hover { background: rgba(255, 255, 255, 0.2); }
+    .theme-dark .cat-label:has(input:checked) { 
+      background: rgba(255, 77, 28, 0.25); 
+      color: #FF8359; 
+      border-color: #FF8359; 
+    }
 
     /* Switch */
     .toggle-wrapper { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: bold; color: #555; }
@@ -97,11 +152,44 @@
     input:checked + .slider { background-color: #4CAF50; }
     input:checked + .slider:before { transform: translateX(14px); }
     
-    .btn { padding: 10px 20px; border-radius: 10px; border: none; background: #FF4D1C; color: white; cursor: pointer; font-weight: bold; font-family: "Google Sans", sans-serif; font-size: 1rem; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px; }
-    .btn:hover { background: #e64519; }
-    .btn.secondary { background: #555; }
-    .btn.secondary:hover { background: #333; }
-    .btn:disabled { background: #ccc !important; cursor: not-allowed; }
+    .btn { 
+      padding: 12px 24px; 
+      border-radius: 999px; 
+      border: 1px solid rgba(255, 255, 255, 0.5); 
+      background: linear-gradient(135deg, rgba(255, 77, 28, 0.8) 0%, rgba(255, 131, 89, 0.8) 100%);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      color: white; 
+      cursor: pointer; 
+      font-weight: bold; 
+      font-family: inherit; 
+      font-size: 1rem; 
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+      display: flex; align-items: center; justify-content: center; gap: 8px; 
+      box-shadow: 0 6px 15px rgba(255, 77, 28, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    }
+    .btn:hover { 
+      transform: translateY(-2px) scale(1.02);
+      background: linear-gradient(135deg, rgba(255, 77, 28, 0.9) 0%, rgba(255, 131, 89, 0.9) 100%);
+      box-shadow: 0 10px 25px rgba(255, 77, 28, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+    }
+    .theme-dark .btn {
+      background: linear-gradient(135deg, rgba(255, 77, 28, 0.6) 0%, rgba(255, 131, 89, 0.6) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .theme-dark .btn:hover {
+      background: linear-gradient(135deg, rgba(255, 77, 28, 0.8) 0%, rgba(255, 131, 89, 0.8) 100%);
+    }
+    .btn.secondary { 
+      background: rgba(0, 0, 0, 0.4); 
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    }
+    .btn.secondary:hover { 
+      background: rgba(0, 0, 0, 0.6); 
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
 
     .wheel-box { position: relative; width: 90%; max-width: 400px; aspect-ratio: 1/1; margin: 20px auto; }
     #canvas { width: 100%; height: auto; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
@@ -119,10 +207,28 @@
     .theme-dark #map { border-color: #333; }
 
     /* สไตล์ Modal และรูปภาพ */
-    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; }
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; }
     .modal-overlay.active { display: flex; opacity: 1; }
-    .modal-content { background: #fff; padding: 25px; border-radius: 20px; text-align: center; max-width: 400px; width: 90%; box-shadow: 0 15px 40px rgba(0,0,0,0.3); display: flex; flex-direction: column; align-items: center; }
-    .theme-dark .modal-content { background: #18181b; color: #fff; border: 1px solid #333; }
+    .modal-content { 
+      background: rgba(255, 255, 255, 0.65); 
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 30px 25px; 
+      border-radius: 32px; 
+      text-align: center; 
+      max-width: 400px; 
+      width: 90%; 
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1); 
+      display: flex; flex-direction: column; align-items: center; 
+      color: #1f2937;
+    }
+    .theme-dark .modal-content { 
+      background: rgba(30, 30, 32, 0.6); 
+      color: #fff; 
+      border: 1px solid rgba(255, 255, 255, 0.15); 
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
     
     #winnerPhoto { width: 100%; height: 180px; border-radius: 12px; margin-bottom: 15px; background: #eee; overflow: hidden; display: none; border: 2px solid #f0f0f0; }
     .theme-dark #winnerPhoto { border-color: #333; background: #222; }
@@ -227,17 +333,6 @@
         </div>
 
         <div class="history-column">
-          <!-- โฆษณา Google AdSense -->
-          <div style="text-align: center; margin-bottom: 20px; min-height: 100px;">
-            <ins class="adsbygoogle"
-                 style="display:block"
-                 data-ad-client="ca-pub-6552505597075020"
-                 data-ad-format="auto"
-                 data-full-width-responsive="true"></ins>
-            <script>
-                 (adsbygoogle = window.adsbygoogle || []).push({});
-            </script>
-          </div>
           
           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
             <h3 style="margin: 0; font-size: 1.2rem;"><i class="fas fa-history"></i> ประวัติร้านที่ได้</h3>
@@ -531,7 +626,7 @@
       }
       // แก้ไขในฟังก์ชัน updateHistory()
       list.innerHTML = [...historyData].reverse().map((h, i) => `
-        <li style="padding: 12px; background: var(--card-bg, #fff); color: var(--text-color, #333); margin-bottom: 8px; border-radius: 10px; border-left: 4px solid #FF4D1C; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+        <li style="padding: 16px 12px; background: var(--card-bg); color: var(--text-color); margin-bottom: 12px; border-radius: 16px; border-left: 5px solid #FF4D1C; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-top: 1px solid var(--card-border); border-right: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
           <a href="${h.url}" target="_blank" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: center;">
             <div style="flex: 1; margin-right: 10px;">
               <span style="font-size: 0.8rem; opacity: 0.7;">รอบที่ ${historyData.length - i}</span><br>
