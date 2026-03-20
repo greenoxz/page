@@ -107,9 +107,14 @@
     .promptpay-highlight { color: #003764; }
     .theme-dark .promptpay-highlight { color: #00AEEF; }
 
-    /* Filter PromptPay logo to white in dark mode */
-    .theme-dark .promptpay-logo {
+    /* Filter PromptPay logos to white in dark mode */
+    .theme-dark .promptpay-logo, {
       filter: brightness(0) invert(1);
+    }
+    
+    .google-pay-logo {
+      height: 24px !important; /* Slightly smaller to balance visually with taller/wider icons */
+      margin-top: 4px;
     }
   </style>
 </head>
@@ -128,6 +133,7 @@
               <img src="https://js.stripe.com/v3/fingerprinted/img/payment-methods/icon-pm-promptpay-8bc83c76f38f2a4d3a5f64b6229450dd.svg" class="promptpay-logo" alt="PromptPay">
               <img src="svg/visa-svgrepo-com.svg" alt="Visa">
               <img src="svg/mastercard-svgrepo-com.svg" alt="Mastercard">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Google_Pay_Acceptance_Mark.svg" class="google-pay-logo" alt="Google Pay">
             </div>
             <div class="payment-info">
               <div class="payment-label kofi-highlight">สนับสนุนค่ากาแฟได้ง่าย ๆ ผ่าน Ko-fi ☕️</div>
