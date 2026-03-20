@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <style>
     /* Layout */
-    .layout-wrapper { display: flex; flex-direction: column; gap: 30px; padding: 0 15px; box-sizing: border-box; }
+    .layout-wrapper { display: flex; flex-direction: column; gap: 30px; padding: 0; box-sizing: border-box; width: 100%; }
     
     .history-column { 
       width: 100%; 
@@ -41,8 +41,8 @@
     .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
     
     /* Editable Title & Share */
-    .title-group { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 600px; margin: 0 auto 20px; padding: 0 15px; box-sizing: border-box; }
-    .page-title-input { text-align: center; font-size: clamp(1.5rem, 6vw, 2.2rem); font-weight: 700; display: block; flex: 1; background: transparent; border: 2px dashed transparent; color: inherit; font-family: "Noto Sans Thai", sans-serif; border-radius: 12px; padding: 5px 15px; transition: all 0.2s; min-width: 0; }
+    .title-group { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 10px; width: 100%; max-width: 600px; margin: 0 auto 20px; padding: 0; box-sizing: border-box; }
+    .page-title-input { text-align: center; font-size: clamp(1.5rem, 6vw, 2.2rem); font-weight: 700; display: block; flex: 1; background: transparent; border: 2px dashed transparent; color: inherit; font-family: "LINESeedSansTH", sans-serif; border-radius: 12px; padding: 5px 15px; transition: all 0.2s; min-width: 0; }
     .page-title-input:hover { border-color: #ddd; }
     .page-title-input:focus { border-color: #FF4D1C; outline: none; background: rgba(0,0,0,0.02); }
     .theme-dark .page-title-input:hover { border-color: #444; }
@@ -327,7 +327,6 @@
         
         <div class="title-group">
           <input type="text" class="page-title-input" id="wheelTitle" value="Random Wheel" placeholder="ตั้งชื่อวงล้อของคุณ...">
-          <button class="btn secondary" onclick="shareWheel()" title="แชร์วงล้อนี้ให้เพื่อน"><i class="fas fa-share-alt"></i> แชร์</button>
         </div>
         
         <div class="content-box layout-wrapper">
@@ -378,12 +377,13 @@
           <div class="history-column">
             <div class="history-header">
               <h3 class="history-title"><i class="fas fa-history"></i> ประวัติผลลัพธ์</h3>
+              <button class="btn secondary" onclick="shareWheel()" title="แชร์วงล้อนี้ให้เพื่อน" style="padding: 8px 16px; font-size: 0.95rem;"><i class="fas fa-share-alt"></i> แชร์</button>
             </div>
             <ul class="history-list" id="historyList">
               <div class="empty-history">ยังไม่มีประวัติการสุ่ม<br>ลองหมุนวงล้อดูสิ!</div>
             </ul>
-            <button class="btn secondary" style="width: 100%; margin-top: 15px; padding: 12px;" onclick="clearHistory()">
-              <i class="fas fa-trash"></i> ล้างประวัติทั้งหมด
+            <button class="btn secondary" style="width: 100%; margin-top: 15px;" onclick="clearHistory()">
+              <i class="fas fa-trash-alt"></i> ล้างประวัติ
             </button>
           </div>
 

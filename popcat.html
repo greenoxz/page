@@ -14,7 +14,7 @@
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
     <style>
-        .game-container { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 20px; user-select: none; -webkit-user-select: none; position: relative; min-height: 100vh; width: 100%; box-sizing: border-box; margin-top: -60px; padding-top: 80px; cursor: pointer; }
+        .game-container { display: flex; flex-direction: column; align-items: center; justify-content: center; flex: 1; padding: 20px; user-select: none; -webkit-user-select: none; position: relative; min-height: 100vh; width: 100%; box-sizing: border-box; padding-top: 20px; cursor: pointer; touch-action: pan-y pinch-zoom; }
         .page-container { display: flex; flex-direction: column; min-height: 100vh; position: relative; overflow-x: hidden; }
         .game-title { font-size: 3rem; color: #2c3e50; margin-bottom: 5px; text-shadow: 2px 2px 4px rgba(0,0,0,0.1); pointer-events: none; z-index: 2; }
         body.theme-dark .game-title { color: #fff; }
@@ -86,6 +86,7 @@
             z-index: 2; 
             box-shadow: 0 10px 40px rgba(0,0,0,0.05);
             border: 1px solid rgba(255, 255, 255, 0.6);
+            box-sizing: border-box;
         }
         body.theme-dark .leaderboard { 
             background: rgba(30, 30, 32, 0.4); 
@@ -420,7 +421,7 @@
             document.getElementById('paginationContainer').innerHTML = pgHtml;
         }
 
-        document.getElementById('clickArea').onclick = (e) => {
+        const handlePop = (e) => {
             if (e.target.closest('#changeNameBtn') || e.target.closest('.controls-overlay')) return;
             
             count++; pendingClicks++;
@@ -428,8 +429,9 @@
             checkBadges(count);
             
             if (popSound) {
-                popSound.currentTime = 0; 
-                popSound.play();
+                const soundClone = popSound.cloneNode();
+                soundClone.volume = volumeSlider.value;
+                soundClone.play().catch(e => {});
             }
             
             document.getElementById('catImageOpen').classList.add('active');
@@ -449,6 +451,14 @@
                 }
             }, 500);
         };
+
+        const clickArea = document.getElementById('clickArea');
+        // รองรับ multi-touch รัวๆ และเมาส์ด้วย pointerdown
+        clickArea.addEventListener('pointerdown', handlePop);
+        
+        // กันไม่ให้อุปกรณ์พยายามลากรูปภาพขณะกดรัวๆ
+        document.getElementById('catImage').ondragstart = () => false;
+        document.getElementById('catImageOpen').ondragstart = () => false;
 
         function submitScore() {
             const name = document.getElementById('playerName').value.trim();
