@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6552505597075020" crossorigin="anonymous"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#fcfcfc"> <!-- js/main.js will update this dynamically based on theme -->
+  <link rel="manifest" href="manifest.json">
+  <link rel="apple-touch-icon" href="pic/logo.webp">
+  
+  <!-- SEO Primary Meta Tags -->
+  <title>สุ่มที่เที่ยวใกล้ฉัน คิดไม่ออกบอกเรา สุ่มที่เที่ยวรอบตัว - ppknr</title>
+  <meta name="title" content="สุ่มที่เที่ยวใกล้ฉัน คิดไม่ออกบอกเรา สุ่มที่เที่ยวรอบตัว - ppknr">
+  <meta name="description" content="วันนี้ไปเที่ยวไหนดี? ไม่ต้องคิดให้ปวดหัว! ใช้หน้าเว็บสุ่มที่เที่ยวรอบตัวคุณ ค้นหาสถานที่น่าสนใจใกล้ฉัน พร้อมกำหนดงบและหาสถานที่ที่กำลังเปิดอยู่จาก Google Maps ได้ทันที">
+  <meta name="keywords" content="สุ่มที่เที่ยว, ที่เที่ยวใกล้ฉัน, สุ่มสถานที่เที่ยว, ไปเที่ยวไหนดี, แอพสุ่มที่เที่ยว, วัดใกล้ฉัน, สวนสาธารณะใกล้ฉัน, ทะเลใกล้ฉัน, ที่เที่ยวเปิดอยู่">
+  <meta name="author" content="pisitz">
+  
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://greenoxz.github.io/page/randomplace">
+
+  <!-- Open Graph / Facebook / LINE -->
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://greenoxz.github.io/page/randomplace">
+  <meta property="og:title" content="สุ่มที่เที่ยวใกล้ฉัน คิดไม่ออกบอกเรา สุ่มที่เที่ยวรอบตัว">
+  <meta property="og:description" content="วันนี้ไปเที่ยวไหนดี? ไม่ต้องคิดให้ปวดหัว! ใช้เว็บสุ่มที่เที่ยวง่ายๆ เลือกสถานที่ใกล้ตัว เลือกระดับราคา พร้อมเปิดนำทางบน Google Maps ทันที">
+  <meta property="og:image" content="https://greenoxz.github.io/page/pic/logo.webp">
+
+  <!-- Twitter -->
+  <meta property="twitter:card" content="summary_large_image">
+  <meta property="twitter:url" content="https://greenoxz.github.io/page/randomplace">
+  <meta property="twitter:title" content="สุ่มที่เที่ยวใกล้ฉัน คิดไม่ออกบอกเรา">
+  <meta property="twitter:description" content="วันนี้ไปเที่ยวไหนดี? ใช้แอปสุ่มที่เที่ยวง่ายๆ เลือกสถานที่ใกล้ตัว เลือกระดับราคา พร้อมเปิดนำทางบน Google Maps">
+  <meta property="twitter:image" content="https://greenoxz.github.io/page/pic/logo.webp">
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebApplication",
+    "name": "สุ่มที่เที่ยวใกล้ฉัน ppknr",
+    "url": "https://greenoxz.github.io/page/randomplace",
+    "description": "เครื่องมือสุ่มสถานที่ใกล้ตัวผ่าน Google Maps เลือกสถานที่ได้ตรงใจ สำหรับคนที่คิดไม่ออกว่าจะไปเที่ยวไหนดี",
+    "applicationCategory": "UtilitiesApplication",
+    "operatingSystem": "All",
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "THB"
+    }
+  }
+  </script>
+
+  <link rel="stylesheet" href="css/style.css?v=3">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  
+  <style>
+    /* โครงสร้างหลัก */
+    .layout-wrapper { display: flex; flex-direction: column; gap: 30px; padding: 0; box-sizing: border-box; width: 100%; }
+    .history-column { 
+      width: 100%; 
+      background: rgba(255, 255, 255, 0.4); 
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      padding: 24px; 
+      border-radius: 28px; 
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+      display: flex; flex-direction: column; max-height: 500px; box-sizing: border-box; 
+    }
+    .theme-dark .history-column { 
+      background: rgba(30, 30, 32, 0.4); 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    
+    @media (min-width: 1000px) {
+      .layout-wrapper { display: grid; grid-template-columns: 1fr auto 1fr; align-items: start; gap: 50px; padding: 0; }
+      .wheel-column { grid-column: 2; display: flex; flex-direction: column; align-items: center; min-width: 500px; max-width: 600px; width: 100%; }
+      .right-column { grid-column: 3; justify-self: end; width: 320px; display: flex; flex-direction: column; gap: 10px; }
+      .history-column { width: 100%; max-height: 800px; }
+    }
+    .kofi-container { text-align: center; margin-top: 1.5rem; display: flex; justify-content: center; width: 100%; }
+    
+    :root {
+      --card-bg: rgba(255, 255, 255, 0.6);
+      --card-border: rgba(255, 255, 255, 0.8);
+      --text-color: #333333;
+    }
+    .theme-dark {
+      --card-bg: rgba(40, 40, 44, 0.5);
+      --card-border: rgba(255, 255, 255, 0.05);
+      --text-color: #ccc; 
+    }
+
+    .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
+    .page-title { text-align: center; font-size: clamp(2.2rem, 6vw, 3rem); font-weight: 800; margin: 0; background: linear-gradient(135deg, #1CFFBC 0%, #59FFCD 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 4px 20px rgba(28, 255, 188, 0.2); letter-spacing: -0.5px; font-family: inherit; }
+    .theme-dark .page-title { background: linear-gradient(135deg, #59FFCD 0%, #99FFE6 100%); -webkit-background-clip: text; text-shadow: 0 4px 20px rgba(89, 255, 205, 0.2); }
+    .filter-box { 
+      width: 100%; 
+      background: rgba(255, 255, 255, 0.4); 
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      padding: 24px; 
+      border-radius: 28px; 
+      border: 1px solid rgba(255, 255, 255, 0.6); 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+      margin-bottom: 5px; 
+      box-sizing: border-box;
+    }
+    .theme-dark .filter-box { 
+      background: rgba(30, 30, 32, 0.4); 
+      border: 1px solid rgba(255, 255, 255, 0.1); 
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+    .filter-title { font-size: 1rem; font-weight: bold; color: #555; margin: 0 0 10px 0; text-align: left;}
+    .theme-dark .filter-title { color: #ccc; }
+    
+    /* สไตล์ตัวกรอง */
+    .cat-label { 
+      background: rgba(0, 0, 0, 0.05); 
+      padding: 8px 16px; 
+      border-radius: 999px; 
+      cursor: pointer; 
+      font-size: 0.95rem; 
+      font-weight: bold; 
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+      color: #555; 
+      border: 1px solid transparent; 
+      user-select: none; 
+      backdrop-filter: blur(8px);
+    }
+    .cat-label:hover { transform: scale(1.05); background: rgba(0, 0, 0, 0.1); }
+    .cat-label:has(input:checked) { 
+      background: rgba(28, 255, 188, 0.15); 
+      color: #00B377; 
+      border-color: #1CFFBC; 
+      box-shadow: 0 4px 15px rgba(28, 255, 188, 0.2);
+    }
+    .cat-label input { display: none; }
+    .theme-dark .cat-label { background: rgba(255, 255, 255, 0.1); color: #ccc; }
+    .theme-dark .cat-label:hover { background: rgba(255, 255, 255, 0.2); }
+    .theme-dark .cat-label:has(input:checked) { 
+      background: rgba(28, 255, 188, 0.25); 
+      color: #59FFCD; 
+      border-color: #59FFCD; 
+    }
+
+    /* Switch */
+    .toggle-wrapper { display: flex; align-items: center; gap: 8px; font-size: 0.9rem; font-weight: bold; color: #555; }
+    .theme-dark .toggle-wrapper { color: #ccc; }
+    .switch { position: relative; display: inline-block; width: 34px; height: 20px; }
+    .switch input { opacity: 0; width: 0; height: 0; }
+    .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #ccc; transition: .4s; border-radius: 34px; }
+    .slider:before { position: absolute; content: ""; height: 14px; width: 14px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
+    input:checked + .slider { background-color: #4CAF50; }
+    input:checked + .slider:before { transform: translateX(14px); }
+    
+    .btn { 
+      padding: 12px 24px; 
+      border-radius: 999px; 
+      border: 1px solid rgba(255, 255, 255, 0.5); 
+      background: linear-gradient(135deg, rgba(28, 255, 188, 0.8) 0%, rgba(89, 255, 205, 0.8) 100%);
+      backdrop-filter: blur(12px) saturate(180%);
+      -webkit-backdrop-filter: blur(12px) saturate(180%);
+      color: #006644; 
+      cursor: pointer; 
+      font-weight: bold; 
+      font-family: inherit; 
+      font-size: 1rem; 
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); 
+      display: flex; align-items: center; justify-content: center; gap: 8px; 
+      box-shadow: 0 6px 15px rgba(28, 255, 188, 0.25), inset 0 2px 4px rgba(255, 255, 255, 0.3);
+    }
+    .btn:hover { 
+      transform: translateY(-2px) scale(1.02);
+      background: linear-gradient(135deg, rgba(28, 255, 188, 0.9) 0%, rgba(89, 255, 205, 0.9) 100%);
+      box-shadow: 0 10px 25px rgba(28, 255, 188, 0.4), inset 0 2px 4px rgba(255, 255, 255, 0.5);
+    }
+    .theme-dark .btn {
+      background: linear-gradient(135deg, rgba(28, 255, 188, 0.6) 0%, rgba(89, 255, 205, 0.6) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .theme-dark .btn:hover {
+      background: linear-gradient(135deg, rgba(28, 255, 188, 0.8) 0%, rgba(89, 255, 205, 0.8) 100%);
+    }
+    .btn.secondary { 
+      background: rgba(0, 0, 0, 0.4); 
+      border-color: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+      color: white;
+    }
+    .btn.secondary:hover { 
+      background: rgba(0, 0, 0, 0.6); 
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    .btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none !important; box-shadow: none !important; }
+
+    .wheel-box { position: relative; width: 90%; max-width: 400px; aspect-ratio: 1/1; margin: 20px auto; }
+    #canvas { width: 100%; height: auto; border-radius: 50%; transition: transform 4s cubic-bezier(0.17, 0.67, 0.12, 0.99); border: 5px solid #fff; box-shadow: 0 8px 25px rgba(0,0,0,0.15); }
+    .theme-dark #canvas { border-color: #333; }
+    .pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 35px solid #1CFFBC; z-index: 10; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
+    
+    /* สไตล์ช่องค้นหาและแผนที่ */
+    #search-container { margin-bottom: 10px; width: 100%; position: relative; }
+    .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; font-size: 1.1rem; pointer-events: none; }
+    .theme-dark .search-icon { color: #bbb; }
+    #pac-input { width: 100%; padding: 12px 15px 12px 38px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 1rem; font-family: "Google Sans", sans-serif; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); outline: none; }
+    #pac-input:focus { border-color: #1CFFBC; }
+    .theme-dark #pac-input { background: #222; color: #fff; border-color: #444; }
+    #map { width: 100%; height: 350px; border-radius: 12px; border: 2px solid #eee; }
+    .theme-dark #map { border-color: #333; }
+
+    /* สไตล์ Modal และรูปภาพ */
+    .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.4); backdrop-filter: blur(12px); display: none; justify-content: center; align-items: center; z-index: 2000; opacity: 0; transition: opacity 0.3s; }
+    .modal-overlay.active { display: flex; opacity: 1; }
+    .modal-content { 
+      background: rgba(255, 255, 255, 0.65); 
+      backdrop-filter: blur(24px) saturate(200%);
+      -webkit-backdrop-filter: blur(24px) saturate(200%);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      padding: 30px 25px; 
+      border-radius: 32px; 
+      text-align: center; 
+      max-width: 400px; 
+      width: 90%; 
+      box-shadow: 0 20px 50px rgba(0,0,0,0.1); 
+      display: flex; flex-direction: column; align-items: center; 
+      color: #1f2937;
+    }
+    .theme-dark .modal-content { 
+      background: rgba(30, 30, 32, 0.6); 
+      color: #fff; 
+      border: 1px solid rgba(255, 255, 255, 0.15); 
+      box-shadow: 0 20px 50px rgba(0,0,0,0.4);
+    }
+    
+    #winnerPhoto { width: 100%; height: 180px; border-radius: 12px; margin-bottom: 15px; background: #eee; overflow: hidden; display: none; border: 2px solid #f0f0f0; }
+    .theme-dark #winnerPhoto { border-color: #333; background: #222; }
+    #storeImg { width: 100%; height: 100%; object-fit: cover; }
+    
+    .modal-winner { font-size: 1.8rem; font-weight: bold; color: #00B377; margin-bottom: 5px; line-height: 1.3; }
+    .theme-dark .modal-winner { color: #59FFCD; }
+    #winnerRating { margin-bottom: 20px; font-weight: bold; font-size: 1.1rem; }
+
+    /* Title Redesign */
+    .title-wrapper { margin: 0 auto 30px auto; max-width: 800px; display: flex; flex-direction: column; align-items: center; gap: 15px; font-family: "LINESeedSansTH", sans-serif; }
+    .page-subtitle { text-align: center; color: #555; font-size: 0.95rem; margin: 0; line-height: 1.5; font-weight: 500; background: rgba(0,0,0,0.04); padding: 12px 24px; border-radius: 999px; border: 1px solid rgba(0,0,0,0.05); max-width: 650px; box-shadow: 0 2px 10px rgba(0,0,0,0.02); }
+    .theme-dark .page-subtitle { color: #ccc; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.05); }
+
+    /* Ko-fi Widget override */
+    .kofitext { font-family: "LINESeedSansTH", sans-serif !important; }
+
+    /* Input Improvements */
+    .radius-setting-box {
+      display: flex; align-items: center; gap: 8px; 
+      background: rgba(255,255,255,0.5); padding: 8px 14px; 
+      border-radius: 14px; border: 1px solid rgba(255,255,255,0.6); 
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+    .theme-dark .radius-setting-box { background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.05); }
+    .radius-setting-box > span { font-weight: 600; font-size: 0.95rem; color: #555; }
+    .theme-dark .radius-setting-box > span { color: #ccc; }
+
+    .radius-input {
+      width: 70px;
+      padding: 6px 10px;
+      border-radius: 10px;
+      border: 1px solid rgba(0,0,0,0.1);
+      background: rgba(255,255,255,0.8);
+      text-align: center;
+      font-weight: bold;
+      color: #00B377;
+      font-size: 0.95rem;
+      transition: all 0.2s;
+      outline: none;
+      box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+    }
+    .radius-input:focus { border-color: #1CFFBC; background: #fff; box-shadow: 0 0 0 3px rgba(28,255,188,0.1); }
+    .theme-dark .radius-input { background: rgba(0,0,0,0.3); border-color: rgba(255,255,255,0.1); color: #59FFCD; }
+    .theme-dark .radius-input:focus { border-color: #99FFE6; background: rgba(0,0,0,0.5); }
+
+    .custom-checkbox-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-top: 15px;
+      cursor: pointer;
+      font-size: 1rem;
+      color: #555;
+      font-weight: 600;
+      padding: 10px 18px;
+      background: rgba(255,255,255,0.4);
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.5);
+      transition: all 0.2s;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+    .custom-checkbox-label:hover { background: rgba(255,255,255,0.6); transform: translateY(-1px); }
+    .theme-dark .custom-checkbox-label { color: #ccc; background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.05); }
+    
+    .custom-checkbox-input {
+      appearance: none;
+      -webkit-appearance: none;
+      width: 22px;
+      height: 22px;
+      background: rgba(255,255,255,0.8);
+      border: 2px solid #ddd;
+      border-radius: 6px;
+      position: relative;
+      cursor: pointer;
+      outline: none;
+      transition: all 0.2s;
+    }
+    .theme-dark .custom-checkbox-input { background: rgba(0,0,0,0.5); border-color: #555; }
+    
+    .custom-checkbox-input:checked {
+      background: #00B377;
+      border-color: #00B377;
+    }
+    .theme-dark .custom-checkbox-input:checked {
+      background: #1CFFBC;
+      border-color: #1CFFBC;
+    }
+    .custom-checkbox-input:checked::after {
+      content: '';
+      position: absolute;
+      left: 6px;
+      top: 2px;
+      width: 5px;
+      height: 10px;
+      border: solid white;
+      border-width: 0 2.5px 2.5px 0;
+      transform: rotate(45deg);
+    }
+  </style>
+</head>
+
+<script>
+  if(localStorage.getItem('theme') === 'dark') { document.documentElement.classList.add('theme-dark'); }
+</script>
+
+<body id="theme-body">
+  <div id="navbar-include"></div>
+
+  <main class="main-section">
+    <div class="content" style="max-width: 1200px; margin: 20px auto;">
+      <div class="title-wrapper">
+        <h1 class="page-title">สุ่มสถานที่ท่องเที่ยวรอบตัวคุณ</h1>
+        <p class="page-subtitle">
+          ข้อมูลสถานที่จาก Google Maps แสดงผลสูงสุด 20 แห่ง
+        </p>
+      </div>
+      <div class="layout-wrapper">
+        <div class="wheel-column wheel-container">
+          <div class="filter-box">
+            
+            <div id="search-container" class="search-container">
+              <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
+              <input id="pac-input" type="text" placeholder="พิมพ์ชื่อจังหวัด, อำเภอ, สถานที่ หรือถนน...">
+            </div>
+            <div id="map"></div>
+            <p style="font-size: 0.85rem; color: #888; margin-top: 5px; text-align: center;">*ลากหมุดหรือคลิกบนแผนที่เพื่อเลือกจุดศูนย์กลาง</p>
+
+            <div style="margin-top: 20px;">
+              <p class="filter-title">ประเภทสถานที่</p>
+              <div id="placeCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <label class="cat-label"><input type="checkbox" value="วัด">🛕 วัด/ทำบุญ</label>
+                <label class="cat-label"><input type="checkbox" value="สวนสาธารณะ">🌳 สวนสาธารณะ</label>
+                <label class="cat-label"><input type="checkbox" value="ทะเล">🏖️ ทะเล</label>
+                <label class="cat-label"><input type="checkbox" value="ภูเขา">⛰️ ธรรมชาติ/ภูเขา</label>
+                <label class="cat-label"><input type="checkbox" value="พิพิธภัณฑ์">🏛️ พิพิธภัณฑ์</label>
+                <label class="cat-label"><input type="checkbox" value="จุดชมวิว">🌅 จุดชมวิว</label>
+                <label class="cat-label"><input type="checkbox" value="ตลาดกลางคืน">🌃 ตลาดกลางคืน</label>
+                <label class="cat-label"><input type="checkbox" value="ห้างสรรพสินค้า">🛍️ ห้างสรรพสินค้า</label>
+              </div>
+            </div>
+
+            <div style="margin-top: 15px;">
+              <p class="filter-title">หมวดหมู่เพิ่มเติม (ใส่หรือไม่ก็ได้)</p>
+              <input type="text" id="customKeyword" placeholder="เช่น คาเฟ่, น้ำตก..." style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-family: inherit; box-sizing: border-box;">
+            </div>
+
+            <div style="margin-top: 15px;">
+              <p class="filter-title">คะแนนดาวขั้นต่ำ</p>
+              <div id="ratingCat" style="display: flex; flex-wrap: wrap; gap: 8px;">
+                <label class="cat-label"><input type="radio" name="minRating" value="0" checked>ทุกระดับ</label>
+                <label class="cat-label"><input type="radio" name="minRating" value="3"><i class="fas fa-star" style="color:#FFD700;"></i> 3.0+</label>
+                <label class="cat-label"><input type="radio" name="minRating" value="4"><i class="fas fa-star" style="color:#FFD700;"></i> 4.0+</label>
+                <label class="cat-label"><input type="radio" name="minRating" value="4.5"><i class="fas fa-star" style="color:#FFD700;"></i> 4.5+</label>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 10px; align-items: center; margin-top: 20px; flex-wrap: wrap; justify-content: space-between;">
+              <div class="toggle-wrapper">
+                เฉพาะสถานที่ที่เปิดอยู่
+                <label class="switch">
+                  <input type="checkbox" id="openNowCheck" checked>
+                  <span class="slider"></span>
+                </label>
+              </div>
+
+              <div class="radius-setting-box">
+                <span>ระยะค้นหา:</span>
+                <input type="number" id="radiusInput" class="radius-input" value="1" min="1" step="0.5">
+                <span>กม.</span>
+              </div>
+            </div>
+            
+            <button class="btn" onclick="fetchPlaces()" style="width: 100%; height: 45px; margin-top: 15px;"><i class="fas fa-search"></i> ค้นหาที่เที่ยว</button>
+            <div id="placeStatus" style="text-align: center; margin-top: 10px; font-weight: bold; color: #888;"></div>
+          </div>
+
+          <div class="wheel-box">
+            <div class="pointer"></div>
+            <canvas id="canvas" width="400" height="400"></canvas>
+          </div>
+          
+          <button class="btn" id="spinBtn" style="width: 250px; font-size: 1.5rem; height: 60px; border-radius: 30px; margin-top: 10px;" onclick="spin()">หมุนวงล้อ!</button>
+          
+          <label class="custom-checkbox-label">
+            <input type="checkbox" id="autoRemove" class="custom-checkbox-input"> ลบสถานที่ที่สุ่มได้ออกอัตโนมัติ
+          </label>
+        </div>
+
+        <div class="right-column">
+          <div class="history-column">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 2px solid #eee; padding-bottom: 10px; margin-bottom: 15px;">
+            <h3 style="margin: 0; font-size: 1.2rem;"><i class="fas fa-history"></i> ประวัติสถานที่ที่ได้</h3>
+          </div>
+          <ul id="historyList" style="list-style: none; padding: 0; margin: 0; flex: 1; overflow-y: auto;">
+            <div style="text-align: center; color: #aaa; padding: 20px 0; font-style: italic;">ยังไม่มีประวัติการสุ่ม</div>
+          </ul>
+            <button class="btn secondary" style="width: 100%; margin-top: 15px;" onclick="clearHistory()"><i class="fas fa-trash-alt"></i> ล้างประวัติ</button>
+          </div>
+
+          <!-- Ko-fi Widget -->
+          <div class="kofi-container">
+            <script type='text/javascript' src='https://storage.ko-fi.com/cdn/widget/Widget_2.js'></script><script type='text/javascript'>kofiwidget2.init('Buy me a coffee', '#00b377', 'P5P6WMMKB');kofiwidget2.draw();</script>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </main>
+
+  <div id="footer-include"></div>
+
+  <div class="modal-overlay" id="winModal">
+    <div class="modal-content">
+      <div style="font-size: 1.3rem; font-weight: bold; margin-bottom: 15px; color: #555;"><i class="fas fa-map-marked-alt"></i> วันนี้ไปเที่ยวที่นี่เลย!</div>
+      <div id="winnerPhoto"><img id="storeImg" src="" alt="ภาพถ่ายสถานที่ที่สุ่มได้"></div>
+      <div class="modal-winner" id="winnerText">...</div>
+      <div id="winnerRating"></div>
+      <a id="navButton" href="#" target="_blank" class="btn" style="width: 85%; margin-bottom: 10px; height: 45px; font-size: 1.1rem;">
+        <i class="fas fa-map-marker-alt"></i> เปิดดูใน Google Maps
+      </a>
+      <button class="btn secondary" style="width: 85%; height: 45px; font-size: 1.1rem;" onclick="closeModal()">ปิดหน้าต่าง</button>
+    </div>
+  </div>
+
+  <script>
+    fetch('nav.html').then(r => r.text()).then(h => { document.getElementById('navbar-include').innerHTML = h; });
+    fetch('footer.html').then(r => r.text()).then(h => { 
+      document.getElementById('footer-include').innerHTML = h; 
+      const yearElem = document.getElementById('year');
+      if (yearElem) yearElem.textContent = new Date().getFullYear();
+    });
+
+    let options = [];
+    let map, marker, selectedLocation;
+    let currentDeg = 0;
+    let isSpinning = false;
+    let historyData = [];
+    const colors = ["#1CFFBC", "#2A9D8F", "#E9C46A", "#00B377", "#264653", "#F4A261", "#8AB17D", "#6D597A"];
+
+    window.initMap = function() {
+      const defaultPos = { lat: 13.913, lng: 100.498 };
+      map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 14, center: defaultPos, mapTypeControl: false, streetViewControl: false
+      });
+
+      marker = new google.maps.Marker({ position: defaultPos, map: map, draggable: true, animation: google.maps.Animation.DROP });
+      selectedLocation = defaultPos;
+
+      const input = document.getElementById("pac-input");
+      const searchBox = new google.maps.places.SearchBox(input);
+
+      searchBox.addListener("places_changed", () => {
+        const places = searchBox.getPlaces();
+        if (places.length === 0) return;
+        const place = places[0];
+        if (!place.geometry || !place.geometry.location) return;
+
+        if (place.geometry.viewport) { map.fitBounds(place.geometry.viewport); } 
+        else { map.setCenter(place.geometry.location); map.setZoom(15); }
+        
+        marker.setPosition(place.geometry.location);
+        selectedLocation = place.geometry.location;
+      });
+
+      marker.addListener("dragend", () => { selectedLocation = marker.getPosition(); });
+      map.addListener("click", (e) => { selectedLocation = e.latLng; marker.setPosition(selectedLocation); });
+    };
+
+    // ระบบค้นหาและตัวกรองที่ปรับแต่งสำหรับสถานที่ท่องเที่ยว
+    async function fetchPlaces() {
+      if(isSpinning) return;
+      if(!selectedLocation) return alert("กรุณาเลือกตำแหน่งบนแผนที่ก่อนครับ");
+
+      const statusDiv = document.getElementById('placeStatus');
+      statusDiv.innerHTML = "กำลังค้นหาสถานที่... (อาจใช้เวลาสักครู่)";
+      
+      const radiusValue = (parseFloat(document.getElementById('radiusInput').value) || 1) * 1000;
+      const isOpenNow = document.getElementById('openNowCheck').checked;
+      
+      const categoryCheckboxes = document.querySelectorAll('#placeCat input:checked');
+      const customKeyword = document.getElementById('customKeyword').value.trim();
+      
+      let selectedCategories = Array.from(categoryCheckboxes).map(cb => cb.value);
+      if(customKeyword) selectedCategories.push(customKeyword);
+      
+      const minRating = parseFloat(document.querySelector('input[name="minRating"]:checked').value);
+      
+      const service = new google.maps.places.PlacesService(map);
+      let allResults = [];
+
+      const searchPromise = (keyword) => {
+        return new Promise((resolve) => {
+          const request = {
+            location: selectedLocation,
+            radius: radiusValue,
+            keyword: keyword || 'สถานที่ท่องเที่ยว'
+          };
+          if (isOpenNow) request.openNow = true;
+
+          service.nearbySearch(request, (results, status) => {
+            if (status === google.maps.places.PlacesServiceStatus.OK && results) {
+              resolve(results);
+            } else {
+              resolve([]);
+            }
+          });
+        });
+      };
+
+      try {
+        // ค้นหาตามหมวดหมู่
+        if (selectedCategories.length === 0) {
+          allResults = await searchPromise(undefined);
+        } else {
+          const promises = selectedCategories.map(cat => searchPromise(cat));
+          const resultsArray = await Promise.all(promises);
+          resultsArray.forEach(res => { allResults = allResults.concat(res); });
+        }
+
+        if (allResults.length > 0) {
+          let uniqueResults = [];
+          const mapPlaceIds = new Map();
+          for (const item of allResults) {
+            if(!mapPlaceIds.has(item.place_id)){
+              mapPlaceIds.set(item.place_id, true);
+              uniqueResults.push(item);
+            }
+          }
+
+          // กรองดาว
+          if (minRating > 0) {
+            uniqueResults = uniqueResults.filter(r => r.rating !== undefined && r.rating >= minRating);
+          }
+
+          if (uniqueResults.length === 0) {
+             statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบสถานที่ที่ตรงกับเงื่อนไขดาว ลองปรับตัวกรองดูครับ</span>';
+             options = [];
+             drawWheel();
+             return;
+          }
+
+          const shuffled = uniqueResults.sort(() => 0.5 - Math.random()).slice(0, 50);
+
+          options = shuffled.map(r => ({
+            text: r.name, 
+            place_id: r.place_id, 
+            percent: 100/shuffled.length,
+            lat: r.geometry.location.lat(), 
+            lng: r.geometry.location.lng()
+          }));
+          
+          drawWheel();
+          statusDiv.innerHTML = `<span style="color:#4CAF50;">เจอ ${options.length} แห่ง พร้อมสุ่มแล้ว!</span>`;
+        } else {
+          statusDiv.innerHTML = '<span style="color:#ff4444;">ไม่พบสถานที่ในระยะนี้ ลองขยายระยะทางดูครับ</span>';
+          options = [];
+          drawWheel();
+        }
+      } catch (error) {
+        statusDiv.innerHTML = '<span style="color:#ff4444;">เกิดข้อผิดพลาดในการดึงข้อมูล</span>';
+      }
+    }
+
+    function drawWheel() {
+      const canvas = document.getElementById("canvas");
+      const ctx = canvas.getContext("2d");
+      const center = canvas.width / 2;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      if(options.length === 0) return;
+
+      let startAngle = 0;
+      options.forEach((opt, i) => {
+        const sliceAngle = (opt.percent / 100) * 2 * Math.PI;
+        ctx.beginPath();
+        ctx.fillStyle = colors[i % colors.length];
+        ctx.moveTo(center, center);
+        ctx.arc(center, center, center, startAngle, startAngle + sliceAngle);
+        ctx.fill();
+        ctx.save();
+        
+        ctx.translate(center, center);
+        ctx.rotate(startAngle + sliceAngle / 2);
+        ctx.textAlign = "right";
+        ctx.fillStyle = "#fff";
+        let fontSize = options.length > 25 ? 10 : (options.length > 15 ? 12 : 16);
+        ctx.font = `bold ${fontSize}px "Google Sans", sans-serif`;
+        
+        let textToShow = opt.text.length > 20 ? opt.text.substring(0, 20) + "..." : opt.text;
+        ctx.fillText(textToShow, center - 20, 5);
+        ctx.restore();
+        startAngle += sliceAngle;
+      });
+    }
+
+    function spin() {
+      if (options.length === 0 || isSpinning) return;
+      isSpinning = true;
+      document.getElementById('spinBtn').disabled = true;
+
+      const randomDeg = Math.floor(Math.random() * 360) + 3600; 
+      currentDeg += randomDeg;
+      document.getElementById("canvas").style.transform = `rotate(${currentDeg}deg)`;
+
+      setTimeout(() => {
+        const pointerAngle = (360 - (currentDeg % 360) + 270) % 360;
+        let cumulativeAngle = 0;
+        let winnerIndex = 0;
+        
+        for (let i = 0; i < options.length; i++) {
+          cumulativeAngle += (options[i].percent / 100) * 360;
+          if (pointerAngle <= cumulativeAngle) { winnerIndex = i; break; }
+        }
+
+        const winner = options[winnerIndex];
+        const service = new google.maps.places.PlacesService(map);
+        
+        service.getDetails({ 
+          placeId: winner.place_id, 
+          fields: ['photos', 'url', 'rating', 'user_ratings_total'] 
+        }, (place, status) => {
+          
+          const photoDiv = document.getElementById('winnerPhoto');
+          const imgTag = document.getElementById('storeImg');
+          
+          if (status === google.maps.places.PlacesServiceStatus.OK && place && place.photos && place.photos.length > 0) {
+            imgTag.src = place.photos[0].getUrl({ maxWidth: 400, maxHeight: 300 });
+            photoDiv.style.display = 'block';
+          } else {
+            photoDiv.style.display = 'none';
+          }
+
+          const ratingDiv = document.getElementById('winnerRating');
+          if (place && place.rating) {
+            ratingDiv.innerHTML = `<span style="color: #FFD700;"><i class="fas fa-star"></i> ${place.rating}</span> <span style="font-size: 0.9rem; color: #888; font-weight: normal;">(${place.user_ratings_total || 0} รีวิว)</span>`;
+            ratingDiv.style.display = 'block';
+          } else {
+            ratingDiv.style.display = 'none';
+          }
+
+          let finalUrl = place && place.url ? place.url : `https://www.google.com/maps/search/?api=1&query=${winner.lat},${winner.lng}&query_place_id=${winner.place_id}`;
+          document.getElementById('navButton').href = finalUrl;
+          document.getElementById('winnerText').textContent = winner.text;
+          document.getElementById('winModal').classList.add('active');
+
+          historyData.push({ text: winner.text, url: finalUrl });
+          updateHistory();
+
+          isSpinning = false;
+          document.getElementById('spinBtn').disabled = false;
+
+          if (document.getElementById('autoRemove').checked) {
+            options.splice(winnerIndex, 1);
+            options.forEach(opt => opt.percent = 100 / options.length);
+            drawWheel();
+          }
+        });
+      }, 4000);
+    }
+
+    function updateHistory() {
+      const list = document.getElementById("historyList");
+      if(historyData.length === 0) {
+        list.innerHTML = `<div style="text-align: center; color: #aaa; padding: 20px 0; font-style: italic;">ยังไม่มีประวัติการสุ่ม</div>`;
+        return;
+      }
+      list.innerHTML = [...historyData].reverse().map((h, i) => `
+        <li style="padding: 16px 12px; background: var(--card-bg); color: var(--text-color); margin-bottom: 12px; border-radius: 16px; border-left: 5px solid #1CFFBC; box-shadow: 0 4px 15px rgba(0,0,0,0.04); border-top: 1px solid var(--card-border); border-right: 1px solid var(--card-border); border-bottom: 1px solid var(--card-border); transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);">
+          <a href="${h.url}" target="_blank" style="text-decoration: none; color: inherit; display: flex; justify-content: space-between; align-items: center;">
+            <div style="flex: 1; margin-right: 10px;">
+              <span style="font-size: 0.8rem; opacity: 0.7;">รอบที่ ${historyData.length - i}</span><br>
+              <strong style="font-size: 1rem;">${h.text}</strong>
+            </div>
+            <i class="fas fa-map-marker-alt" style="color: #4CAF50; font-size: 1.2rem;"></i>
+          </a>
+        </li>
+      `).join('');
+    }
+
+    function clearHistory() { 
+      if(confirm("ต้องการล้างประวัติผลลัพธ์ทั้งหมดหรือไม่?")) { historyData = []; updateHistory(); }
+    }
+    function closeModal() { document.getElementById('winModal').classList.remove('active'); }
+  </script>
+  
+  <script src="js/main.js?v=3" defer></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsZqohGF5WMcQMoUmxWAHoUqo_V26mw1A&libraries=places&loading=async&callback=initMap" async defer></script>
+</body>
+</html>

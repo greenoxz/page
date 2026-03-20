@@ -48,11 +48,11 @@
         <p class="subtitle">โปรเจคเล็กๆ ที่ทำขึ้นเพื่อความบันเทิงของผู้เขียน</p>
         
         <!-- คอนเทนเนอร์สำหรับจัดกลุ่มปุ่มเข้าด้วยกัน -->
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 15px; padding: 0 15px; margin-top: 30px; margin-bottom: 40px;">
+    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 0 15px; margin-top: 30px; margin-bottom: 40px; align-items: stretch;">
     
     <!-- ปุ่ม Popcat -->
-    <a href="popcat.html" style="text-decoration: none; display: block; height: 100%;">
-        <div class="liquid-glass-card glass-blue">
+    <a href="popcat.html" style="text-decoration: none; display: flex; flex: 1 1 140px; max-width: 200px;">
+        <div class="liquid-glass-card glass-purple" style="width: 100%; height: auto; flex: 1;">
             <div class="glass-icon-wrapper">
                 <i class="fas fa-gamepad" style="font-size: 24px;"></i>
             </div>
@@ -63,13 +63,25 @@
     </a>
 
     <!-- ปุ่ม สุ่มร้านอาหาร -->
-    <a href="randomdish" style="text-decoration: none; display: block; height: 100%;">
-        <div class="liquid-glass-card glass-orange">
+    <a href="randomdish" style="text-decoration: none; display: flex; flex: 1 1 140px; max-width: 200px;">
+        <div class="liquid-glass-card glass-orange" style="width: 100%; height: auto; flex: 1;">
             <div class="glass-icon-wrapper">
                 <i class="fas fa-random" style="font-size: 24px;"></i>
             </div>
             <div style="text-align: center;">
                 <h3 style="margin: 0; font-size: 1.2rem; font-weight: 700;">สุ่มร้านอาหาร</h3>
+            </div>
+        </div>
+    </a>
+    
+    <!-- ปุ่ม สุ่มที่เที่ยว -->
+    <a href="randomplace" style="text-decoration: none; display: flex; flex: 1 1 140px; max-width: 200px;">
+        <div class="liquid-glass-card glass-blue" style="width: 100%; height: auto; flex: 1;">
+            <div class="glass-icon-wrapper">
+                <i class="fa-solid fa-plane" style="font-size: 24px;"></i>
+            </div>
+            <div style="text-align: center;">
+                <h3 style="margin: 0; font-size: 1.2rem; font-weight: 700;">สุ่มที่เที่ยว</h3>
             </div>
         </div>
     </a>
