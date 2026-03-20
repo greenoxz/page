@@ -98,6 +98,10 @@
       .then(res => res.text())
       .then(html => {
         document.getElementById('navbar-include').innerHTML = html;
+        const desktopMenu = document.querySelector('.desktop-menu');
+        if (desktopMenu) desktopMenu.style.display = 'none';
+        const hamburgerBtn = document.querySelector('.hamburger');
+        if (hamburgerBtn) hamburgerBtn.style.display = 'none';
       });
 
     fetch('footer.html')

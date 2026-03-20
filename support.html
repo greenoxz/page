@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-6552505597075020" crossorigin="anonymous"></script>
+  <meta name="theme-color" media="(prefers-color-scheme: light)" content="#fcfcfc" />
+  <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#18181b" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Support Me - ppknr</title>
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  
+  <style>
+    .support-wrapper {
+      max-width: 600px;
+      margin: 2rem auto;
+      padding: 3rem 2rem;
+      text-align: center;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.3);
+      backdrop-filter: blur(40px) saturate(150%);
+      -webkit-backdrop-filter: blur(40px) saturate(150%);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-radius: 36px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
+      font-family: 'LINESeedSansTH', sans-serif;
+      transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    .support-wrapper:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.45);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.08);
+      border-color: rgba(255, 77, 28, 0.3);
+    }
+
+    .theme-dark .support-wrapper {
+      background: rgba(30, 30, 32, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
+    }
+
+    .theme-dark .support-wrapper:hover {
+      background: rgba(30, 30, 32, 0.5);
+      box-shadow: 0 40px 80px rgba(0, 0, 0, 0.5), 0 0 20px rgba(255, 131, 89, 0.1);
+      border-color: rgba(255, 131, 89, 0.2);
+    }
+
+    .support-title { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.5rem; color: #FF4D1C; }
+    .support-subtitle { font-size: 1.1rem; opacity: 0.7; margin-bottom: 2.5rem; font-weight: 300; }
+
+    .payment-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    @media (min-width: 480px) {
+      .payment-grid { grid-template-columns: 1fr; }
+    }
+
+    .payment-card {
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.8);
+      border-radius: 24px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.03);
+    }
+
+    .theme-dark .payment-card {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    }
+
+    .payment-card:hover {
+      transform: translateY(-8px) scale(1.02);
+      background: rgba(255, 255, 255, 0.8);
+      box-shadow: 0 15px 40px rgba(255, 77, 28, 0.15);
+      border-color: #FF4D1C;
+    }
+
+    .payment-icon-group {
+      display: flex;
+      gap: 12px;
+      font-size: 2rem;
+    }
+    .payment-icon-group img { height: 32px; width: auto; }
+    .fa-visa { color: #1a1f71; }
+    .fa-cc-mastercard { color: #eb001b; }
+
+    .payment-label { font-weight: 700; font-size: 1.25rem; }
+    .payment-desc { font-size: 0.95rem; opacity: 0.7; }
+
+    .kofi-highlight { color: #FF5E5B; }
+    .promptpay-highlight { color: #003764; }
+    .theme-dark .promptpay-highlight { color: #00AEEF; }
+
+    /* Filter PromptPay logo to white in dark mode */
+    .theme-dark .promptpay-logo {
+      filter: brightness(0) invert(1);
+    }
+  </style>
+</head>
+<body class="theme-light" id="theme-body">
+  <div class="page-container">
+    <div id="navbar-include"></div>
+    
+    <main class="main-section">
+      <div class="support-wrapper">
+        <h1 class="support-title">สนับสนุนผู้พัฒนา</h1>
+        
+        <div class="payment-grid">
+          <!-- Ko-fi Card -->
+          <a href="https://ko-fi.com/P5P6WMMKB" target="_blank" class="payment-card">
+            <div class="payment-icon-group">
+              <img src="https://js.stripe.com/v3/fingerprinted/img/payment-methods/icon-pm-promptpay-8bc83c76f38f2a4d3a5f64b6229450dd.svg" class="promptpay-logo" alt="PromptPay">
+              <img src="svg/visa-svgrepo-com.svg" alt="Visa">
+              <img src="svg/mastercard-svgrepo-com.svg" alt="Mastercard">
+            </div>
+            <div class="payment-info">
+              <div class="payment-label kofi-highlight">สนับสนุนค่ากาแฟได้ง่าย ๆ ผ่าน Ko-fi ☕️</div>
+              <div class="payment-desc">รองรับทั้ง PromptPay, Visa และ Mastercard จากทั่วโลก</div>
+            </div>
+          </a>
+        </div>
+
+        <p style="margin-top: 3rem; font-size: 0.9rem; opacity: 0.6; line-height: 1.5;">
+          *การสนับสนุนของคุณจะถูกนำไปใช้เป็นค่าโฮสติ้งและพัฒนาโปรเจคใหม่ ๆ<br>
+          ขอบพระคุณจากใจจริงครับ
+        </p>
+      </div>
+    </main>
+    
+    <div id="footer-include"></div>
+  </div>
+
+  <script>
+    fetch('nav.html').then(res => res.text()).then(html => { document.getElementById('navbar-include').innerHTML = html; });
+    fetch('footer.html').then(res => res.text()).then(html => {
+      document.getElementById('footer-include').innerHTML = html;
+      const yearElem = document.getElementById('year'); 
+      if (yearElem) yearElem.textContent = new Date().getFullYear();
+    });
+  </script>
+  <script src="js/main.js" defer></script>
+</body>
+</html>
