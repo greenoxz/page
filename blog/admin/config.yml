@@ -13,8 +13,13 @@ collections:
     create: true # Allow users to create new documents in this collection
     slug: "{{slug}}" # Filename template, e.g., yyyy-mm-dd-title.md
     fields: # The fields for each document, usually in front matter
-      - {label: "หัวข้อบทความ", name: "title", widget: "string"}
-      - {label: "วันที่ลง", name: "date", widget: "datetime"}
-      - {label: "ฉบับร่าง (Draft)", name: "draft", widget: "boolean", default: false}
-      - {label: "คำอธิบายย่อ (Summary)", name: "summary", widget: "text"}
-      - {label: "เนื้อหาบทความ", name: "body", widget: "markdown"}
+      - { label: "หัวข้อบทความ", name: "title", widget: "string" }
+      - { label: "วันที่ลง", name: "date", widget: "datetime" }
+      - {
+          label: "ฉบับร่าง (Draft)",
+          name: "draft",
+          widget: "boolean",
+          default: false,
+        }
+      - { label: "คำอธิบายย่อ (Summary)", name: "summary", widget: "text" }
+      - { label: "เนื้อหาบทความ", name: "body", widget: "markdown" }
