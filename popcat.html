@@ -259,7 +259,7 @@
 </head>
 <body id="theme-body">
     <div class="page-container">
-        <div id="nav-placeholder"></div>
+        <div id="navbar-include"></div>
         <div class="game-container" id="clickArea">
             <h1 class="game-title">Pisit Pop</h1>
             <div id="achievementBadge"></div>
@@ -290,7 +290,7 @@
             <div id="paginationContainer" class="pagination"></div>
         </div>
         <audio id="popSound" src="sound/pop.mp3" preload="auto"></audio>
-        <div id="footer-placeholder"></div>
+        <div id="footer-include"></div>
     </div>
 
     <div class="modal" id="nameModal">
@@ -308,6 +308,7 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="js/components.js"></script>
     <script src="js/main.js"></script>
     <script>
         const firebaseConfig = { apiKey: "AIzaSyAXfzmalfP4RZjMSjDbl5LOXBT7m9vzDzU", authDomain: "ppknr-popcat.firebaseapp.com", databaseURL: "https://ppknr-popcat-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "ppknr-popcat", storageBucket: "ppknr-popcat.firebasestorage.app", messagingSenderId: "90126143526", appId: "1:90126143526:web:96316212d303ac08df16e7" };
@@ -360,8 +361,6 @@
         }
 
         $(function(){ 
-            $("#nav-placeholder").load("nav.html"); 
-            $("#footer-placeholder").load("footer.html"); 
             updateDisplayName();
         });
 

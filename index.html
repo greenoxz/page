@@ -34,7 +34,7 @@
     }
   </script>
 </head>
-<body class="theme-light" id="theme-body">
+<body class="theme-light" id="theme-body" data-hide-nav-menu="true">
 
   <div class="page-container">
     <div id="navbar-include"></div>
@@ -106,29 +106,7 @@
     <div id="footer-include"></div>
   </div>
   
-<script>
-    fetch('nav.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-include').innerHTML = html;
-        const desktopMenu = document.querySelector('.desktop-menu');
-        if (desktopMenu) desktopMenu.style.display = 'none';
-        const hamburgerBtn = document.querySelector('.hamburger');
-        if (hamburgerBtn) hamburgerBtn.style.display = 'none';
-      });
-
-    fetch('footer.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('footer-include').innerHTML = html;
-        
-        // เพิ่มโค้ดอัปเดตเลขปีตรงนี้
-        const yearElem = document.getElementById('year'); 
-        if (yearElem) {
-          yearElem.textContent = new Date().getFullYear();
-        }
-      });
-  </script>
+<script src="js/components.js"></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>

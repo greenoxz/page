@@ -490,14 +490,8 @@
     </div>
   </div>
 
+  <script src="js/components.js"></script>
   <script>
-    fetch('nav.html').then(r => r.text()).then(h => { document.getElementById('navbar-include').innerHTML = h; });
-    fetch('footer.html').then(r => r.text()).then(h => { 
-      document.getElementById('footer-include').innerHTML = h; 
-      const yearElem = document.getElementById('year');
-      if (yearElem) yearElem.textContent = new Date().getFullYear();
-    });
-
     let options = [];
     let map, marker, selectedLocation;
     let currentDeg = 0;

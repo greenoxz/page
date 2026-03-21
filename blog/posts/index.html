@@ -95,33 +95,179 @@
     </main>
 
     <div id="footer-include">
-      <footer class="custom-footer">
-  <style>
-    .custom-footer { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; padding: 2rem 1rem 1.25rem 1rem; margin-top: auto; font-family: 'LINESeedSansTH', sans-serif; position: relative; z-index: 10; }
-    .back-to-top { position: fixed; bottom: 30px; left: 30px; background: linear-gradient(135deg, rgba(255, 77, 28, 0.95), rgba(255, 131, 89, 0.95)); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 20px rgba(255, 77, 28, 0.4); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); border: 2px solid rgba(255, 255, 255, 0.6); cursor: pointer; z-index: 9999; opacity: 0; visibility: hidden; }
-    .back-to-top.visible { opacity: 1; visibility: visible; }
-    .social-icons-row { display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 2px; }
-    .social-icon-btn { display: inline-flex; justify-content: center; align-items: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.6); color: #1f2937; text-decoration: none; transition: all 0.4s; }
-    .kofi-support-btn { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; background: rgba(255, 94, 91, 0.08); border: 1px solid rgba(255, 94, 91, 0.25); color: #FF5E5B !important; border-radius: 999px; text-decoration: none; font-size: 0.8rem; font-weight: 600; }
-    .footer-links-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; font-size: 0.85rem; font-weight: 500; }
-    .footer-link { color: #666; text-decoration: none; }
-    .footer-bottom-row { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #666; margin-top: 2px; }
-    .app-version { background: rgba(0,0,0,0.05); padding: 1px 6px; border-radius: 4px; font-family: "Tiny5", sans-serif; font-size: 0.8rem; }
-    .theme-dark .social-icon-btn { background: rgba(30, 30, 32, 0.4); border-color: rgba(255, 255, 255, 0.1); color: #ffffff; }
-    .theme-dark .footer-link { color: #aaa; }
-    .theme-dark .footer-bottom-row { color: #888; }
-  </style>
-  
+      <style>
+  .custom-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 2rem 1rem 1.25rem 1rem;
+    margin-top: auto;
+    font-family: 'LINESeedSansTH', sans-serif;
+    position: relative;
+    z-index: 10;
+  }
+
+  .back-to-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background: linear-gradient(135deg, rgba(255, 77, 28, 0.95), rgba(255, 131, 89, 0.95));
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    box-shadow: 0 6px 20px rgba(255, 77, 28, 0.4);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    border: 2px solid rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
+  }
+  .back-to-top:hover {
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 10px 30px rgba(255, 77, 28, 0.6);
+  }
+  .theme-dark .back-to-top {
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  .social-icons-row {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    margin-bottom: 2px;
+  }
+
+  .social-icon-btn {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.4);
+    backdrop-filter: blur(16px) saturate(180%);
+    -webkit-backdrop-filter: blur(16px) saturate(180%);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+    font-size: 0.9rem;
+    color: #1f2937;
+    transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    text-decoration: none;
+  }
+
+  .social-icon-btn:hover {
+    transform: translateY(-4px) scale(1.1);
+    background: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  }
+
+  .kofi-support-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 12px;
+    background: rgba(255, 94, 91, 0.08);
+    border: 1px solid rgba(255, 94, 91, 0.25);
+    color: #FF5E5B !important;
+    border-radius: 999px;
+    text-decoration: none;
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    margin-left: 4px;
+    box-shadow: none;
+  }
+
+  .kofi-support-btn:hover {
+    background: rgba(255, 94, 91, 0.15);
+    border-color: rgba(255, 94, 91, 0.5);
+    transform: translateY(-2px);
+  }
+
+  .theme-dark .kofi-support-btn {
+    background: rgba(255, 94, 91, 0.05);
+    border-color: rgba(255, 94, 91, 0.15);
+  }
+
+  .footer-disclaimer {
+    font-size: 0.8rem;
+    color: #888;
+    background: rgba(0,0,0,0.03);
+    padding: 4px 12px;
+    border-radius: 999px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .footer-links-row {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 0.85rem;
+    font-weight: 500;
+  }
+
+  .footer-bottom-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.8rem;
+    color: #666;
+    margin-top: 2px;
+  }
+
+  .app-version {
+    background: rgba(0,0,0,0.05);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-family: "Tiny5", sans-serif;
+    letter-spacing: 0.5px;
+    font-size: 0.8rem;
+  }
+
+   
+  .theme-dark .social-icon-btn { background: rgba(30, 30, 32, 0.4); border-color: rgba(255, 255, 255, 0.1); color: #ffffff; }
+  .theme-dark .footer-link { color: #aaa; }
+  .theme-dark .footer-disclaimer { color: #999; background: rgba(255,255,255,0.05); }
+  .theme-dark .app-version { background: rgba(255,255,255,0.08); }
+  .theme-dark .footer-bottom-row { color: #888; }
+  .footer-link { color: #666; text-decoration: none; transition: color 0.3s; }
+  .footer-link:hover { color: #FF4D1C; }
+  .theme-dark .footer-link:hover { color: #FF8359; }
+  .footer-dot { color: #ccc; font-size: 0.7rem; }
+  .theme-dark .footer-dot { color: #555; }
+</style>
+
+<footer class="custom-footer">
+
   <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="back-to-top" id="blog-back-to-top" title="กลับขึ้นด้านบน">
     <i class="fas fa-chevron-up"></i>
   </a>
 
   <div class="social-icons-row">
-    <a href="https://www.instagram.com/ppknr" target="_blank" class="social-icon-btn"><i class="fab fa-instagram"></i></a>
-    <a href="https://www.facebook.com/pisitzknr" target="_blank" class="social-icon-btn"><i class="fab fa-facebook-f"></i></a>
-    <a href="https://www.twitch.tv/pisitz" target="_blank" class="social-icon-btn"><i class="fab fa-twitch"></i></a>
-    <a href="https://www.youtube.com/@greenoxz" target="_blank" class="social-icon-btn"><i class="fab fa-youtube"></i></a>
-    <a href="mailto:pisit@ppknr.com" class="social-icon-btn"><i class="fas fa-envelope"></i></a>
+    <a href="https://www.instagram.com/ppknr" target="_blank" class="social-icon-btn" title="Instagram"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/pisitzknr" target="_blank" class="social-icon-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.twitch.tv/pisitz" target="_blank" class="social-icon-btn" title="Twitch"><i class="fab fa-twitch"></i></a>
+    <a href="https://www.youtube.com/@greenoxz" target="_blank" class="social-icon-btn" title="YouTube"><i class="fab fa-youtube"></i></a>
+    <a href="mailto:pisit@ppknr.com" class="social-icon-btn" title="Email"><i class="fas fa-envelope"></i></a>
     <a href="/support.html" class="kofi-support-btn">
       <i class="fas fa-heart"></i> Support Me
     </a>
@@ -137,15 +283,17 @@
 
   <div class="footer-bottom-row">
     <span>&copy; <span id="footer-year"></span> Pisitz. All rights reserved.</span>
-    <span class="app-version">v1.2.0</span>
+    <span class="app-version">v2.0.1</span>
   </div>
 
   <script>
     document.getElementById('footer-year').textContent = new Date().getFullYear();
     window.addEventListener('scroll', () => {
       const btt = document.getElementById('blog-back-to-top');
-      if (window.scrollY > 300) btt.classList.add('visible');
-      else btt.classList.remove('visible');
+      if (btt) {
+        if (window.scrollY > 300) btt.classList.add('visible');
+        else btt.classList.remove('visible');
+      }
     });
   </script>
 </footer>

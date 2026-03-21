@@ -435,14 +435,8 @@
     </div>
   </div>
   
+  <script src="js/components.js"></script>
   <script>
-    fetch('nav.html').then(res => res.text()).then(html => document.getElementById('navbar-include').innerHTML = html);
-    fetch('footer.html').then(res => res.text()).then(html => {
-      document.getElementById('footer-include').innerHTML = html;
-      const yearElem = document.getElementById('year'); 
-      if (yearElem) yearElem.textContent = new Date().getFullYear();
-    });
-
     // ใช้ Weight เป็น Core หลักในการคำนวณ ส่วน Percent เป็นแค่ส่วนแสดงผลลัพธ์
     let options = [
       { text: "กินอะไรดี", weight: 1, percent: 25 },

@@ -8,279 +8,411 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>About - ppknr</title>
+  <meta name="description" content="ppknr คืออะไร? มาจากชื่อ Pisitz Kongnarong — เว็บไซต์ส่วนตัวสำหรับโปรเจคเล็กๆ น้อยๆ ที่สร้างขึ้นเพื่อความสนุกและการเรียนรู้">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
   <style>
-    .lang-switch {
+    .about-wrapper {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 0 1rem 3rem;
       display: flex;
-      justify-content: center;
-      gap: 12px;
-      margin: 20px 0;
+      flex-direction: column;
+      gap: 2rem;
     }
-    .lang-btn {
-      padding: 8px 16px;
-      border-radius: 20px;
-      border: none;
-      cursor: pointer;
+
+    /* ── Hero ── */
+    .hero-card {
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(40px) saturate(160%);
+      -webkit-backdrop-filter: blur(40px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 32px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.06);
+      padding: 2.5rem 2rem;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      gap: 8px;
-      font-size: 15px;
-      font-family: "Google Sans", sans-serif;
-      font-weight: 500;
-      transition: all 0.15s ease;
-    }
-    .lang-btn i {
-      font-size: 16px;
-    }
-    .lang-btn.active {
-      background: #FF4D1C;
-      color: white;
-    }
-    .lang-btn:not(.active) {
-      background: #f0f0f0;
-      color: #666;
-    }
-    .lang-btn:hover:not(.active) {
-      background: #e0e0e0;
-    }
-    .theme-dark .lang-btn:not(.active) {
-      background: #2a2a2a;
-      color: #999;
-    }
-    .theme-dark .lang-btn:hover:not(.active) {
-      background: #333;
-    }
-    .tech-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 20px;
-      width: 100%;
-      margin-top: 30px;
-      padding: 0;
-    }
-    .tech-item {
-      padding: 16px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      background: white;
-      transition: transform 0.15s ease, box-shadow 0.15s ease;
-      width: 100%;
-      box-sizing: border-box;
-    }
-    .tech-item:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-    .tech-item i, .tech-item img {
-      font-size: 24px;
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-      transition: transform 0.15s ease;
-    }
-    .tech-item:hover i, 
-    .tech-item:hover img {
-      transform: scale(1.05);
-    }
-    .theme-dark .tech-item {
-      background: #1a1a1a;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    .theme-dark .tech-item:hover {
-      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-    }
-    .content-section {
-      margin: 0;
-      line-height: 1.8;
+      gap: 1.2rem;
       text-align: center;
     }
-    .content-section p {
-      margin-bottom: 1rem;
-      font-size: 1.1rem;
+    .theme-dark .hero-card {
+      background: rgba(30, 30, 32, 0.35);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
     }
+
+    .profile-avatar {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid rgba(255, 77, 28, 0.4);
+      box-shadow: 0 8px 30px rgba(255, 77, 28, 0.2);
+      transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .profile-avatar:hover { transform: scale(1.08) rotate(-3deg); }
+
+    .hero-name {
+      font-size: clamp(1.8rem, 5vw, 2.5rem);
+      font-weight: 800;
+      margin: 0;
+      background: linear-gradient(135deg, #FF4D1C 0%, #FF8359 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      letter-spacing: -0.03em;
+      font-family: 'LINESeedSansTH', sans-serif;
+    }
+    .hero-handle {
+      font-size: 1rem;
+      opacity: 0.55;
+      font-weight: 500;
+      margin: -0.5rem 0 0;
+    }
+    .hero-bio {
+      font-size: 1.05rem;
+      line-height: 1.75;
+      opacity: 0.8;
+      max-width: 520px;
+      margin: 0;
+    }
+
+    /* ── Name breakdown card ── */
+    .section-card {
+      background: rgba(255, 255, 255, 0.35);
+      backdrop-filter: blur(40px) saturate(160%);
+      -webkit-backdrop-filter: blur(40px) saturate(160%);
+      border: 1px solid rgba(255, 255, 255, 0.55);
+      border-radius: 28px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.05);
+      padding: 2rem 2rem 2rem;
+    }
+    .theme-dark .section-card {
+      background: rgba(30, 30, 32, 0.35);
+      border-color: rgba(255, 255, 255, 0.08);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: #FF4D1C;
+      margin: 0 0 1rem;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .theme-dark .section-label { color: #FF8359; }
+
     .section-title {
       font-size: 1.5rem;
-      font-weight: 600;
-      margin: 40px 0 20px;
+      font-weight: 700;
+      margin: 0 0 1.2rem;
+      letter-spacing: -0.02em;
+    }
+
+    /* ppknr breakdown */
+    .name-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 10px;
+    }
+
+    .name-block {
+      background: rgba(255, 77, 28, 0.05);
+      border: 1px solid rgba(255, 77, 28, 0.12);
+      border-radius: 16px;
+      padding: 0.8rem 0.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+    }
+    .name-block:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 20px rgba(255, 77, 28, 0.1);
+    }
+    .theme-dark .name-block {
+      background: rgba(255, 77, 28, 0.06);
+      border-color: rgba(255, 77, 28, 0.15);
+    }
+
+    .name-letter {
+      font-size: 1.5rem;
+      font-weight: 900;
       color: #FF4D1C;
+      line-height: 1;
+      font-family: 'LINESeedSansTH', sans-serif;
     }
-    .profile-img {
-      width: 180px;
-      height: 180px;
-      margin: 0 auto 20px;
-      display: block;
-      border-radius: 15px;
+    .theme-dark .name-letter { color: #FF8359; }
+
+    .name-stands-for {
+      font-size: 0.85rem;
+      font-weight: 700;
+      margin: 0;
     }
-    .page-title {
+
+    .name-desc {
+      font-size: 0.72rem;
+      opacity: 0.55;
+      margin: 0;
       text-align: center;
-      font-size: 2.2rem;
-      margin: 0 0 20px;
+    }
+
+    /* website sections */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 12px;
+    }
+
+    .feature-item {
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 20px;
+      padding: 1.2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 0.8rem;
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.3s;
+    }
+    .feature-item:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    }
+    .theme-dark .feature-item {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+    .theme-dark .feature-item:hover {
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+    }
+
+    .feature-icon {
+      font-size: 2rem;
+      line-height: 1;
+    }
+
+    .feature-text h3 {
+      margin: 0 0 4px;
+      font-size: 0.95rem;
       font-weight: 700;
     }
-    [lang="en"] {
-      opacity: 0;
-      transform: translateX(20px);
-      display: none;
-    }
-    .lang-en [lang="th"] {
-      opacity: 0;
-      transform: translateX(-20px);
-      display: none;
-    }
-    .lang-en [lang="en"] {
-      opacity: 1;
-      transform: translateX(0);
-      display: block;
-    }
-    .content-box {
-      background: #f9f9f9;
-      border-radius: 15px;
-      padding: 30px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-      margin-top: 20px;
-      transition: background-color 0.2s ease;
-    }
-    .theme-dark .content-box {
-      background: #111111;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-    }
-    .tech-section {
-      margin-top: 30px;
-    }
-    .tech-title {
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-      color: inherit;
-      text-align: center;
-    }
-    .theme-dark .tech-item .fa-github {
-      color: #fff !important;
-    }
-    .tech-item span {
-      font-size: 0.95rem;
+    .feature-text p {
+      margin: 0;
+      font-size: 0.82rem;
+      opacity: 0.6;
       line-height: 1.4;
-      text-align: left;
-      flex: 1;
-      padding-right: 8px;
     }
-    .theme-dark .tech-item span {
-      color: #999;
+
+    /* tech stack */
+    .tech-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
     }
-    .theme-dark .tech-item:hover span {
-      color: #fff;
+
+    .tech-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 14px;
+      background: rgba(255, 255, 255, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.7);
+      border-radius: 999px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
     }
-    body {
-      transition: background-color 0.3s ease, color 0.3s ease;
+    .tech-pill:hover {
+      transform: translateY(-3px) scale(1.04);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
     }
-    * {
-      transition-property: background-color, color, border-color, box-shadow;
-      transition-duration: 0.2s;
-      transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    .theme-dark .tech-pill {
+      background: rgba(255, 255, 255, 0.07);
+      border-color: rgba(255, 255, 255, 0.1);
     }
-    [lang="th"], [lang="en"] {
-      transition: opacity 0.15s ease;
+    .tech-pill img {
+      width: 18px;
+      height: 18px;
+      object-fit: contain;
     }
-    .theme-dark .tech-item .fa-js {
-      color: #F7DF1E !important;
+
+    /* body text */
+    .body-text {
+      font-size: 1rem;
+      line-height: 1.8;
+      opacity: 0.85;
+      margin: 0 0 1rem;
     }
-    @media (max-width: 768px) {
-      .tech-grid {
-        grid-template-columns: 1fr;
-      }
-      .content-box {
-        padding: 20px;
-      }
+    .body-text:last-child { margin-bottom: 0; }
+
+    @media (max-width: 600px) {
+      .hero-card, .section-card { padding: 1.5rem 1.2rem; }
+      .name-grid { grid-template-columns: repeat(2, 1fr); }
     }
   </style>
 </head>
 <body class="theme-light" id="theme-body">
   <div class="page-container">
     <div id="navbar-include"></div>
+
     <main class="main-section">
-      <div class="content" style="max-width: 800px; margin: 0 auto;">
-        <img src="pic/pisit-fire.webp" alt="Profile" class="profile-img">
-        <h1 class="page-title">About</h1>
-        
-        <div class="lang-switch">
-          <button class="lang-btn active" data-lang="th">
-            <i class="fa-solid fa-language"></i>
-            ไทย
-          </button>
-          <button class="lang-btn" data-lang="en">
-            <i class="fa-solid fa-language"></i>
-            ENG
-          </button>
+      <div class="about-wrapper">
+
+        <!-- ── Hero ── -->
+        <div class="hero-card">
+          <img src="pic/pisit-fire.webp" alt="Profile" class="profile-avatar">
+          <div>
+            <h1 class="hero-name">Pisit Kongnarong</h1>
+            <p class="hero-handle">@pisitz · ppknr.com</p>
+          </div>
+          <p class="hero-bio">
+            นักพัฒนาสมัครเล่นที่ชอบสร้างเครื่องมือเล็กๆ น้อยๆ เพื่อแก้ปัญหาชีวิตประจำวัน
+            และบางอย่างก็แค่สร้างเพราะมันดูสนุก
+          </p>
         </div>
 
-        <div class="content-box">
-          <div class="content-section">
-            <div lang="th">
-              <p>เว็บไซต์นี้เป็นโปรเจคส่วนตัวสำหรับทดลองเขียนโค้ดและเรียนรู้การทำเว็บ ไม่มีจุดประสงค์เชิงพาณิชย์ใดๆ ทำไว้ลุยเล่นๆ และเป็นพื้นที่เก็บผลงานครับ</p>
+        <!-- ── ppknr คืออะไร ── -->
+        <div class="section-card">
+          <p class="section-label"><i class="fas fa-tag"></i> ที่มาของชื่อ</p>
+          <h2 class="section-title">ppknr มาจากอะไร?</h2>
+          <div class="name-grid">
+            <div class="name-block">
+              <span class="name-letter">p</span>
+              <p class="name-stands-for">p</p>
+              <p class="name-desc">ชื่อเล่น</p>
             </div>
-            <div lang="en">
-              <p>This is a personal project built to practice coding and web development. No commercial purposes—just a space to experiment and showcase my work.</p>
+            <div class="name-block">
+              <span class="name-letter">p</span>
+              <p class="name-stands-for">Pisitz</p>
+              <p class="name-desc">ชื่อจริง</p>
+            </div>
+            <div class="name-block">
+              <span class="name-letter">k</span>
+              <p class="name-stands-for">Kong-</p>
+              <p class="name-desc">นามสกุล</p>
+            </div>
+            <div class="name-block">
+              <span class="name-letter">n</span>
+              <p class="name-stands-for">-na-</p>
+              <p class="name-desc">นามสกุล</p>
+            </div>
+            <div class="name-block">
+              <span class="name-letter">r</span>
+              <p class="name-stands-for">-rong</p>
+              <p class="name-desc">นามสกุล</p>
             </div>
           </div>
+          <p style="margin: 1.2rem 0 0; font-size: 0.9rem; opacity: 0.6; text-align: center;">
+            <strong>pp</strong> (ชื่อเล่น + ชื่อจริง) + <strong>knr</strong> (Kongnarong) = <strong>ppknr</strong>
+          </p>
+        </div>
 
-          <div class="tech-section">
-            <p class="tech-title" lang="th">เทคโนโลยีที่ใช้</p>
-            <p class="tech-title" lang="en">Tech Stack</p>
-            <div class="tech-grid">
-              <div class="tech-item">
-                <i class="fab fa-html5" style="color: #E34F26;"></i>
-                <span lang="th">HTML5 / CSS / JS พื้นฐาน</span>
-                <span lang="en">Basic HTML5 / CSS / JS</span>
+        <!-- ── เกี่ยวกับเว็บ ── -->
+        <div class="section-card">
+          <p class="section-label"><i class="fas fa-globe"></i> เกี่ยวกับเว็บไซต์</p>
+          <h2 class="section-title">ppknr.com คืออะไร?</h2>
+          <p class="body-text">
+            ppknr.com เป็นเว็บไซต์ส่วนตัวที่รวบรวมโปรเจคเล็กๆ ที่สร้างขึ้นเพราะชอบ ไม่มีจุดประสงค์เชิงพาณิชย์
+            แค่อยากทดลอง เรียนรู้ และแชร์สิ่งที่ทำออกมาให้คนอื่นใช้ได้ด้วย
+          </p>
+          <p class="body-text">
+            ทุกฟีเจอร์บนเว็บนี้เกิดจากความต้องการในชีวิตจริง เช่น "วันนี้กินอะไรดี?" 
+            "ไปเที่ยวไหนดี?" หรือแค่อยากมีวงล้อสุ่มไว้ใช้ — เลยสร้างขึ้นมาเพื่อตัวเองแล้วก็แชร์ให้คนอื่นด้วยเลย
+          </p>
+
+          <div class="feature-grid" style="margin-top: 1.5rem;">
+            <div class="feature-item">
+              <div class="feature-icon">🎡</div>
+              <div class="feature-text">
+                <h3>วงล้อสุ่ม</h3>
+                <p>ใส่รายการ ปรับโอกาส แชร์ให้เพื่อนได้</p>
               </div>
-              <div class="tech-item">
-                <i class="fab fa-css3-alt" style="color: #1572B6;"></i>
-                <span lang="th">Tailwind CSS สำหรับสไตล์</span>
-                <span lang="en">Tailwind CSS for styling</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🍜</div>
+              <div class="feature-text">
+                <h3>สุ่มร้านอาหาร</h3>
+                <p>ค้นร้านใกล้ตัวจาก Google Maps แล้วสุ่มทันที</p>
               </div>
-              <div class="tech-item">
-                <i class="fab fa-github" style="color: #181717;"></i>
-                <span lang="th">GitHub Pages (Hosting)</span>
-                <span lang="en">GitHub Pages (Hosting)</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">✈️</div>
+              <div class="feature-text">
+                <h3>สุ่มที่เที่ยว</h3>
+                <p>หาสถานที่น่าสนใจรอบตัวแบบสุ่ม</p>
               </div>
-              <div class="tech-item">
-                <img src="https://www.vectorlogo.zone/logos/cloudflare/cloudflare-icon.svg" alt="Cloudflare">
-                <span lang="th">Cloudflare (DNS & Security)</span>
-                <span lang="en">Cloudflare (DNS & Security)</span>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">🐱</div>
+              <div class="feature-text">
+                <h3>Pisit Pop</h3>
+                <p>เกมคลิกแมวแข่งกับคนทั้งโลก Leaderboard แบบ Realtime</p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <div class="feature-icon">📝</div>
+              <div class="feature-text">
+                <h3>บล็อก</h3>
+                <p>บทความเทคโนโลยีและสิ่งที่น่าสนใจ</p>
               </div>
             </div>
           </div>
         </div>
+
+        <!-- ── Tech Stack ── -->
+        <div class="section-card">
+          <p class="section-label"><i class="fas fa-code"></i> เทคโนโลยีที่ใช้</p>
+          <h2 class="section-title">สร้างด้วยอะไร?</h2>
+          <p class="body-text">
+            เน้น Vanilla HTML/CSS/JS เป็นหลัก ไม่พึ่ง framework หนักๆ
+            เพราะเว็บส่วนใหญ่เป็นหน้าเดี่ยวที่ต้องการความเร็วและเบา
+          </p>
+          <div class="tech-row">
+            <span class="tech-pill">
+              <i class="fab fa-html5" style="color:#E34F26;font-size:1.1rem;"></i> HTML5
+            </span>
+            <span class="tech-pill">
+              <i class="fab fa-css3-alt" style="color:#1572B6;font-size:1.1rem;"></i> CSS
+            </span>
+            <span class="tech-pill">
+              <i class="fab fa-js" style="color:#F7DF1E;font-size:1.1rem;background:#222;border-radius:3px;padding:1px 3px;"></i> JavaScript
+            </span>
+            <span class="tech-pill">
+              <img src="https://www.vectorlogo.zone/logos/cloudflare/cloudflare-icon.svg" alt="Cloudflare"> Cloudflare
+            </span>
+            <span class="tech-pill">
+              <i class="fab fa-github" style="font-size:1.1rem;"></i> GitHub Pages
+            </span>
+            <span class="tech-pill">
+              <i class="fas fa-fire" style="color:#FFA000;font-size:1.1rem;"></i> Firebase (Realtime DB)
+            </span>
+            <span class="tech-pill">
+              🗺️ Google Maps API
+            </span>
+            <span class="tech-pill">
+              📦 Hugo (Blog)
+            </span>
+          </div>
+        </div>
+
       </div>
     </main>
+
     <div id="footer-include"></div>
   </div>
-  <script>
-    fetch('nav.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('navbar-include').innerHTML = html;
-      });
-    fetch('footer.html')
-      .then(res => res.text())
-      .then(html => {
-        document.getElementById('footer-include').innerHTML = html;
-      });
 
-    const langBtns = document.querySelectorAll('.lang-btn');
-    langBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.dataset.lang;
-        langBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        document.body.classList.toggle('lang-en', lang === 'en');
-      });
-    });
-  </script>
+  <script src="js/components.js"></script>
   <script src="js/main.js" defer></script>
 </body>
 </html>
