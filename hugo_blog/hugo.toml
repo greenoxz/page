@@ -1,0 +1,11 @@
+baseURL = 'https://ppknr.com/blog/'
+languageCode = 'th-th'
+title = 'ppknr blog'
+theme = []
+relativeURLs = false
+canonifyURLs = false
+publishDir = "../blog"
+
+
+[params]
+  description = 'บล็อกส่วนตัวของ pisit'

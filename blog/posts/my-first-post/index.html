@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="th-th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ยินดีต้อนรับสู่บล็อกใหม่ | ppknr blog</title>
+  
+  
+  <link rel="stylesheet" href="/css/style.css" />
+  <link rel="stylesheet" href="/theme.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  
+  <style>
+    .blog-content { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; text-align: left; }
+  </style>
+
+  <script>
+    function toggleMenu() {
+      const menu = document.getElementById("mobile-menu");
+      const isMenuVisible = !menu.classList.contains("hidden");
+      const iconPath = document.querySelector("#hamburger-btn svg path");
+      if (isMenuVisible) {
+        menu.classList.remove("animate-in"); menu.classList.add("animate-out");
+        iconPath.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
+        setTimeout(() => menu.classList.add("hidden"), 180);
+      } else {
+        menu.classList.remove("hidden"); menu.classList.remove("animate-out");
+        void menu.offsetWidth; menu.classList.add("animate-in");
+        iconPath.setAttribute("d", "M6 18L18 6M6 6l12 12");
+      }
+    }
+  </script>
+</head>
+<body class="theme-light" id="theme-body">
+  <div class="page-container">
+    <div id="navbar-include">
+      <input type="checkbox" id="theme-toggle" onchange="toggleTheme()" style="display: none;">
+<nav class="navbar">
+    <a href="/index.html" class="logo-wrap">
+        <img src="/pic/popcat.gif" alt="logo" class="logo" />
+        <span class="site-title">pisitz</span>
+    </a>
+    <div class="desktop-menu">
+        <a href="/wheel.html" class="nav-link">วงล้อ</a>
+        <a href="/randomdish" class="nav-link">สุ่มร้านอาหาร</a>
+        <a href="/randomplace" class="nav-link">สุ่มที่เที่ยว</a>
+        <a href="/blog/" class="nav-link">บล็อก</a>
+    </div>
+    <div class="nav-buttons">
+        <label for="theme-toggle" class="theme-toggle">
+            <div class="circle">
+                <svg class="sun" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2.25a.75.75 0 0 1 .75.75v2.25a.75.75 0 0 1-1.5 0V3a.75.75 0 0 1 .75-.75ZM7.5 12a4.5 4.5 0 1 1 9 0 4.5 4.5 0 0 1-9 0ZM18.894 6.166a.75.75 0 0 0-1.06-1.06l-1.591 1.59a.75.75 0 1 0 1.06 1.061l1.591-1.59ZM21.75 12a.75.75 0 0 1-.75.75h-2.25a.75.75 0 0 1 0-1.5H21a.75.75 0 0 1 .75.75ZM17.834 18.894a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 1 0-1.061 1.06l1.59 1.591ZM12 18a.75.75 0 0 1 .75.75V21a.75.75 0 0 1-1.5 0v-2.25A.75.75 0 0 1 12 18ZM7.758 17.303a.75.75 0 0 0-1.061-1.06l-1.591 1.59a.75.75 0 0 0 1.06 1.061l1.591-1.59ZM6 12a.75.75 0 0 1-.75.75H3a.75.75 0 0 1 0-1.5h2.25A.75.75 0 0 1 6 12ZM6.697 7.757a.75.75 0 0 0 1.06-1.06l-1.59-1.591a.75.75 0 0 0-1.061 1.06l1.59 1.591Z" />
+                </svg>
+                <svg class="moon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor">
+                    <path fill-rule="evenodd" d="M9.528 1.718a.75.75 0 0 1 .162.819A8.97 8.97 0 0 0 9 6a9 9 0 0 0 9 9 8.97 8.97 0 0 0 3.463-.69.75.75 0 0 1 .981.98 10.503 10.503 0 0 1-9.694 6.46c-5.799 0-10.5-4.7-10.5-10.5 0-4.368 2.667-8.112 6.46-9.694a.75.75 0 0 1 .818.162Z" clip-rule="evenodd" />
+                </svg>
+            </div>
+        </label>
+        <button class="hamburger" onclick="toggleMenu()" id="hamburger-btn">
+            <svg xmlns="http://www.w3.org/2000/svg" class="icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+            </svg>
+        </button>
+    </div>
+</nav>
+<div id="mobile-menu" class="mobile-menu hidden">
+    <a href="/wheel.html" class="nav-link">วงล้อ</a>
+    <a href="/randomdish" class="nav-link">สุ่มร้านอาหาร</a>
+    <a href="/randomplace" class="nav-link">สุ่มที่เที่ยว</a>
+    <a href="/blog/" class="nav-link">บล็อก</a>
+</div>
+
+
+    </div>
+    
+    <main class="main-section">
+      <div class="content blog-content">
+        
+<article class="post-single liquid-glass-card" style="align-items: flex-start; text-align: left; padding: clamp(30px, 5vw, 60px); max-width: 900px; margin: 0 auto; min-height: 80vh;">
+  <div class="post-back" style="margin-bottom: 2rem;">
+    <a href="/blog/" style="color: #f97316; font-weight: 600; font-family: 'LINESeedSansTH', sans-serif;">
+      <i class="fas fa-arrow-left"></i> กลับไปรายการบล็อก
+    </a>
+  </div>
+  
+  <header style="width: 100%; margin-bottom: 2.5rem;">
+    <h1 class="post-title" style="font-size: clamp(2rem, 4vw, 3.5rem); margin: 0.5rem 0; line-height: 1.2; background: linear-gradient(135deg, #f97316, #ea580c); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;">
+      ยินดีต้อนรับสู่บล็อกใหม่
+    </h1>
+
+    <div style="display: flex; gap: 20px; align-items: center; opacity: 0.6; font-size: 0.95rem; margin-top: 1rem; font-family: 'LINESeedSansTH', sans-serif;">
+       <span><i class="far fa-calendar-alt"></i> 21 March 2026</span>
+       <span><i class="far fa-clock"></i> 1 min read</span>
+    </div>
+  </header>
+
+  <div class="post-content" style="line-height: 1.9; font-size: 1.15rem; width: 100%; color: inherit;">
+    <p>ยินดีต้อนรับสู่บล็อกใหม่ของ <strong>ppknr.com</strong> ที่สร้างด้วยเฟรมเวิร์ก <strong>Hugo</strong></p>
+<h3 id="ทำไมตอง-hugo">ทำไมต้อง Hugo?</h3>
+<ol>
+<li><strong>เร็วมาก</strong>: เป็น Static Site Generator ที่แรงอันดับต้นๆ</li>
+<li><strong>ปรับแต่งง่าย</strong>: ใช้ภาษา Markdown และระบบ Layout ที่ยืดหยุ่น</li>
+<li><strong>ใช้งานได้หลากหลาย</strong>: ทั้งบล็อก ส่วนตัว และเว็บเอกสาร</li>
+</ol>
+<p>หวังว่าเพื่อนๆ จะชอบบล็อกที่สร้างขึ้นใหม่นี้นะครับ!</p>
+
+  </div>
+
+  <footer style="margin-top: 4rem; width: 100%; padding-top: 2rem; border-top: 1px solid rgba(0,0,0,0.1);">
+     <div class="theme-dark-footer-fix" style="opacity: 0.7; font-size: 0.9rem; text-align: center;">
+        ขอบคุณที่อ่านจนจบครับ! ติดตามเรื่องอื่นๆ ได้ในหมวดบล็อกครับ
+     </div>
+  </footer>
+</article>
+
+<style>
+   
+  .post-content h2 { font-size: 2rem; margin-top: 2.5rem; margin-bottom: 1rem; border-left: 5px solid #f97316; padding-left: 15px; }
+  .post-content h3 { font-size: 1.5rem; margin-top: 2rem; margin-bottom: 0.8rem; }
+  .post-content p { margin-bottom: 1.5rem; opacity: 0.9; }
+  .post-content img { display: block; max-width: 100%; height: auto; margin: 2.5rem auto; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+  .post-content blockquote { border-left: 4px solid #f97316; padding: 10px 20px; font-style: italic; background: rgba(0,0,0,0.03); border-radius: 0 10px 10px 0; margin: 2rem 0; }
+</style>
+
+      </div>
+    </main>
+
+    <div id="footer-include">
+      <footer class="custom-footer">
+  <style>
+    .custom-footer { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 0.75rem; padding: 2rem 1rem 1.25rem 1rem; margin-top: auto; font-family: 'LINESeedSansTH', sans-serif; position: relative; z-index: 10; }
+    .back-to-top { position: fixed; bottom: 30px; left: 30px; background: linear-gradient(135deg, rgba(255, 77, 28, 0.95), rgba(255, 131, 89, 0.95)); color: white; width: 45px; height: 45px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 6px 20px rgba(255, 77, 28, 0.4); transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1); border: 2px solid rgba(255, 255, 255, 0.6); cursor: pointer; z-index: 9999; opacity: 0; visibility: hidden; }
+    .back-to-top.visible { opacity: 1; visibility: visible; }
+    .social-icons-row { display: flex; gap: 8px; justify-content: center; align-items: center; flex-wrap: wrap; margin-bottom: 2px; }
+    .social-icon-btn { display: inline-flex; justify-content: center; align-items: center; width: 32px; height: 32px; border-radius: 50%; background: rgba(255, 255, 255, 0.4); backdrop-filter: blur(16px); border: 1px solid rgba(255, 255, 255, 0.6); color: #1f2937; text-decoration: none; transition: all 0.4s; }
+    .kofi-support-btn { display: inline-flex; align-items: center; gap: 6px; padding: 5px 12px; background: rgba(255, 94, 91, 0.08); border: 1px solid rgba(255, 94, 91, 0.25); color: #FF5E5B !important; border-radius: 999px; text-decoration: none; font-size: 0.8rem; font-weight: 600; }
+    .footer-links-row { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; font-size: 0.85rem; font-weight: 500; }
+    .footer-link { color: #666; text-decoration: none; }
+    .footer-bottom-row { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #666; margin-top: 2px; }
+    .app-version { background: rgba(0,0,0,0.05); padding: 1px 6px; border-radius: 4px; font-family: "Tiny5", sans-serif; font-size: 0.8rem; }
+    .theme-dark .social-icon-btn { background: rgba(30, 30, 32, 0.4); border-color: rgba(255, 255, 255, 0.1); color: #ffffff; }
+    .theme-dark .footer-link { color: #aaa; }
+    .theme-dark .footer-bottom-row { color: #888; }
+  </style>
+  
+  <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="back-to-top" id="blog-back-to-top" title="กลับขึ้นด้านบน">
+    <i class="fas fa-chevron-up"></i>
+  </a>
+
+  <div class="social-icons-row">
+    <a href="https://www.instagram.com/ppknr" target="_blank" class="social-icon-btn"><i class="fab fa-instagram"></i></a>
+    <a href="https://www.facebook.com/pisitzknr" target="_blank" class="social-icon-btn"><i class="fab fa-facebook-f"></i></a>
+    <a href="https://www.twitch.tv/pisitz" target="_blank" class="social-icon-btn"><i class="fab fa-twitch"></i></a>
+    <a href="https://www.youtube.com/@greenoxz" target="_blank" class="social-icon-btn"><i class="fab fa-youtube"></i></a>
+    <a href="mailto:pisit@ppknr.com" class="social-icon-btn"><i class="fas fa-envelope"></i></a>
+    <a href="/support.html" class="kofi-support-btn">
+      <i class="fas fa-heart"></i> Support Me
+    </a>
+  </div>
+
+  <div class="footer-links-row">
+    <a href="/contact.html" class="footer-link">Contact</a>
+    <span class="footer-dot">•</span>
+    <a href="/privacy.html" class="footer-link">Privacy Policy</a>
+    <span class="footer-dot">•</span>
+    <a href="/terms.html" class="footer-link">Terms of Use</a>
+  </div>
+
+  <div class="footer-bottom-row">
+    <span>&copy; <span id="footer-year"></span> Pisitz. All rights reserved.</span>
+    <span class="app-version">v1.2.0</span>
+  </div>
+
+  <script>
+    document.getElementById('footer-year').textContent = new Date().getFullYear();
+    window.addEventListener('scroll', () => {
+      const btt = document.getElementById('blog-back-to-top');
+      if (window.scrollY > 300) btt.classList.add('visible');
+      else btt.classList.remove('visible');
+    });
+  </script>
+</footer>
+
+    </div>
+  </div>
+  
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>ppknr blog</title>
+    <link>https://ppknr.com/blog/</link>
+    <description>Recent content on ppknr blog</description>
+    <generator>Hugo</generator>
+    <language>th-th</language>
+    <lastBuildDate>Sat, 21 Mar 2026 10:00:00 +0700</lastBuildDate>
+    <atom:link href="https://ppknr.com/blog/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>ยินดีต้อนรับสู่บล็อกใหม่</title>
+      <link>https://ppknr.com/blog/posts/my-first-post/</link>
+      <pubDate>Sat, 21 Mar 2026 10:00:00 +0700</pubDate>
+      <guid>https://ppknr.com/blog/posts/my-first-post/</guid>
+      <description>นี่คือบล็อกโพสต์แรกที่สร้างด้วย Hugo บนเว็บไซต์ ppknr.com</description>
+    </item>
+  </channel>
+</rss>

@@ -1,0 +1,20 @@
+backend:
+  name: github
+  repo: greenoxz/page # GitHub repository (username/repo)
+  branch: main # Branch to update (optional; defaults to master)
+
+media_folder: "pic" # Media files will be stored in root/pic/
+public_folder: "../pic" # For local preview in HTML
+
+collections:
+  - name: "posts" # Used in routes, e.g., /admin/collections/posts
+    label: "บทความ (Posts)" # Used in the UI
+    folder: "hugo_blog/content/posts" # The path to the folder where the documents are stored
+    create: true # Allow users to create new documents in this collection
+    slug: "{{slug}}" # Filename template, e.g., yyyy-mm-dd-title.md
+    fields: # The fields for each document, usually in front matter
+      - {label: "หัวข้อบทความ", name: "title", widget: "string"}
+      - {label: "วันที่ลง", name: "date", widget: "datetime"}
+      - {label: "ฉบับร่าง (Draft)", name: "draft", widget: "boolean", default: false}
+      - {label: "คำอธิบายย่อ (Summary)", name: "summary", widget: "text"}
+      - {label: "เนื้อหาบทความ", name: "body", widget: "markdown"}
