@@ -93,8 +93,8 @@
     }
 
     .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
-    .page-title { text-align: center; font-size: clamp(2.2rem, 6vw, 3rem); font-weight: 800; margin: 0; background: linear-gradient(135deg, #FF4D1C 0%, #FF8359 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 4px 20px rgba(255, 77, 28, 0.2); letter-spacing: -0.5px; font-family: inherit; }
-    .theme-dark .page-title { background: linear-gradient(135deg, #FF8359 0%, #FFB499 100%); -webkit-background-clip: text; text-shadow: 0 4px 20px rgba(255, 131, 89, 0.2); }
+    .page-title { text-align: center; font-size: clamp(2.2rem, 6vw, 3rem); font-weight: 800; margin: 0; background: linear-gradient(135deg, #FF4D1C 0%, #FF8359 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 4px 20px rgba(255, 77, 28, 0.2); letter-spacing: -0.5px; font-family: inherit; }
+    .theme-dark .page-title { background: linear-gradient(135deg, #FF8359 0%, #FFB499 100%); -webkit-background-clip: text; background-clip: text; text-shadow: 0 4px 20px rgba(255, 131, 89, 0.2); }
     .filter-box { 
       width: 100%; 
       background: rgba(255, 255, 255, 0.4); 
@@ -203,9 +203,39 @@
     #search-container { margin-bottom: 10px; width: 100%; position: relative; }
     .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; font-size: 1.1rem; pointer-events: none; }
     .theme-dark .search-icon { color: #bbb; }
-    #pac-input { width: 100%; padding: 12px 15px 12px 38px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 1rem; font-family: "Google Sans", sans-serif; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); outline: none; }
+    #pac-input { width: 100%; padding: 12px 45px 12px 38px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 1rem; font-family: "Google Sans", sans-serif; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); outline: none; }
     #pac-input:focus { border-color: #FF4D1C; }
     .theme-dark #pac-input { background: #222; color: #fff; border-color: #444; }
+
+    #current-location-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(255, 77, 28, 0.1);
+      border: none;
+      color: #FF4D1C;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    #current-location-btn:hover {
+      background: rgba(255, 77, 28, 0.2);
+      transform: translateY(-50%) scale(1.05);
+    }
+    .theme-dark #current-location-btn {
+      background: rgba(255, 131, 89, 0.15);
+      color: #FF8359;
+    }
+    .theme-dark #current-location-btn:hover {
+      background: rgba(255, 131, 89, 0.25);
+    }
     #map { width: 100%; height: 350px; border-radius: 12px; border: 2px solid #eee; }
     .theme-dark #map { border-color: #333; }
 
@@ -351,6 +381,9 @@
             <div id="search-container" class="search-container">
               <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
               <input id="pac-input" type="text" placeholder="พิมพ์ชื่อสถานที่ หรือถนน เพื่อย้ายตำแหน่งหมุด...">
+              <button id="current-location-btn" onclick="useCurrentLocation()" title="ใช้ตำแหน่งปัจจุบันของคุณ">
+                <i class="fa-solid fa-location-crosshairs"></i>
+              </button>
             </div>
             <div id="map"></div>
             <p style="font-size: 0.85rem; color: #888; margin-top: 5px; text-align: center;">*ลากหมุดหรือคลิกบนแผนที่เพื่อเลือกจุดศูนย์กลาง</p>
@@ -399,8 +432,8 @@
 
               <div class="radius-setting-box">
                 <span>ระยะค้นหา:</span>
-                <input type="number" id="radiusInput" class="radius-input" value="1000" min="100" step="100">
-                <span>ม.</span>
+                <input type="number" id="radiusInput" class="radius-input" value="1" min="0.1" step="0.1">
+                <span>กม.</span>
               </div>
             </div>
             
@@ -501,6 +534,39 @@
       map.addListener("click", (e) => { selectedLocation = e.latLng; marker.setPosition(selectedLocation); });
     };
 
+    function useCurrentLocation() {
+      if (navigator.geolocation) {
+        const btn = document.getElementById('current-location-btn');
+        const icon = btn.querySelector('i');
+        icon.className = 'fas fa-spinner fa-spin';
+        btn.disabled = true;
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+            selectedLocation = pos;
+            map.setCenter(pos);
+            map.setZoom(16);
+            marker.setPosition(pos);
+            
+            icon.className = 'fa-solid fa-location-crosshairs';
+            btn.disabled = false;
+          },
+          () => {
+            alert("ไม่สามารถเข้าถึงตำแหน่งของคุณได้ กรุณาตรวจสอบการอนุญาตสิทธิ์ตำแหน่งที่ตั้ง");
+            icon.className = 'fa-solid fa-location-crosshairs';
+            btn.disabled = false;
+          },
+          { enableHighAccuracy: true }
+        );
+      } else {
+        alert("เบราว์เซอร์ของคุณไม่รองรับการระบุตำแหน่งที่ตั้ง");
+      }
+    }
+
     // ระบบค้นหาและตัวกรองที่สมบูรณ์แบบเดิม
     async function fetchRestaurants() {
       if(isSpinning) return;
@@ -509,7 +575,7 @@
       const statusDiv = document.getElementById('restaurantStatus');
       statusDiv.innerHTML = "กำลังค้นหาร้านอาหาร... (อาจใช้เวลาสักครู่)";
       
-      const radiusValue = parseInt(document.getElementById('radiusInput').value) || 1000;
+      const radiusValue = (parseFloat(document.getElementById('radiusInput').value) || 1) * 1000;
       const isOpenNow = document.getElementById('openNowCheck').checked;
       
       const categoryCheckboxes = document.querySelectorAll('#foodCat input:checked');

@@ -78,6 +78,18 @@ function toggleMenu() {
   }
 })();
 
+// Back to top visibility logic
+window.addEventListener('scroll', () => {
+  const backToTop = document.querySelector('.back-to-top');
+  if (backToTop) {
+    if (window.scrollY > 300) {
+      backToTop.classList.add('visible');
+    } else {
+      backToTop.classList.remove('visible');
+    }
+  }
+});
+
 // ดึง meta tag theme-color มา
 let metaThemeColor = document.querySelector('meta[name="theme-color"]');
 

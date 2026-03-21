@@ -93,8 +93,8 @@
     }
 
     .wheel-container { display: flex; flex-direction: column; align-items: center; gap: 20px; width: 100%; }
-    .page-title { text-align: center; font-size: clamp(2.2rem, 6vw, 3rem); font-weight: 800; margin: 0; background: linear-gradient(135deg, #1CFFBC 0%, #59FFCD 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 4px 20px rgba(28, 255, 188, 0.2); letter-spacing: -0.5px; font-family: inherit; }
-    .theme-dark .page-title { background: linear-gradient(135deg, #59FFCD 0%, #99FFE6 100%); -webkit-background-clip: text; text-shadow: 0 4px 20px rgba(89, 255, 205, 0.2); }
+    .page-title { text-align: center; font-size: clamp(2.2rem, 6vw, 3rem); font-weight: 800; margin: 0; background: linear-gradient(135deg, #1CFFBC 0%, #59FFCD 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; text-shadow: 0 4px 20px rgba(28, 255, 188, 0.2); letter-spacing: -0.5px; font-family: inherit; }
+    .theme-dark .page-title { background: linear-gradient(135deg, #59FFCD 0%, #99FFE6 100%); -webkit-background-clip: text; background-clip: text; text-shadow: 0 4px 20px rgba(89, 255, 205, 0.2); }
     .filter-box { 
       width: 100%; 
       background: rgba(255, 255, 255, 0.4); 
@@ -204,9 +204,39 @@
     #search-container { margin-bottom: 10px; width: 100%; position: relative; }
     .search-icon { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #888; font-size: 1.1rem; pointer-events: none; }
     .theme-dark .search-icon { color: #bbb; }
-    #pac-input { width: 100%; padding: 12px 15px 12px 38px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 1rem; font-family: "Google Sans", sans-serif; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); outline: none; }
+    #pac-input { width: 100%; padding: 12px 45px 12px 38px; border-radius: 8px; border: 1px solid #ccc; box-sizing: border-box; font-size: 1rem; font-family: "Google Sans", sans-serif; box-shadow: inset 0 1px 3px rgba(0,0,0,0.1); outline: none; }
     #pac-input:focus { border-color: #1CFFBC; }
     .theme-dark #pac-input { background: #222; color: #fff; border-color: #444; }
+
+    #current-location-btn {
+      position: absolute;
+      right: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(28, 255, 188, 0.1);
+      border: none;
+      color: #00B377;
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      font-size: 1.1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+    #current-location-btn:hover {
+      background: rgba(28, 255, 188, 0.2);
+      transform: translateY(-50%) scale(1.05);
+    }
+    .theme-dark #current-location-btn {
+      background: rgba(89, 255, 205, 0.15);
+      color: #59FFCD;
+    }
+    .theme-dark #current-location-btn:hover {
+      background: rgba(89, 255, 205, 0.25);
+    }
     #map { width: 100%; height: 350px; border-radius: 12px; border: 2px solid #eee; }
     .theme-dark #map { border-color: #333; }
 
@@ -357,6 +387,9 @@
             <div id="search-container" class="search-container">
               <i class="fa-solid fa-magnifying-glass search-icon" aria-hidden="true"></i>
               <input id="pac-input" type="text" placeholder="พิมพ์ชื่อจังหวัด, อำเภอ, สถานที่ หรือถนน...">
+              <button id="current-location-btn" onclick="useCurrentLocation()" title="ใช้ตำแหน่งปัจจุบันของคุณ">
+                <i class="fa-solid fa-location-crosshairs"></i>
+              </button>
             </div>
             <div id="map"></div>
             <p style="font-size: 0.85rem; color: #888; margin-top: 5px; text-align: center;">*ลากหมุดหรือคลิกบนแผนที่เพื่อเลือกจุดศูนย์กลาง</p>
@@ -502,6 +535,39 @@
       marker.addListener("dragend", () => { selectedLocation = marker.getPosition(); });
       map.addListener("click", (e) => { selectedLocation = e.latLng; marker.setPosition(selectedLocation); });
     };
+
+    function useCurrentLocation() {
+      if (navigator.geolocation) {
+        const btn = document.getElementById('current-location-btn');
+        const icon = btn.querySelector('i');
+        icon.className = 'fas fa-spinner fa-spin';
+        btn.disabled = true;
+
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const pos = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude,
+            };
+            selectedLocation = pos;
+            map.setCenter(pos);
+            map.setZoom(16);
+            marker.setPosition(pos);
+            
+            icon.className = 'fa-solid fa-location-crosshairs';
+            btn.disabled = false;
+          },
+          () => {
+            alert("ไม่สามารถเข้าถึงตำแหน่งของคุณได้ กรุณาตรวจสอบการอนุญาตสิทธิ์ตำแหน่งที่ตั้ง");
+            icon.className = 'fa-solid fa-location-crosshairs';
+            btn.disabled = false;
+          },
+          { enableHighAccuracy: true }
+        );
+      } else {
+        alert("เบราว์เซอร์ของคุณไม่รองรับการระบุตำแหน่งที่ตั้ง");
+      }
+    }
 
     // ระบบค้นหาและตัวกรองที่ปรับแต่งสำหรับสถานที่ท่องเที่ยว
     async function fetchPlaces() {

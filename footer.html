@@ -13,28 +13,37 @@
   }
 
   .back-to-top {
-    position: absolute;
-    top: -30px;
-    background: linear-gradient(135deg, rgba(255, 77, 28, 0.9), rgba(255, 131, 89, 0.9));
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    background: linear-gradient(135deg, rgba(255, 77, 28, 0.95), rgba(255, 131, 89, 0.95));
     color: white;
-    width: 38px;
-    height: 38px;
+    width: 45px;
+    height: 45px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    box-shadow: 0 4px 15px rgba(255, 77, 28, 0.3);
+    box-shadow: 0 6px 20px rgba(255, 77, 28, 0.4);
     transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-    border: 2px solid rgba(255, 255, 255, 0.5);
+    border: 2px solid rgba(255, 255, 255, 0.6);
     cursor: pointer;
+    z-index: 9999;
+    opacity: 0;
+    visibility: hidden;
   }
   .back-to-top:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(255, 77, 28, 0.5);
+    transform: translateY(-5px) scale(1.1);
+    box-shadow: 0 10px 30px rgba(255, 77, 28, 0.6);
   }
   .theme-dark .back-to-top {
-    border-color: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
+  }
+  .back-to-top.visible {
+    opacity: 1;
+    visibility: visible;
   }
 
   .social-icons-row {
@@ -151,8 +160,6 @@
   .theme-dark .footer-dot { color: #555; }
 </style>
 
-</style>
-
 <footer class="custom-footer">
   
   <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="back-to-top" title="กลับขึ้นด้านบน">
@@ -184,6 +191,7 @@
   </div>
 
   <script>
-    document.getElementById('year').textContent = new Date().getFullYear();
+    const yearElem = document.getElementById('year');
+    if (yearElem) yearElem.textContent = new Date().getFullYear();
   </script>
 </footer>
