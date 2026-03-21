@@ -8,7 +8,7 @@
     "blog:new": "node scripts/new-post.js",
     "blog:build": "hugo -s hugo_blog",
     "blog:serve": "hugo server -s hugo_blog -D",
-    "blog:admin": "npx decap-cms-proxy-server"
+    "blog:admin": "npx decap-server"
   },
   "repository": {
     "type": "git",
