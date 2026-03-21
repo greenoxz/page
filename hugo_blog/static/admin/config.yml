@@ -3,6 +3,8 @@ backend:
   repo: greenoxz/page # GitHub repository (username/repo)
   branch: main # Branch to update (optional; defaults to master)
 
+local_backend: true # ช่วยให้เปิดหน้า Admin ในคอมตัวเองได้โดยไม่ต้อง Login ผ่าน GitHub
+
 media_folder: "pic" # Media files will be stored in root/pic/
 public_folder: "../pic" # For local preview in HTML
 
