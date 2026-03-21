@@ -1,5 +1,5 @@
 backend:
-  name: github
+  name: git-gateway
   repo: greenoxz/page # GitHub repository (username/repo)
   branch: main # Branch to update (optional; defaults to master)
 

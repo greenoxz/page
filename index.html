@@ -12,6 +12,8 @@
   <link rel="stylesheet" href="css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+
   <script>
     function toggleMenu() {
       const menu = document.getElementById("mobile-menu");
@@ -129,5 +131,16 @@
       });
   </script>
   <script src="js/main.js" defer></script>
+  <script>
+    if (window.netlifyIdentity) {
+      window.netlifyIdentity.on("init", user => {
+        if (!user) {
+          window.netlifyIdentity.on("login", () => {
+            document.location.href = "/blog/admin/";
+          });
+        }
+      });
+    }
+  </script>
 </body>
 </html>

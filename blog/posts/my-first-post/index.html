@@ -109,7 +109,7 @@
 
   </div>
 
-  <footer style="margin-top: 4rem; width: 100%; padding-top: 2rem; border-top: 1px solid rgba(0,0,0,0.1);">
+  <footer class="post-footer" style="margin-top: 4rem; width: 100%; padding-top: 2rem;">
      <div class="theme-dark-footer-fix" style="opacity: 0.7; font-size: 0.9rem; text-align: center;">
         ขอบคุณที่อ่านจนจบครับ! ติดตามเรื่องอื่นๆ ได้ในหมวดบล็อกครับ
      </div>
@@ -123,6 +123,34 @@
   .post-content p { margin-bottom: 1.5rem; opacity: 0.9; }
   .post-content img { display: block; max-width: 100%; height: auto; margin: 2.5rem auto; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
   .post-content blockquote { border-left: 4px solid #f97316; padding: 10px 20px; font-style: italic; background: rgba(0,0,0,0.03); border-radius: 0 10px 10px 0; margin: 2rem 0; }
+
+   
+  @media (max-width: 768px) {
+    .post-single.liquid-glass-card {
+      background: transparent !important;
+      backdrop-filter: none !important;
+      -webkit-backdrop-filter: none !important;
+      border: none !important;
+      box-shadow: none !important;
+      padding: 30px 15px !important;
+      margin-top: 0 !important;
+      border-radius: 0 !important;
+    }
+    .post-content {
+      font-size: 1.1rem !important;
+    }
+    .post-title {
+      font-size: 2.2rem !important;
+    }
+  }
+
+   
+  .post-footer {
+    border-top: 1px solid rgba(0,0,0,0.1);
+  }
+  .theme-dark .post-footer {
+    border-top: 1px solid rgba(255,255,255,0.1);
+  }
 </style>
 
       </div>
