@@ -1,3 +1,683 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Google+Sans:ital,opsz,wght@0,17..18,400..700;1,17..18,400..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Tiny5&display=swap');
+@import "tailwindcss";
+@source "./*.html";
+@source "./pages/*.html";
+@source "./components/*.html";
+
+
+
+@font-face {
+  font-family: 'LINESeedSansTH';
+  src: url('../font/WOFF2/LINESeedSansTH_W_Rg.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LINESeedSansTH';
+  src: url('../font/WOFF2/LINESeedSansTH_W_Bd.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'LINESeedSansTH';
+  src: url('../font/WOFF2/LINESeedSansTH_W_XBd.woff2') format('woff2');
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+}
+
+body {
+  font-family: "Google Sans", sans-serif;
+  font-optical-sizing: auto;
+  margin: 0;
+  padding: 0;
+  transition: background-color 0.4s, color 0.4s;
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+.google-sans {
+  font-family: "Google Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-style: normal;
+  font-variation-settings: "GRAD" 0;
+}
+
+/* Headings use LINE Seed Sans TH Bold */
+h1, h2, h3, h4, h5, h6,
+.main-title, .page-title, .page-title-input, .modal-title, .history-title, .section-title {
+  font-family: "LINESeedSansTH", sans-serif;
+  font-weight: 700;
+}
+
+.page-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+#navbar-include {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  pointer-events: none;
+}
+
+/* Create the Fading Blur Curtain (Liquid Glass) */
+#navbar-include::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 140px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%);
+  backdrop-filter: blur(12px) saturate(180%);
+  -webkit-backdrop-filter: blur(12px) saturate(180%);
+  mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 30%, transparent 100%);
+  z-index: -1;
+  pointer-events: none;
+}
+
+.theme-dark #navbar-include::before {
+  background: linear-gradient(to bottom, rgba(18, 18, 20, 0.5) 0%, rgba(18, 18, 20, 0) 100%);
+}
+
+/* --- Navbar Liquid Glass --- */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.8rem 1.5rem;
+  margin: 1rem auto;
+  width: 90%;
+  max-width: 1000px;
+  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px; /* Pill shape */
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  font-family: "LINESeedSansTH", sans-serif;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  pointer-events: auto; /* Re-enable clicks for the actual navbar */
+}
+
+.navbar a,
+.mobile-menu a {
+  font-family: "LINESeedSansTH", sans-serif;
+  font-weight: 700;
+}
+
+.navbar .site-title {
+  font-family: "Tiny5", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 1.6rem;
+  letter-spacing: 1px;
+}
+
+.tiny5-regular {
+  font-family: "Tiny5", sans-serif !important;
+  font-weight: 400 !important;
+  font-style: normal;
+}
+
+.theme-dark .navbar {
+  background-color: rgba(30, 30, 32, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.footer {
+  text-align: center;
+  font-size: 0.875rem;
+  padding: 1rem;
+  box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.06);
+}
+
+.theme-dark .footer {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.logo {
+  height: 2rem;
+  width: 2rem;
+}
+.logo-wrap {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+.theme-btn {
+  padding: 0.3rem 0.6rem;
+  font-size: 1.25rem;
+  border-radius: 0.375rem;
+  background: transparent;
+  border: 1px solid currentColor;
+  color: inherit;
+  cursor: pointer;
+}
+
+.theme-dark .theme-btn {
+  border-color: #ffffff;
+  color: #ffffff;
+}
+
+/* Main Section Updates */
+.main-section {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem 1rem; /* Reduced mobile padding */
+  min-height: 70vh;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+@media (min-width: 768px) {
+  .main-section {
+    padding: 3rem 2rem; /* Re-apply generous padding for tablets/desktops */
+  }
+}
+
+.content {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.image-wrapper {
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.hero-img {
+  width: 180px;
+  height: auto;
+  border-radius: 50%;
+  filter: drop-shadow(0 20px 30px rgba(0,0,0,0.1));
+  transition: transform 0.5s ease;
+}
+
+.hero-img:hover {
+  transform: scale(1.05);
+}
+
+.theme-dark .hero-img {
+  /* ปรับเงาในโหมดมืดให้ดูละมุนขึ้น */
+  filter: drop-shadow(0 20px 30px rgba(249, 115, 22, 0.1));
+}
+
+@media (min-width: 768px) {
+  .hero-img {
+    width: 220px;
+  }
+}
+
+.main-title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.subtitle {
+  font-size: 1.125rem;
+  font-weight: 300;
+  opacity: 0.8;
+  margin-bottom: 2.5rem;
+}
+
+@media (min-width: 768px) {
+  .main-title { font-size: 3.5rem; }
+  .subtitle { font-size: 1.25rem; }
+}
+
+.desktop-menu {
+  display: flex;
+  gap: 1rem;
+}
+
+/* --- Mobile Menu Liquid Glass --- */
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 1rem 2rem;
+  transition: transform 0.3s cubic-bezier(.4,2,.6,1), opacity 0.3s;
+  transform: translateY(-20px);
+  opacity: 0;
+  pointer-events: none;
+  background-color: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(24px) saturate(200%);
+  -webkit-backdrop-filter: blur(24px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 5rem;
+  left: 5%;
+  width: 90%;
+  box-sizing: border-box;
+  z-index: 45;
+}
+
+.mobile-menu.show {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.theme-dark .mobile-menu {
+  background-color: rgba(30, 30, 32, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.hamburger {
+  display: none;
+  font-size: 1.25rem;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (max-width: 768px) {
+  .desktop-menu { display: none; }
+  .hamburger { display: inline-block; }
+}
+
+/* --- Vibrant Animated Aurora Backgrounds --- */
+.theme-light {
+  background-color: #fcfcfc;
+  color: #1f2937;
+}
+
+.theme-dark {
+  background-color: #121214;
+  color: #e4e4e7;
+}
+
+/* Base shape for gradient blobs */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: -2;
+  pointer-events: none;
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(255, 77, 28, 0.12), transparent 50%),
+    radial-gradient(circle at 85% 30%, rgba(41, 157, 143, 0.1), transparent 50%),
+    radial-gradient(circle at 50% 80%, rgba(233, 196, 106, 0.12), transparent 50%),
+    radial-gradient(circle at 50% 20%, rgba(76, 201, 240, 0.1), transparent 50%);
+  background-size: 200% 200%;
+  animation: auroraFlow 25s ease-in-out infinite alternate;
+}
+
+/* Dark mode blob colors */
+.theme-dark::before {
+  background-image: 
+    radial-gradient(circle at 15% 50%, rgba(255, 77, 28, 0.15), transparent 45%),
+    radial-gradient(circle at 85% 30%, rgba(41, 157, 143, 0.1), transparent 45%),
+    radial-gradient(circle at 50% 80%, rgba(233, 196, 106, 0.1), transparent 45%),
+    radial-gradient(circle at 50% 20%, rgba(114, 9, 183, 0.15), transparent 45%);
+}
+
+/* Subtle texture overlay for Glassmorphism Realism */
+body::after {
+  content: '';
+  position: fixed;
+  top: 0; left: 0; width: 100vw; height: 100vh;
+  z-index: -1;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.08'/%3E%3C/svg%3E");
+  opacity: 0.6;
+}
+
+.theme-dark::after {
+  opacity: 0.4;
+}
+
+@keyframes auroraFlow {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 100%; }
+  100% { background-position: 0% 100%; }
+}
+
+.icon {
+  width: 1.5rem;
+  height: 1.5rem;
+  stroke: currentColor;
+}
+
+@media (min-width: 769px) {
+  .mobile-menu { display: none !important; }
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.mobile-menu a {
+  transition: all 0.3s ease-in-out;
+  padding: 0.4rem 0;
+}
+
+.mobile-menu a:hover {
+  transform: translateX(6px);
+  opacity: 0.9;
+  color: #f97316;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.hamburger .icon,
+#hamburger-btn .icon,
+.hamburger,
+#hamburger-btn {
+  stroke: currentColor;
+  fill: currentColor;
+  color: inherit;
+}
+
+.theme-light .hamburger,
+.theme-light #hamburger-btn { color: #1f2937; }
+.theme-dark .hamburger,
+.theme-dark #hamburger-btn { color: #ffffff; }
+
+/* Contact form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 400px;
+  margin: 0 auto;
+}
+.contact-form label { font-weight: 600; }
+.contact-form input,
+.contact-form textarea {
+  padding: 0.5rem;
+  border: 1px solid currentColor;
+  border-radius: 0.375rem;
+  background: transparent;
+  color: inherit;
+}
+.contact-form .submit-btn {
+  margin-top: 0.5rem;
+  padding: 0.6rem;
+  border: none;
+  border-radius: 0.375rem;
+  background-color: currentColor;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+.contact-form .submit-btn:hover { background-color: #555; }
+
+.linktree-links {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 24px;
+}
+
+/* --- Link Box Liquid Glass --- */
+.link-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 18px;
+  padding: 20px 28px;
+  margin: 14px 0;
+  border-radius: 16px;
+  text-decoration: none;
+  color: inherit;
+  font-weight: 500;
+  min-width: 240px;
+  font-size: 1.15rem;
+  text-align: left;
+  transition: background 0.2s, transform 0.2s;
+  
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(16px) saturate(150%);
+  -webkit-backdrop-filter: blur(16px) saturate(150%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+}
+
+.link-box:hover {
+  background: rgba(255, 255, 255, 0.6);
+  transform: scale(1.05);
+}
+
+.theme-dark .link-box {
+  background: rgba(24, 24, 27, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+.theme-dark .link-box:hover {
+  background: rgba(24, 24, 27, 0.6);
+}
+
+.desktop-menu a {
+  position: relative;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  padding: 0.6rem 1.2rem;
+  border-radius: 999px;
+  margin: 0 0.1rem;
+}
+
+.desktop-menu a:hover {
+  background: rgba(0, 0, 0, 0.05);
+  color: #f97316;
+}
+
+.theme-dark .desktop-menu a:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #f97316;
+}
+
+/* Updated CTA Button (Softer Orange) */
+.button-container {
+  margin-top: 1rem;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
+.cta-button {
+  position: relative;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 0.8rem 2rem;
+  font-size: 1.1rem;
+  color: white !important;
+  background-color: #f97316;
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .cta-button {
+    width: auto;
+  }
+}
+
+.cta-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  transition: all 0.6s;
+}
+
+.cta-button:hover {
+  background-color: #ea580c;
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.3);
+}
+
+.cta-button:hover::before {
+  left: 100%;
+}
+
+.cta-button:active {
+  transform: translateY(0);
+  box-shadow: 0 4px 10px rgba(249, 115, 22, 0.2);
+}
+
+.icon-bounce {
+  transition: transform 0.3s;
+}
+
+.cta-button:hover .icon-bounce {
+  transform: rotate(15deg) scale(1.1);
+}
+
+button, .cta-button {
+  font-family: "Google Sans", sans-serif !important;
+}
+
+/* Apple Liquid Glass Concept UI */
+.liquid-glass-card {
+  position: relative;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+  border-radius: 28px;
+  padding: 30px 20px;
+  color: #1f2937;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), box-shadow 0.4s cubic-bezier(0.4, 0, 0.2, 1), background 0.4s;
+  height: 100%;
+}
+
+.theme-dark .liquid-glass-card {
+  background: rgba(30, 30, 32, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+.liquid-glass-card:hover {
+  transform: translateY(-8px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.theme-dark .liquid-glass-card:hover {
+  background: rgba(30, 30, 32, 0.6);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+/* Color tints */
+.glass-blue {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.2) 0%, rgba(0, 242, 254, 0.2) 100%);
+}
+.theme-dark .glass-blue {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.1) 0%, rgba(0, 242, 254, 0.1) 100%);
+}
+.glass-blue:hover {
+  background: linear-gradient(135deg, rgba(79, 172, 254, 0.35) 0%, rgba(0, 242, 254, 0.35) 100%);
+}
+
+.glass-orange {
+  background: linear-gradient(135deg, rgba(255, 77, 28, 0.2) 0%, rgba(255, 131, 89, 0.2) 100%);
+}
+.theme-dark .glass-orange {
+  background: linear-gradient(135deg, rgba(255, 77, 28, 0.1) 0%, rgba(255, 131, 89, 0.1) 100%);
+}
+.glass-orange:hover {
+  background: linear-gradient(135deg, rgba(255, 77, 28, 0.35) 0%, rgba(255, 131, 89, 0.35) 100%);
+}
+
+.glass-purple {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.2) 0%, rgba(236, 72, 153, 0.2) 100%);
+}
+.theme-dark .glass-purple {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+}
+.glass-purple:hover {
+  background: linear-gradient(135deg, rgba(168, 85, 247, 0.35) 0%, rgba(236, 72, 153, 0.35) 100%);
+}
+
+.glass-green {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(20, 184, 166, 0.2) 100%);
+}
+.theme-dark .glass-green {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.1) 0%, rgba(20, 184, 166, 0.1) 100%);
+}
+.glass-green:hover {
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.35) 0%, rgba(20, 184, 166, 0.35) 100%);
+}
+
+
+/* Inner Icon styling */
+.glass-icon-wrapper {
+  background: rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(16px);
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.8);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.8), 0 4px 10px rgba(0, 0, 0, 0.05);
+  color: #1f2937;
+  transition: transform 0.4s;
+}
+
+.theme-dark .glass-icon-wrapper {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1), 0 4px 10px rgba(0, 0, 0, 0.3);
+  color: #fff;
+}
+
+.liquid-glass-card:hover .glass-icon-wrapper {
+  transform: scale(1.15) rotate(5deg);
+}

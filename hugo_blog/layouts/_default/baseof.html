@@ -16,22 +16,7 @@
     .blog-content { max-width: 900px; margin: 0 auto; padding: 2rem 1rem; text-align: left; }
   </style>
 
-  <script>
-    function toggleMenu() {
-      const menu = document.getElementById("mobile-menu");
-      const isMenuVisible = !menu.classList.contains("hidden");
-      const iconPath = document.querySelector("#hamburger-btn svg path");
-      if (isMenuVisible) {
-        menu.classList.remove("animate-in"); menu.classList.add("animate-out");
-        iconPath.setAttribute("d", "M4 6h16M4 12h16M4 18h16");
-        setTimeout(() => menu.classList.add("hidden"), 180);
-      } else {
-        menu.classList.remove("hidden"); menu.classList.remove("animate-out");
-        void menu.offsetWidth; menu.classList.add("animate-in");
-        iconPath.setAttribute("d", "M6 18L18 6M6 6l12 12");
-      }
-    }
-  </script>
+
 </head>
 <body class="theme-light" id="theme-body">
   <div class="page-container">

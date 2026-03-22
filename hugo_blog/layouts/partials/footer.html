@@ -15,7 +15,7 @@
   .back-to-top {
     position: fixed;
     bottom: 30px;
-    right: 30px;
+    left: 30px;
     background: linear-gradient(135deg, rgba(255, 77, 28, 0.95), rgba(255, 131, 89, 0.95));
     color: white;
     width: 45px;
@@ -79,6 +79,7 @@
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
   }
 
+  /* Compact Support Button - Less Prominent Ghost Style */
   .kofi-support-btn {
     display: inline-flex;
     align-items: center;
@@ -160,8 +161,8 @@
 </style>
 
 <footer class="custom-footer">
-
-  <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="back-to-top" id="blog-back-to-top" title="กลับขึ้นด้านบน">
+  
+  <a href="#" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;" class="back-to-top" title="กลับขึ้นด้านบน">
     <i class="fas fa-chevron-up"></i>
   </a>
 
@@ -171,32 +172,28 @@
     <a href="https://www.twitch.tv/pisitz" target="_blank" class="social-icon-btn" title="Twitch"><i class="fab fa-twitch"></i></a>
     <a href="https://www.youtube.com/@greenoxz" target="_blank" class="social-icon-btn" title="YouTube"><i class="fab fa-youtube"></i></a>
     <a href="mailto:pisit@ppknr.com" class="social-icon-btn" title="Email"><i class="fas fa-envelope"></i></a>
-    <a href="/support.html" class="kofi-support-btn">
+    <a href="/pages/support.html" class="kofi-support-btn">
       <i class="fas fa-heart"></i> Support Me
     </a>
   </div>
 
   <div class="footer-links-row">
-    <a href="/contact.html" class="footer-link">Contact</a>
+    <a href="/pages/about.html" class="footer-link">About</a>
     <span class="footer-dot">•</span>
-    <a href="/privacy.html" class="footer-link">Privacy Policy</a>
+    <a href="/pages/contact.html" class="footer-link">Contact</a>
     <span class="footer-dot">•</span>
-    <a href="/terms.html" class="footer-link">Terms of Use</a>
+    <a href="/pages/privacy.html" class="footer-link">Privacy Policy</a>
+    <span class="footer-dot">•</span>
+    <a href="/pages/terms.html" class="footer-link">Terms of Use</a>
   </div>
 
   <div class="footer-bottom-row">
-    <span>&copy; <span id="footer-year"></span> Pisitz. All rights reserved.</span>
+    <span>&copy; <span id="year"></span> Pisitz. All rights reserved.</span>
     <span class="app-version">v2.0.1</span>
   </div>
 
   <script>
-    document.getElementById('footer-year').textContent = new Date().getFullYear();
-    window.addEventListener('scroll', () => {
-      const btt = document.getElementById('blog-back-to-top');
-      if (btt) {
-        if (window.scrollY > 300) btt.classList.add('visible');
-        else btt.classList.remove('visible');
-      }
-    });
+    const yearElem = document.getElementById('year');
+    if (yearElem) yearElem.textContent = new Date().getFullYear();
   </script>
 </footer>

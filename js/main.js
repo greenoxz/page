@@ -103,6 +103,6 @@ if (document.body.classList.contains('theme-dark')) {
 // ลงทะเบียน Service Worker (ถ้ามี)
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('sw.js').catch(err => { console.log('SW fail: ', err); });
+    navigator.serviceWorker.register('/sw.js').catch(err => { console.log('SW fail: ', err); });
   });
 }

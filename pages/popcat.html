@@ -8,8 +8,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Pisit Pop</title>
-    <link rel="stylesheet" href="theme.css">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="/theme.css">
+    <link rel="stylesheet" href="/css/style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-database-compat.js"></script>
@@ -266,8 +266,8 @@
             <button class="game-button" id="changeNameBtn"><i class="fas fa-user-edit"></i> <span id="playerNameDisplay">ใส่ชื่อ / เปลี่ยนชื่อ</span></button>
             <div class="stat-value" id="clickCount">0</div>
             <div class="cat-container">
-                <img src="pic/pisit-closed.webp" alt="Cat" class="cat-image" id="catImage">
-                <img src="pic/pisit-open.webp" alt="Cat Open" class="cat-image mouth-open" id="catImageOpen">
+                <img src="/pic/pisit-closed.webp" alt="Cat" class="cat-image" id="catImage">
+                <img src="/pic/pisit-open.webp" alt="Cat Open" class="cat-image mouth-open" id="catImageOpen">
             </div>
         </div>
 
@@ -289,7 +289,7 @@
             <div id="leaderboardEntries"></div>
             <div id="paginationContainer" class="pagination"></div>
         </div>
-        <audio id="popSound" src="sound/pop.mp3" preload="auto"></audio>
+        <audio id="popSound" src="/sound/pop.mp3" preload="auto"></audio>
         <div id="footer-include"></div>
     </div>
 
@@ -308,8 +308,8 @@
     </div>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="js/components.js"></script>
-    <script src="js/main.js"></script>
+    <script src="/js/components.js"></script>
+    <script src="/js/main.js"></script>
     <script>
         const firebaseConfig = { apiKey: "AIzaSyAXfzmalfP4RZjMSjDbl5LOXBT7m9vzDzU", authDomain: "ppknr-popcat.firebaseapp.com", databaseURL: "https://ppknr-popcat-default-rtdb.asia-southeast1.firebasedatabase.app", projectId: "ppknr-popcat", storageBucket: "ppknr-popcat.firebasestorage.app", messagingSenderId: "90126143526", appId: "1:90126143526:web:96316212d303ac08df16e7" };
         firebase.initializeApp(firebaseConfig);

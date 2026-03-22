@@ -8,10 +8,31 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ppknr</title>
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="stylesheet" href="/css/style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <style>
+    .home-buttons-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      align-items: stretch;
+      gap: 1.5rem;
+      padding: 0 1rem;
+      margin: 2.5rem auto 3rem;
+      max-width: 64rem;
+    }
+    .home-button-item {
+      flex: 1 1 200px;
+      max-width: 280px;
+      text-decoration: none;
+      transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .home-button-item:hover {
+      transform: scale(1.05) translateY(-4px);
+    }
+  </style>
 
   <script>
     function toggleMenu() {
@@ -33,6 +54,7 @@
       }
     }
   </script>
+  <link rel="stylesheet" href="/theme.css">
 </head>
 <body class="theme-light" id="theme-body" data-hide-nav-menu="true">
 
@@ -42,71 +64,71 @@
     <main class="main-section">
       <div class="content">
         <div class="image-wrapper">
-          <img src="pic/popcat.gif" alt="logo" class="hero-img" style="border-radius: 0 0 50% 50%;"/> 
+          <img src="/pic/popcat.gif" alt="logo" class="hero-img" style="border-radius: 0 0 50% 50%;"/> 
         </div>
         
         <h1 class="main-title tiny5-regular">pisitz projects</h1>
         <p class="subtitle">โปรเจคเล็กๆ ที่ทำขึ้นเพื่อความบันเทิงของผู้เขียน</p>
         
         <!-- คอนเทนเนอร์สำหรับจัดกลุ่มปุ่มเข้าด้วยกัน -->
-    <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 0 15px; margin-top: 30px; margin-bottom: 40px; align-items: stretch;">
-    
-    <!-- ปุ่ม Popcat -->
-    <a href="popcat.html" style="text-decoration: none; display: flex; flex: 1 1 140px; max-width: 200px;">
-        <div class="liquid-glass-card glass-purple" style="width: 100%; height: auto; flex: 1;">
-            <div class="glass-icon-wrapper">
-                <i class="fas fa-gamepad" style="font-size: 24px;"></i>
-            </div>
-            <div style="text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; font-weight: 700;">PisitPop</h3>
-            </div>
-        </div>
-    </a>
+        <div class="home-buttons-grid">
+            
+            <!-- ปุ่ม Popcat -->
+            <a href="/pages/popcat.html" class="home-button-item">
+                <div class="liquid-glass-card glass-purple w-full h-full min-h-[150px] flex flex-col justify-center items-center p-6">
+                    <div class="glass-icon-wrapper mb-3" style="margin-bottom: 0.75rem;">
+                        <i class="fas fa-gamepad" style="font-size: 2rem;"></i>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="m-0 text-xl font-bold" style="margin: 0; font-size: 1.25rem;">PisitPop</h3>
+                    </div>
+                </div>
+            </a>
 
-    <!-- ปุ่ม สุ่มร้านอาหาร -->
-    <a href="randomdish" style="text-decoration: none; display: flex; flex: 1 1 140px; max-width: 200px;">
-        <div class="liquid-glass-card glass-orange" style="width: 100%; height: auto; flex: 1;">
-            <div class="glass-icon-wrapper">
-                <i class="fas fa-random" style="font-size: 24px;"></i>
-            </div>
-            <div style="text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; font-weight: 700;">สุ่มร้านอาหาร</h3>
-            </div>
-        </div>
-    </a>
-    
-    <!-- ปุ่ม สุ่มที่เที่ยว -->
-    <a href="randomplace" style="text-decoration: none; display: flex; flex: 1 1 140px; max-width: 200px;">
-        <div class="liquid-glass-card glass-blue" style="width: 100%; height: auto; flex: 1;">
-            <div class="glass-icon-wrapper">
-                <i class="fa-solid fa-plane" style="font-size: 24px;"></i>
-            </div>
-            <div style="text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; font-weight: 700;">สุ่มที่เที่ยว</h3>
-            </div>
-        </div>
-    </a>
+            <!-- ปุ่ม สุ่มร้านอาหาร -->
+            <a href="/pages/randomdish.html" class="home-button-item">
+                <div class="liquid-glass-card glass-orange w-full h-full min-h-[150px] flex flex-col justify-center items-center p-6">
+                    <div class="glass-icon-wrapper mb-3" style="margin-bottom: 0.75rem;">
+                        <i class="fas fa-random" style="font-size: 2rem;"></i>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="m-0 text-xl font-bold" style="margin: 0; font-size: 1.25rem;">สุ่มร้านอาหาร</h3>
+                    </div>
+                </div>
+            </a>
+            
+            <!-- ปุ่ม สุ่มที่เที่ยว -->
+            <a href="/pages/randomplace.html" class="home-button-item">
+                <div class="liquid-glass-card glass-blue w-full h-full min-h-[150px] flex flex-col justify-center items-center p-6">
+                    <div class="glass-icon-wrapper mb-3" style="margin-bottom: 0.75rem;">
+                        <i class="fa-solid fa-plane" style="font-size: 2rem;"></i>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="m-0 text-xl font-bold" style="margin: 0; font-size: 1.25rem;">สุ่มที่เที่ยว</h3>
+                    </div>
+                </div>
+            </a>
 
-    <!-- ปุ่ม บล็อก -->
-    <a href="blog/" style="text-decoration: none; display: flex; flex: 1 1 140px; max-width: 200px;">
-        <div class="liquid-glass-card glass-green" style="width: 100%; height: auto; flex: 1;">
-            <div class="glass-icon-wrapper">
-                <i class="fa-solid fa-blog" style="font-size: 24px;"></i>
-            </div>
-            <div style="text-align: center;">
-                <h3 style="margin: 0; font-size: 1.2rem; font-weight: 700;">บล็อก</h3>
-            </div>
-        </div>
-    </a>
+            <!-- ปุ่ม บล็อก -->
+            <a href="/blog/" class="home-button-item">
+                <div class="liquid-glass-card glass-green w-full h-full min-h-[150px] flex flex-col justify-center items-center p-6">
+                    <div class="glass-icon-wrapper mb-3" style="margin-bottom: 0.75rem;">
+                        <i class="fa-solid fa-blog" style="font-size: 2rem;"></i>
+                    </div>
+                    <div class="text-center">
+                        <h3 class="m-0 text-xl font-bold" style="margin: 0; font-size: 1.25rem;">บล็อก</h3>
+                    </div>
+                </div>
+            </a>
 
-</div>
+        </div>
       </div>
     </main>
 
     <div id="footer-include"></div>
   </div>
   
-<script src="js/components.js"></script>
-  <script src="js/main.js" defer></script>
+<script src="/js/components.js"></script>
+  <script src="/js/main.js" defer></script>
 </body>
 </html>

@@ -7,7 +7,7 @@
   // --- โหลด Nav ---
   const navEl = document.getElementById('navbar-include');
   if (navEl) {
-    fetch('nav.html')
+    fetch('/components/nav.html')
       .then(res => res.text())
       .then(html => {
         navEl.innerHTML = html;
@@ -26,7 +26,7 @@
   // --- โหลด Footer ---
   const footerEl = document.getElementById('footer-include');
   if (footerEl) {
-    fetch('footer.html')
+    fetch('/components/footer.html')
       .then(res => res.text())
       .then(html => {
         footerEl.innerHTML = html;
