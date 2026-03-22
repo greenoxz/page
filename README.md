@@ -43,18 +43,21 @@
 
 **1. สร้างไฟล์ CSS (Tailwind)**
 หากมีการแก้ไขไฟล์ `input.css` หรือคลาส Tailwind ใน `.html` จำเป็นต้องรันคำสั่งเพื่อบิวด์ CSS ใหม่:
+
 ```bash
 npx @tailwindcss/cli -i ./input.css -o ./css/style.css --watch
 ```
 
 **2. รันเซอร์เวอร์สำหรับ Blog (Hugo Local Server)**
 เปิดเพื่อทดสอบระบบหน้าบล็อกและเขียนบทความ (จะเปิดเซอร์เวอร์ไว้ที่ พอร์ต 1313):
+
 ```bash
 npm run blog:serve
 ```
 
 **3. บิวด์หน้า Blog ทิ้งไว้สำหรับการ Deploy**
 แปลงบทความทั้งหมดใน `hugo_blog` ออกมาเป็นไฟล์ HTML เตรียมอัปโหลดขึ้นเซิร์ฟเวอร์ (ไฟล์จะไปอยู่ที่โฟลเดอร์ `/blog/` ด้านนอกสุด):
+
 ```bash
 npm run blog:build
 ```
@@ -62,5 +65,6 @@ npm run blog:build
 ## 📝 การ Deploy
 
 เมื่อทำการเว็บ Deploy ขึ้น Hosting (เช่น Cloudflare Pages หรือ Vercel) **จำเป็นต้องกำหนด Build Settings ดังนี้:**
+
 - **Build command:** `npm run blog:build` (เพื่อให้ระบบสร้างไฟล์บล็อก)
 - **Build output directory:** เว้นว่างไว้ หรือตั้งค่าเป็น `.` , `/` (เพื่อให้ Hosting ดึงหน้าเว็บเครื่องมือต่างๆ ที่อยู่ด้านนอกเข้าแอปไปด้วย ไม่ใช่อยู่แค่ในบล็อก)
